@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LoveAdmin vs Spond — Competitive Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --e-global-color-primary: #FF5000;
+    --e-global-color-secondary: #0885A3;
+    --e-global-color-text: #4D4D4D;
+    --e-global-color-accent: #FF8636;
+    --e-global-color-79ebde2: #29B8CC;
+    --e-global-color-3f05205: #949494;
+    --e-global-color-960c673: #D84000;
+    --e-global-color-abeb042: #FFFFFF;
+    --e-page-transition-entrance-animation: e-page-transition-fade-out;
+    --e-page-transition-exit-animation: e-page-transition-fade-in;
+    --e-page-transition-animation-duration: 500ms;
+    --e-preloader-animation-duration: 1500ms;
+    --e-preloader-delay: 0ms;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0; padding:0; font-family:"Barlow",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--e-global-color-text); background:#FAFAFA}
+  a{color:var(--e-global-color-secondary); text-decoration:none}
+  a:hover{color:var(--e-global-color-primary)}
+
+  /* Page transitions */
+  body{opacity:0; animation: fadeIn var(--e-page-transition-animation-duration) ease forwards}
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .fade-out { animation: fadeOut var(--e-page-transition-animation-duration) ease forwards }
+  @keyframes fadeOut { from{opacity:1} to{opacity:0} }
+
+  /* Sticky top nav */
+  .topnav{
+    position:sticky; top:0; z-index:9999;
+    backdrop-filter: blur(6px);
+    background:rgba(255,255,255,.85);
+    border-bottom:1px solid #eee;
+  }
+  .topnav .inner{
+    max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:12px;
+    padding:10px 16px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:.2px;
+  }
+  .brand .dot{
+    width:12px; height:12px; border-radius:50%;
+    background:linear-gradient(135deg, var(--e-global-color-primary), var(--e-global-color-accent));
+    box-shadow:0 0 0 3px rgba(255,80,0,.15);
+  }
+  .topnav a.navlink{
+    padding:8px 10px; border-radius:10px; color:#333; font-weight:500;
+  }
+  .topnav a.navlink:hover{ background:#f0f6f8 }
+  .topnav .spacer{flex:1}
+  .badge{
+    background:var(--e-global-color-secondary); color:#fff; padding:4px 8px; border-radius:999px; font-size:.8rem
+  }
+
+  /* Layout */
+  .wrap{max-width:1200px; margin:20px auto; padding:0 16px 60px}
+  section{scroll-margin-top:88px; margin-top:28px}
+  .section-head{
+    display:flex; align-items:center; gap:12px; margin-bottom:14px;
+  }
+  .section-head h2{margin:0; font-weight:600}
+  .accent-bar{width:6px; height:24px; background:var(--e-global-color-primary); border-radius:12px}
+
+  /* Cards, grids */
+  .grid{display:grid; gap:16px}
+  .g-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{
+    background:#fff; border-radius:18px; padding:18px; border:1px solid #f0f0f0;
+    box-shadow:0 10px 25px rgba(0,0,0,.04);
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .card:hover{ transform:translateY(-2px); box-shadow:0 14px 30px rgba(0,0,0,.06); border-color:#eaeaea }
+  .pill{display:inline-block; padding:4px 10px; border-radius:999px; font-size:.8rem; background:#f7f7f7; margin-right:6px}
+
+  /* Tables */
+  .table-wrap{background:#fff; border:1px solid #eee; border-radius:16px; padding:12px; box-shadow:0 8px 20px rgba(0,0,0,.04)}
+  .table-actions{display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:8px 8px 12px}
+  .table-actions input, .table-actions select{
+    padding:10px 12px; border:1px solid #ddd; border-radius:12px; min-width:220px; outline:none;
+  }
+  table{width:100%; border-collapse:collapse; font-size:.98rem}
+  thead th{
+    position:sticky; top:0; background:#f8fbfc; z-index:1;
+    text-align:left; padding:12px; border-bottom:1px solid #eee; cursor:pointer; user-select:none;
+  }
+  tbody td{padding:12px; border-bottom:1px solid #f4f4f4}
+  tbody tr:hover{background:#fcfcff}
+  .vendor-badge{font-weight:600; padding:4px 8px; border-radius:8px; color:#fff; display:inline-block}
+  .vendor-LoveAdmin{ background:var(--e-global-color-primary) }
+  .vendor-Spond{ background:var(--e-global-color-secondary) }
+
+  /* Accordions */
+  .accordion{border-radius:16px; overflow:hidden; border:1px solid #eee; background:#fff}
+  .acc-item + .acc-item{border-top:1px solid #eee}
+  .acc-header{display:flex; justify-content:space-between; align-items:center; padding:14px 16px; cursor:pointer}
+  .acc-header h3{margin:0; font-size:1rem}
+  .acc-content{max-height:0; overflow:hidden; transition:max-height .25s ease}
+  .acc-item.open .acc-content{max-height:900px}
+  .acc-item.open .acc-header{background:#f9fbff}
+
+  .callout{
+    border-left:4px solid var(--e-global-color-79ebde2);
+    background:linear-gradient(0deg, #fff, #fff), linear-gradient(90deg, rgba(41,184,204,.08), rgba(41,184,204,0));
+    border-radius:14px; padding:12px 14px; margin-top:8px
+  }
+
+  .muted{color:#777}
+  .kpi{display:flex; align-items:center; gap:8px}
+  .kpi .dot{width:10px; height:10px; border-radius:50%}
+  .kpi .dot.la{background:var(--e-global-color-primary)}
+  .kpi .dot.sp{background:var(--e-global-color-secondary)}
+  .small{font-size:.9rem}
+  .tag{display:inline-flex; align-items:center; gap:6px; padding:4px 10px; background:#f6f6f6; border-radius:999px; font-size:.82rem}
+  .tag .dot{width:8px; height:8px; border-radius:50%}
+
+  .footnote{font-size:.9rem; color:#777}
+  .chip{background:#fff0ea; color:#7a2e00; border:1px solid #ffd8c7; padding:2px 8px; border-radius:999px; font-size:.78rem}
+
+  .subtle{background:#f7fbfd; border:1px dashed #d9f0f6; padding:10px 12px; border-radius:12px; font-size:.92rem}
+</style>
+</head>
+<body>
+  <nav class="topnav">
+    <div class="inner">
+      <div class="brand"><span class="dot"></span> <span>LoveAdmin vs Spond — Competitive</span></div>
+      <a class="navlink" href="#positioning">Positioning comparison</a>
+      <a class="navlink" href="#pricing">Pricing & Fees</a>
+      <a class="navlink" href="#features">In Depth Feature Matrix</a>
+      <a class="navlink" href="#gaps">Key gaps between the two platforms</a>
+      <a class="navlink" href="#reviews">Reviews & sentiments</a>
+      <a class="navlink" href="#battlecards">Battle Cards</a>
+      <a class="navlink" href="#sources">Sources</a>
+      <div class="spacer"></div>
+      <span class="badge">Internal — for Product, Marketing & Sales</span>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <!-- Positioning -->
+    <section id="positioning">
+      <div class="section-head"><div class="accent-bar"></div><h2>Positioning comparison</h2></div>
+      <div class="grid g-2">
+        <div class="card">
+          <div class="kpi"><span class="dot la"></span><strong>LoveAdmin</strong></div>
+          <p>
+            Membership & club management platform focused on operational robustness: <span class="pill">payments</span>
+            <span class="pill">financial & VAT reporting</span><span class="pill">CRM & contact management</span>
+            <span class="pill">communications (email/SMS/portal)</span><span class="pill">event & class management</span>
+            <span class="pill">shop/merch</span><span class="pill">automation</span>.
+          </p>
+          <div class="callout small">
+            <strong>Signals:</strong> 40+ automatic notifications; 17+ financial reports with reconciliation & VAT; branded booking site; pass fees on to payer; instant-cleared funds claim; JoinIn customer app. 
+          </div>
+        </div>
+        <div class="card">
+          <div class="kpi"><span class="dot sp"></span><strong>Spond</strong></div>
+          <p>
+            Free team/club app built around <span class="pill">zero‑cost adoption</span> and <span class="pill">in‑app messaging & engagement</span> with
+            paid via per‑transaction processing. Strengths include safeguarding‑centred messaging, push notifications, quick payment requests, and
+            recent <em>subscription</em> & <em>instalment</em> payments (Spond Club).
+          </p>
+          <div class="callout small">
+            <strong>Signals:</strong> Low per‑transaction fees (e.g., £0.20 + 2.5% in GBP, app); non‑deletable message threads (traceability); guardian visibility; fundraising and club website add‑ons.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing & Fees -->
+    <section id="pricing">
+      <div class="section-head"><div class="accent-bar"></div><h2>Pricing & Fees</h2></div>
+      <div class="table-wrap">
+        <div class="table-actions">
+          <input id="priceSearch" type="search" placeholder="Search fees, payout, modules…">
+          <select id="priceVendor">
+            <option value="all">Filter by vendor (All)</option>
+            <option value="LoveAdmin">LoveAdmin</option>
+            <option value="Spond">Spond</option>
+          </select>
+        </div>
+        <table id="pricingTable">
+          <thead>
+            <tr>
+              <th data-sort="vendor">Vendor</th>
+              <th data-sort="plan">Plan / Module</th>
+              <th data-sort="fees">Fees & Structure</th>
+              <th data-sort="payouts">Payouts / Settlement</th>
+              <th data-sort="notes">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- LoveAdmin pricing rows -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Activity Providers plan</td>
+              <td>£35/mo service fee + implementation; <span class="chip">Platform fee 3% (+ VAT)</span> when taking payments online</td>
+              <td>“Instantly cleared funds” claim for cash flow</td>
+              <td>Payment module enabled via 3% platform fee; pass fees to payer option</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Sports Clubs plan</td>
+              <td>£20/mo service fee + implementation; <span class="chip">Platform fee 3%</span></td>
+              <td>Financial reporting shows when you’re getting paid</td>
+              <td>40+ automated notifications; VAT & reconciliation reporting</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Membership Orgs plan</td>
+              <td>£20/mo service fee + implementation; <span class="chip">Platform fee 3%</span></td>
+              <td>Instantly cleared funds claim</td>
+              <td>Growth programme; branded booking site; contact & comms suite</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Enterprise</td>
+              <td>Custom pricing; platform fee via contract</td>
+              <td>—</td>
+              <td>Premium setup & support</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Payment providers</td>
+              <td>Supports vetted providers (e.g., GoCardless, PayPal, cards)</td>
+              <td>Automatic retries for failed payments; notifications on disputes/cancellations</td>
+              <td>Option to pass platform & provider fees to payer</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Fees reporting</td>
+              <td>Transaction Fees report; minimum monthly fee tracking (3% + VAT to LoveAdmin)</td>
+              <td>—</td>
+              <td>Drill‑downs on fee details in reports</td>
+            </tr>
+
+            <!-- Spond pricing rows -->
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>App payments (general)</td>
+              <td><strong>GBP:</strong> £0.20 + 2.5% per product line (fees can be assigned to payer); EUR: €0.20 + 2.5% (varies by currency)</td>
+              <td>Payout history export; settlement reports available in Spond Club</td>
+              <td>Free app; Stripe processing; fee per product item</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Spond Club (membership / NIF, where applicable)</td>
+              <td>Separate transaction fees; additional NIF fees apply for Norway</td>
+              <td>Settlement Reports in Finance; payout exports</td>
+              <td>Subscription & instalment payments available</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Fundraising / Club Website</td>
+              <td>Club website: 6‑month free trial; Fundraising uses add‑on mechanics</td>
+              <td>—</td>
+              <td>Promoted as admin‑time savers; integrated payments</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="footnote subtle" style="margin-top:10px">
+          Notes reflect latest public docs at time of compilation; always verify exact commercial terms with vendor.
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Matrix -->
+    <section id="features">
+      <div class="section-head"><div class="accent-bar"></div><h2>In Depth Feature Matrix</h2></div>
+      <div class="table-wrap">
+        <div class="table-actions">
+          <input id="featSearch" type="search" placeholder="Search features… e.g., 'instalments', 'VAT', 'traceability'">
+          <select id="featVendor">
+            <option value="all">Filter by vendor (All)</option>
+            <option value="LoveAdmin">LoveAdmin</option>
+            <option value="Spond">Spond</option>
+          </select>
+        </div>
+        <table id="featureTable">
+          <thead>
+            <tr>
+              <th data-sort="vendor">Vendor</th>
+              <th data-sort="category">Category</th>
+              <th data-sort="feature">Feature</th>
+              <th data-sort="depth">Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Payments -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Payments</td>
+              <td>Payment providers</td>
+              <td>Supports vetted providers incl. Direct Debit (GoCardless), cards & PayPal; admin approval before billing; auto retries; pass fees to payer.</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Payments</td>
+              <td>Billing options</td>
+              <td>Single payments; weekly/monthly/annual schedules; pro‑rata pricing; instalments; approve before payment; auto‑collect vs. user‑authorise flows.</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Payments</td>
+              <td>Refunds & credits</td>
+              <td>Process refunds; account credits; detailed payments screen for online/offline/account‑credit transactions.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Payments</td>
+              <td>Transaction fees</td>
+              <td>Per‑item fee structure (e.g., £0.20 + 2.5% in GBP); fees assignable to payer; Stripe‑backed.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Payments</td>
+              <td>Instalments & Subscriptions</td>
+              <td>Instalments in app; subscription payments in Spond Club for recurring fees; automatic charges on schedule with changeable method.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Payments</td>
+              <td>Payouts/settlements</td>
+              <td>Settlement Reports in Club; payout history exports from app; frequency options managed in Club.</td>
+            </tr>
+
+            <!-- Communications / Messaging -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Communications</td>
+              <td>Email & SMS</td>
+              <td>Full email builder (images, GIFs, links, attachments); branded SMS; targeted lists from anywhere; 40+ auto notifications; delivery/open/click tracking.</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Communications</td>
+              <td>Portal posts</td>
+              <td>Post updates directly to member portal (JoinIn) for important notices/training content.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Messaging</td>
+              <td>In‑app chat</td>
+              <td>GDPR‑centric; <strong>message threads cannot be deleted</strong> (traceability); guardian visibility; push notifications; email/SMS fallbacks.</td>
+            </tr>
+
+            <!-- Attendance / Registers -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Attendance</td>
+              <td>Coach registers</td>
+              <td>One‑tap attendance (attended/absent/ill/injured, etc.) on mobile; advanced view surfaces who needs to pay; access medical data in session.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Attendance</td>
+              <td>Event RSVPs</td>
+              <td>Events & availability; reminders; attendance stats; subgrouping for teams.</td>
+            </tr>
+
+            <!-- Shop / Merchandise -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Merch / Shop</td>
+              <td>Merchandise products</td>
+              <td>Images, tax rates, discounts (e.g., BOGO variants), min/max per customer, approval before payment, instalments, provider selection, stock levels.</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Merch / Shop</td>
+              <td>Shop tiles</td>
+              <td>Configurable category tiles; flexible booking site; abandoned basket visibility.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Merch / Shop</td>
+              <td>Merch features</td>
+              <td>Not publicly documented as a stock‑managed shop; merchandise sales often handled as payment requests/events.</td>
+            </tr>
+
+            <!-- Reporting & Finance -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Reporting</td>
+              <td>Financial & VAT</td>
+              <td>17+ financial reports; VAT calc; upcoming renewals; outstanding/late payments; “know exactly when you’re getting paid”.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Reporting</td>
+              <td>Club Finance views</td>
+              <td>Payment overviews, filters, settlement & export; simple invoicing and consolidated group payments.</td>
+            </tr>
+
+            <!-- Portals / Apps -->
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Portal / App</td>
+              <td>JoinIn app</td>
+              <td>Members manage bookings, payments, real‑time updates, consent/medical/contact info in one secure app.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>App</td>
+              <td>Spond app</td>
+              <td>Unified hub for comms, events, payments; strong parent/guardian model; notifications; admin and member experiences.</td>
+            </tr>
+
+            <!-- Website / Fundraising -->
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Add‑ons</td>
+              <td>Club website</td>
+              <td>Integrated events, payments, comms, customisable design; six‑month free trial.</td>
+            </tr>
+            <tr>
+              <td data-vendor="Spond"><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Add‑ons</td>
+              <td>Fundraising</td>
+              <td>Built‑in mechanisms to raise funds; widely promoted as time savers for volunteers.</td>
+            </tr>
+            <tr>
+              <td data-vendor="LoveAdmin"><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Business support</td>
+              <td>Growth & funding help</td>
+              <td>Growth programme; funding advice; premium onboarding; expert‑built branded booking site.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Key Gaps -->
+    <section id="gaps">
+      <div class="section-head"><div class="accent-bar"></div><h2>Key gaps between the two platforms</h2></div>
+      <div class="table-wrap">
+        <div class="table-actions">
+          <input id="gapSearch" type="search" placeholder="Search gaps or actions…">
+          <select id="gapSort">
+            <option value="gap">Sort by gap</option>
+            <option value="impact">Sort by impact</option>
+          </select>
+        </div>
+        <table id="gapTable">
+          <thead>
+            <tr>
+              <th data-sort="gap">Gap</th>
+              <th data-sort="who">Stronger Today</th>
+              <th data-sort="impact">Impact</th>
+              <th data-sort="action">Actionable Take for LoveAdmin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Built‑in push notifications & non‑deletable message threads (traceable chat)</td>
+              <td><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>High for safeguarding & faster responses</td>
+              <td>Position email/SMS + portal audit trails; explore in‑app push integration; emphasise delivery/open/click logs & targeted SMS for time‑critical comms.</td>
+            </tr>
+            <tr>
+              <td>Clear per‑transaction fee schedule with no monthly platform fee</td>
+              <td><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>High for price‑sensitive small groups</td>
+              <td>Publish a transparent “effective rate” calculator vs. platform fee; highlight instant funds, 17+ finance reports, VAT, and automations as value‑adds.</td>
+            </tr>
+            <tr>
+              <td>Merchandise shop with stock, tax, discounts, approvals & instalments</td>
+              <td><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>Medium revenue uplift</td>
+              <td>Lead with shop depth (stock, approvals, provider choice); provide ready‑to‑use merch templates for common club items.</td>
+            </tr>
+            <tr>
+              <td>Subscription billing for recurring dues (native)</td>
+              <td><span class="vendor-badge vendor-Both" style="background:#777">Both</span></td>
+              <td>High revenue assurance</td>
+              <td>Emphasise flexible billing (pro‑rata, approval, retries) and report packs for treasurers; offer migration guides from ad‑hoc payments.</td>
+            </tr>
+            <tr>
+              <td>Finance transparency: VAT, reconciliation & “when I get paid” views</td>
+              <td><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></td>
+              <td>High for treasurers</td>
+              <td>Demo “know when you’re paid” + VAT reports; add quick‑start reconcile checklist; include “pass fees to payer” one‑click setting in demos.</td>
+            </tr>
+            <tr>
+              <td>Club website & fundraising add‑ons</td>
+              <td><span class="vendor-badge vendor-Spond">Spond</span></td>
+              <td>Medium visibility & revenue</td>
+              <td>Counter with branded booking site & communications suite; bundle with merch shop for end‑to‑end monetisation.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Reviews & Sentiments -->
+    <section id="reviews">
+      <div class="section-head"><div class="accent-bar"></div><h2>Reviews & sentiments</h2></div>
+      <div class="grid g-2">
+        <div class="card">
+          <h3 class="kpi"><span class="dot la"></span> LoveAdmin — snapshot</h3>
+          <ul>
+            <li>Capterra rating around <strong>4.4/5</strong> across regions (43–44 reviews), with praise for support and all‑in‑one setup; some notes on financial reporting complexity.</li>
+            <li>Trustpilot shows mixed sentiment (≈ <strong>2.8/5</strong>, ~141 reviews) with a range of experiences; responses visible on some locales.</li>
+          </ul>
+          <div class="subtle">Interpretation: strong support reputation; onboarding/learning curve and some report reconciliation feedback to address in enablement.</div>
+        </div>
+        <div class="card">
+          <h3 class="kpi"><span class="dot sp"></span> Spond — snapshot</h3>
+          <ul>
+            <li>G2 reviews trend high (<strong>~4.8/5</strong>, 41 reviews) citing ease for organisers and guardian flows.</li>
+            <li>Trustpilot averages around <strong>3.4–3.5/5</strong> (≈45 reviews); app‑store ratings often higher (4.7+).</li>
+          </ul>
+          <div class="subtle">Interpretation: loved as a lightweight organiser app; some variability in CS response noted on third‑party blogs; strengths in notifications and simplicity.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Battle Cards -->
+    <section id="battlecards">
+      <div class="section-head"><div class="accent-bar"></div><h2>Sales Battle Cards</h2></div>
+      <div class="accordion" id="bc">
+        <!-- LoveAdmin vs Spond: Payments -->
+        <div class="acc-item open">
+          <div class="acc-header"><h3>Payments & Finance</h3><span>▼</span></div>
+          <div class="acc-content">
+            <div class="grid g-2" style="padding:12px">
+              <div class="card">
+                <h4>Talk track</h4>
+                <p>
+                  “If your volunteers need fewer spreadsheets and faster cash flow, LoveAdmin layers <strong>instant‑cleared funds</strong>, 
+                  VAT‑aware financial reporting and <strong>40+ automations</strong> on top of payments. Treasurers see renewals, reconciliations
+                  and ‘when we get paid’ in one place—no more chasing.”
+                </p>
+              </div>
+              <div class="card">
+                <h4>Trap to set</h4>
+                <p>Ask: “How do you handle VAT and reconciliation today? Can you see late payments and cancelled direct debits in one report?”</p>
+                <div class="callout small">If they mention reliance on ad‑hoc exports, position LoveAdmin’s 17+ finance reports and automatic retries.</div>
+              </div>
+              <div class="card">
+                <h4>Likely objection</h4>
+                <p>“Spond is free; your platform fee is 3%.”</p>
+                <div class="callout small">Respond with a cost‑of‑operations angle: instant funds, VAT, reporting packs, automations and shop revenue can outweigh fee deltas. Offer an <em>effective rate</em> calculator and proof via case‑like reporting screenshots.</div>
+              </div>
+              <div class="card">
+                <h4>Proof points</h4>
+                <ul class="small">
+                  <li>Pass fees to payer toggle; auto retries & dispute notifications</li>
+                  <li>VAT & reconciliation reports; “know exactly when you’re paid”</li>
+                  <li>Merch shop with tax rates, approvals and instalments</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Communications -->
+        <div class="acc-item">
+          <div class="acc-header"><h3>Communications & Safeguarding</h3><span>▼</span></div>
+          <div class="acc-content">
+            <div class="grid g-2" style="padding:12px">
+              <div class="card">
+                <h4>Talk track</h4>
+                <p>
+                  “We deliver reach with <strong>branded email + SMS</strong> and <strong>portal posts</strong>, plus full delivery/open/click transparency.
+                  For safeguarding, auditability matters—portal comms and logs keep everything accountable.”
+                </p>
+              </div>
+              <div class="card">
+                <h4>Trap to set</h4>
+                <p>“Do you require <em>non‑deletable</em> chat logs for youth teams?”</p>
+                <div class="callout small">If yes, acknowledge Spond’s traceable chat and propose LoveAdmin email/SMS + portal for auditable trails while exploring push‑notification roadmap.</div>
+              </div>
+              <div class="card">
+                <h4>Likely objection</h4>
+                <p>“Spond’s push notifications are faster.”</p>
+                <div class="callout small">Position LoveAdmin’s targeting & deliverability analytics; offer SMS for time‑critical comms; highlight “right‑people” targeting to reduce noise.</div>
+              </div>
+              <div class="card">
+                <h4>Proof points</h4>
+                <ul class="small">
+                  <li>Advanced email builder; 40+ automated comms</li>
+                  <li>Delivery status + open/click analytics</li>
+                  <li>Targeting from anywhere in the system</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop & Growth -->
+        <div class="acc-item">
+          <div class="acc-header"><h3>Shop, Website & Growth</h3><span>▼</span></div>
+          <div class="acc-content">
+            <div class="grid g-2" style="padding:12px">
+              <div class="card">
+                <h4>Talk track</h4>
+                <p>
+                  “Beyond fees, growth comes from new revenue streams. LoveAdmin’s <strong>merch shop</strong> (stock, tax, discounts, instalments) and 
+                  <strong>branded booking site</strong> turn admin into income.”
+                </p>
+              </div>
+              <div class="card">
+                <h4>Trap to set</h4>
+                <p>“Can your current tool handle pre‑purchase approvals, partial refunds and item‑level discounts without more spreadsheets?”</p>
+              </div>
+              <div class="card">
+                <h4>Likely objection</h4>
+                <p>“Spond has a club website and fundraising.”</p>
+                <div class="callout small">Counter with LoveAdmin’s branded booking site + merch stack and automated discounts; offer quick POS‑style merch templates.</div>
+              </div>
+              <div class="card">
+                <h4>Proof points</h4>
+                <ul class="small">
+                  <li>Item tax rates; install‑by‑provider; approvals; min/max per customer</li>
+                  <li>Abandoned basket visibility; category tiles</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <section id="sources">
+      <div class="section-head"><div class="accent-bar"></div><h2>Sources</h2></div>
+      <div class="grid g-2">
+        <div class="card">
+          <h4>LoveAdmin — Official</h4>
+          <ul class="small">
+            <li><a href="https://loveadmin.com/pricing/">Pricing & Platform Fee (3%)</a></li>
+            <li><a href="https://help.loveadmin.com/minimum-monthly-fee-how-do-i-see-how-much-i-have-paid-in-fees">Minimum monthly fee / fee contributions</a></li>
+            <li><a href="https://help.loveadmin.com/expense-report">Transaction Fees report</a></li>
+            <li><a href="https://help.loveadmin.com/how-to-set-up-your-payment-providers">Payment providers linking</a></li>
+            <li><a href="https://loveadmin.com/software/features/payment-solution/">Payment solution features (instant funds, retries, pass-on fees)</a></li>
+            <li><a href="https://help.loveadmin.com/billing-settings">Billing settings (schedules, approvals, pro‑rata, instalments)</a></li>
+            <li><a href="https://help.loveadmin.com/adding-new-products-merchandise">Merchandise products (stock, tax, discounts, approvals)</a></li>
+            <li><a href="https://help.loveadmin.com/migration/managing-shop-tiles">Shop tiles</a></li>
+            <li><a href="https://loveadmin.com/software/features/communications/">Communications (email/SMS, tracking, automation)</a></li>
+            <li><a href="https://loveadmin.com/software/features/joinin-online-app/">JoinIn app</a></li>
+            <li><a href="https://loveadmin.com/software/features/business-reports/">Business & finance reports</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Spond — Official</h4>
+          <ul class="small">
+            <li><a href="https://help.spond.com/app/en/articles/118091-payments-costs-in-the-spond-app">App payments costs (e.g., £0.20 + 2.5% in GBP)</a></li>
+            <li><a href="https://help.spond.com/club/en/articles/190935-settlement-reports-in-spond-club">Settlement reports (Spond Club)</a></li>
+            <li><a href="https://help.spond.com/app/en/articles/113987-pay-in-installments">Pay in instalments (App)</a></li>
+            <li><a href="https://help.spond.com/club/en/articles/45292-setting-up-instalment-payments-in-spond-club">Instalment payments (Club)</a></li>
+            <li><a href="https://help.spond.com/club/en/articles/316473-how-to-set-up-subscription-payments-for-annual-fees-and-other-items-excluding-nif-in-spond-club">Subscription payments (Club)</a></li>
+            <li><a href="https://help.spond.com/app/en/articles/115114-payout-history-in-spond-app">Payout history export</a></li>
+            <li><a href="https://www.spond.com/en-us/messaging/">Messaging page (traceability; non‑deletable threads)</a></li>
+            <li><a href="https://help.spond.com/app/en/articles/129677-messages">Messaging help (GDPR, traceability)</a></li>
+            <li><a href="https://help.spond.com/app/en/articles/115450-push-notifications">Push notifications</a></li>
+            <li><a href="https://www.spond.com/en-us/club-website/">Club website (trial)</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Reviews & Listings</h4>
+          <ul class="small">
+            <li><a href="https://www.trustpilot.com/review/loveadmin.com">LoveAdmin — Trustpilot (~2.8, ~141)</a></li>
+            <li><a href="https://www.capterra.com/p/182986/LoveAdmin/">LoveAdmin — Capterra (~4.4)</a></li>
+            <li><a href="https://www.g2.com/products/spond/reviews">Spond — G2 (~4.8)</a></li>
+            <li><a href="https://www.trustpilot.com/review/spond.com">Spond — Trustpilot (~3.5, ~45)</a></li>
+            <li><a href="https://www.capterra.com/p/181253/Spond/reviews/">Spond — Capterra (regional pages)</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footnote">All links are direct to official docs/pages where possible to enable fast verification by Product, Marketing & Sales.</p>
+    </section>
+  </div>
+
+<script>
+// Smooth exit transition
+window.addEventListener('beforeunload', function(){
+  document.body.classList.add('fade-out');
+});
+
+/* Utility: simple table sorter & filters */
+function sortTable(table, idx, type='text') {
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  const dir = table.dataset.sortDir === 'asc' ? 'desc' : 'asc';
+  table.dataset.sortDir = dir;
+  rows.sort((a,b)=>{
+    const ta = a.children[idx].innerText.trim().toLowerCase();
+    const tb = b.children[idx].innerText.trim().toLowerCase();
+    if(type==='num'){
+      return (parseFloat(ta)||0) - (parseFloat(tb)||0);
+    }
+    return ta.localeCompare(tb);
+  });
+  if(dir==='desc') rows.reverse();
+  rows.forEach(r=>tbody.appendChild(r));
+}
+
+function attachSort(tableId){
+  const table = document.getElementById(tableId);
+  const ths = table.querySelectorAll('thead th');
+  ths.forEach((th,i)=>{
+    th.addEventListener('click', ()=> sortTable(table,i, th.dataset.type || 'text'));
+  });
+}
+
+function attachSearch(tableId, inputId, vendorSelectId){
+  const table = document.getElementById(tableId);
+  const input = document.getElementById(inputId);
+  const vendorSel = vendorSelectId ? document.getElementById(vendorSelectId) : null;
+  function filter(){
+    const q = (input?.value || '').trim().toLowerCase();
+    const vendor = vendorSel ? vendorSel.value : 'all';
+    Array.from(table.tBodies[0].rows).forEach(row=>{
+      const text = row.innerText.toLowerCase();
+      const vcell = row.querySelector('[data-vendor]');
+      const v = vcell ? vcell.getAttribute('data-vendor') : 'na';
+      const matchVendor = vendor==='all' || v===vendor;
+      const matchQ = !q || text.indexOf(q)>-1;
+      row.style.display = (matchVendor && matchQ) ? '' : 'none';
+    });
+  }
+  input && input.addEventListener('input', filter);
+  vendorSel && vendorSel.addEventListener('change', filter);
+  filter();
+}
+
+function attachGap(tableId, searchId, sortSelId){
+  const table = document.getElementById(tableId);
+  const search = document.getElementById(searchId);
+  const sortSel = document.getElementById(sortSelId);
+  function doSearch(){
+    const q = search.value.toLowerCase();
+    Array.from(table.tBodies[0].rows).forEach(r=>{
+      const t = r.innerText.toLowerCase();
+      r.style.display = t.indexOf(q)>-1 ? '' : 'none';
+    });
+  }
+  function doSort(){
+    const idx = sortSel.value === 'impact' ? 2 : 0;
+    sortTable(table, idx, 'text');
+  }
+  search.addEventListener('input', doSearch);
+  sortSel.addEventListener('change', doSort);
+}
+
+attachSort('pricingTable');
+attachSearch('pricingTable','priceSearch','priceVendor');
+
+attachSort('featureTable');
+attachSearch('featureTable','featSearch','featVendor');
+
+attachSort('gapTable');
+attachGap('gapTable','gapSearch','gapSort');
+
+// Accordions
+document.querySelectorAll('.acc-header').forEach(h=>{
+  h.addEventListener('click', ()=>{
+    const item = h.parentElement;
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
