@@ -127,10 +127,17 @@
   .chip{background:#fff0ea; color:#7a2e00; border:1px solid #ffd8c7; padding:2px 8px; border-radius:999px; font-size:.78rem}
 
   .subtle{background:#f7fbfd; border:1px dashed #d9f0f6; padding:10px 12px; border-radius:12px; font-size:.92rem}
+  .btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .cta-buttons{margin-left:auto; display:flex; gap:8px}
 </style>
 </head>
 <body>
   <nav class="topnav">
+    
     <div class="inner">
       <div class="brand"><span class="dot"></span> <span>LoveAdmin vs Spond — Competitive</span></div>
       <a class="navlink" href="#positioning">Positioning comparison</a>
@@ -148,6 +155,13 @@
   <div class="wrap">
     <!-- Positioning -->
     <section id="positioning">
+      <div class="cta-buttons">
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+      <a href="loveadmin_vs_spond.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      </div>
+    </br>
+
       <div class="section-head"><div class="accent-bar"></div><h2>Positioning comparison</h2></div>
       <div class="grid g-2">
         <div class="card">

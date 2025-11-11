@@ -92,7 +92,11 @@ tbody tr:hover{background:#fffaf6}
   background: #fff8f3;
   padding:12px 14px;border-radius:8px;margin:8px 0;color:#5a2f12
 }
-
+.btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+} 
 .accordion{border:1px solid #eee;border-radius:14px;background:#fff;overflow:hidden}
 .accordion .item + .item{border-top:1px dashed #eee}
 .accordion .head{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer}
@@ -123,7 +127,7 @@ tbody tr:hover{background:#fffaf6}
 
 .small{font-size:12px;color:#777}
 hr.sep{border:none;border-top:1px solid #eee;margin:18px 0}
-
+  .cta-buttons{margin-left:auto; display:flex; gap:8px}
 </style>
 </head>
 <body>
@@ -150,6 +154,7 @@ hr.sep{border:none;border-top:1px solid #eee;margin:18px 0}
   <section id="intro" class="card">
     <h1>Competitive Report — LoveAdmin vs Coacha</h1>
     <div class="subtle">Single‑page brief for product, marketing and sales. Focused on class‑based activity providers (with a strong lens on gymnastics values: safeguarding, progression tracking, parent experience, cash‑flow discipline).</div>
+    
     <div class="kicker"><span class="label">Quick take</span><span class="line"></span></div>
     <div class="grid">
       <div class="span-6">
@@ -163,6 +168,12 @@ hr.sep{border:none;border-top:1px solid #eee;margin:18px 0}
         </div>
       </div>
     </div>
+    <div class="cta-buttons">
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+      <a href="loveadmin_vs_coacha.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      </div>
+
   </section>
 
   <!-- Positioning -->

@@ -139,6 +139,12 @@
     .src a{ word-break: break-all; }
     .section-title{ display:flex; align-items:center; gap:10px; }
     .section-title .pill{ background:#eefbff; border-color:#d3f1fa; color:#045; }
+    .btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+    } 
+    .cta-buttons{margin-left:auto; display:flex; gap:8px}
   </style>
 </head>
 <body>
@@ -163,8 +169,14 @@
     <header class="section card" id="positioning">
       <h1 class="section-title">
         Positioning comparison
-        <span class="pill">UK Focus</span>
       </h1>
+
+      <div class="cta-buttons">
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+      <a href="loveadmin_vs_iclasspro.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      </div>
+
       <div class="grid">
         <div class="card">
           <h3>LoveAdmin</h3>

@@ -117,6 +117,13 @@
   /* Subtle tag styles */
   .tag{ display:inline-block; font-size:11px; padding:3px 8px; border-radius:999px; background:#f6f7f9; color:#555; border:1px solid #ececec; }
 
+ .btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .cta-buttons{margin-left:auto; display:flex; gap:8px}
+
   /* Footer */
   footer{ margin: 40px 0 60px; text-align:center; color:#888; }
 </style>
@@ -141,6 +148,12 @@
           <div>
             <h1 style="margin:0 0 4px; font-weight:600;">Single‑page competitive summary for Product • Marketing • Sales</h1>
             <div class="muted">Focus: gymnastics programme values (progress tracking, registers, parent comms, cash‑flow, safety, operational efficiency) — without referencing geography.</div>
+            <div class="cta-buttons">
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+      <a href="loveadmin_vs_pitchero.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      </div>
+
           </div>
         </div>
       </div>

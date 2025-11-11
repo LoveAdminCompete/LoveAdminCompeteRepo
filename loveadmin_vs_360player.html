@@ -33,7 +33,11 @@
     color: var(--e-global-color-text);
     background: #fafafa;
   }
-
+  .btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+  } 
   .container{
     width: min(1200px, 90vw);
     margin: 0 auto;
@@ -262,7 +266,7 @@
     background: #fffaf5;
     border-radius: 12px;
   }
-
+  .cta-buttons{margin-left:auto; display:flex; gap:8px}
   /* Footer sources */
   .sources a{ display: inline-block; margin: 6px 8px 6px 0; }
 </style>
@@ -274,7 +278,7 @@
 <!-- Sticky nav -->
 <nav class="topnav fade-in">
   <div class="inner">
-    <div class="brand"><span class="dot"></span> LoveAdmin vs 360Player — Competitive Report</div>
+    <div class="brand"><span class="dot"></span> LoveAdmin vs 360Player - Competitive Report</div>
     <div class="navlinks">
       <a href="#positioning">Positioning comparison</a>
       <a href="#pricing">Pricing &amp; Fees</a>
@@ -291,7 +295,14 @@
   <header class="card callout">
     <h1>LoveAdmin vs 360Player — Competitive Report</h1>
     <p>This single-page report compiles positioning, pricing &amp; fees, deep feature-by-feature comparisons, gaps with actionable takes, reviews &amp; sentiment, sales battle cards, and linked sources. All content is drawn from official pages, product docs/help centers, announcements, and review sites.</p>
+    <div class="cta-buttons">
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+      <a href="loveadmin_vs_360Player.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+     </div>
+    </br>
     <div class="note"><strong>Legend:</strong> <span class="badge yes">Yes</span> capability; <span class="badge partial">Partial</span> or indirect; <span class="badge no">Not present / No evidence</span>.</div>
+
   </header>
 
   <!-- Positioning -->

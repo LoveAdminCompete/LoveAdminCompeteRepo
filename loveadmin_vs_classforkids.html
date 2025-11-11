@@ -107,7 +107,11 @@ body{
   background:linear-gradient(180deg, rgba(255,80,0,0.06), transparent);
   padding:12px 14px; border-radius:12px; margin:12px 0;
 }
-
+.btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+} 
 /* Tables */
 .controls{display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 16px}
 input[type="search"], select{
@@ -177,6 +181,7 @@ a.link:hover{text-decoration:underline}
 @media (min-width: 900px){
   .two-col{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
 }
+  .cta-buttons{margin-left:auto; display:flex; gap:8px}
 </style>
 </head>
 <body>
@@ -196,7 +201,12 @@ a.link:hover{text-decoration:underline}
 </nav>
 
 <div class="container">
-
+<div class="cta-buttons">
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+      <a href="loveadmin_vs_classforkids.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      </div>
+    </br>
   <section id="positioning" class="card hoverable">
     <h2 class="section-title"><span class="dot"></span>Positioning comparison</h2>
     <div class="two-col">
