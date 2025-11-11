@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoveAdmin vs ClassForKids — Competitive Report</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --e-global-color-primary: #FF5000;
+  --e-global-color-secondary: #0885A3;
+  --e-global-color-text: #4D4D4D;
+  --e-global-color-accent: #FF8636;
+  --e-global-color-79ebde2: #29B8CC;
+  --e-global-color-3f05205: #949494;
+  --e-global-color-960c673: #D84000;
+  --e-global-color-abeb042: #FFFFFF;
+
+  --e-page-transition-entrance-animation: e-page-transition-fade-out;
+  --e-page-transition-exit-animation: e-page-transition-fade-in;
+  --e-page-transition-animation-duration: 500ms;
+  --e-preloader-animation-duration: 1500ms;
+  --e-preloader-delay: 0ms;
+
+  --radius: 16px;
+  --shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Barlow", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--e-global-color-text);
+  background:linear-gradient(180deg,#ffffff 0%, #fafafa 100%);
+  line-height:1.5;
+  font-weight:300;
+  opacity:0;
+  animation:fadeIn var(--e-page-transition-animation-duration) ease forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(8px)}
+  to{opacity:1; transform:none}
+}
+
+/* Sticky Nav */
+.nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:saturate(180%) blur(8px);
+  background:rgba(255,255,255,0.85);
+  border-bottom:1px solid #eee;
+}
+.nav-inner{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:10px 16px;
+  max-width:1200px;
+  margin:0 auto;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:600;
+  color:var(--e-global-color-primary);
+}
+.logo-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--e-global-color-primary);
+  box-shadow:0 0 0 4px rgba(255,80,0,0.15), 0 0 0 8px rgba(255,80,0,0.08);
+}
+.nav a{
+  color:var(--e-global-color-secondary);
+  text-decoration:none;
+  font-weight:500;
+  padding:6px 10px;
+  border-radius:10px;
+}
+.nav a:hover{background:rgba(8,133,163,0.08)}
+.spacer{flex:1}
+
+/* Layout */
+.container{max-width:1200px; margin:24px auto; padding:0 16px}
+.grid{
+  display:grid; gap:20px;
+  grid-template-columns:repeat(12,1fr);
+}
+.card{
+  grid-column:span 12;
+  background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:20px;
+}
+.card h2, .card h3{margin-top:0}
+.tag{
+  display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:500;
+  background:rgba(8,133,163,0.08); color:var(--e-global-color-secondary);
+  margin-right:8px;
+}
+.callout{
+  border-left:4px solid var(--e-global-color-primary);
+  background:linear-gradient(180deg, rgba(255,80,0,0.06), transparent);
+  padding:12px 14px; border-radius:12px; margin:12px 0;
+}
+
+/* Tables */
+.controls{display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 16px}
+input[type="search"], select{
+  padding:10px 12px; border-radius:10px; border:1px solid #e6e6e6; min-width:200px; outline:none;
+}
+.table-wrap{overflow:auto; border-radius:12px; border:1px solid #eee}
+table{width:100%; border-collapse:collapse; font-size:14px; background:#fff}
+th, td{padding:12px 12px; border-bottom:1px solid #f2f2f2; vertical-align:top}
+th{
+  position:relative;
+  background:linear-gradient(180deg,#fafafa,#f6f6f6);
+  text-align:left; font-weight:600; color:#333; cursor:pointer;
+}
+th .sort-ind{position:absolute; right:10px; opacity:0.5; font-size:12px}
+tbody tr:hover{background:#fff8f4}
+.badge{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:2px 8px; border-radius:9999px; border:1px solid #eee; font-size:12px;
+}
+.badge.success{color:#0a7f4a;background:#e7f7ee;border-color:#bfead3}
+.badge.warn{color:#7f4a0a;background:#fff3e0;border-color:#ffe0b2}
+.badge.fail{color:#7f0a1a;background:#ffe7ea;border-color:#ffcbd3}
+
+/* Accordions */
+.accordion{border-top:1px solid #eee}
+.accordion details{border-bottom:1px solid #eee; padding:10px 0}
+.accordion summary{
+  list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  font-weight:600; color:#222;
+}
+.accordion summary::marker, .accordion summary::-webkit-details-marker{display:none}
+.accordion .summary-left{display:flex; align-items:center; gap:10px}
+.chev{transition:transform .25s ease}
+details[open] .chev{transform:rotate(90deg)}
+.acc-body{padding:10px 0 4px}
+
+/* Section headings */
+.section-title{
+  display:flex; align-items:center; gap:10px; margin:0 0 10px 0;
+}
+.section-title .dot{width:10px; height:10px; border-radius:50%; background:var(--e-global-color-accent);
+  box-shadow:0 0 0 6px rgba(255,134,54,.12);
+}
+
+/* Small UI bits */
+.kpi{display:flex; gap:16px; flex-wrap:wrap; margin:10px 0}
+.kpi .pill{background:#fff; border:1px solid #eee; border-radius:12px; padding:8px 12px; box-shadow:var(--shadow)}
+.note{font-size:12px; color:#666}
+a.link{color:var(--e-global-color-secondary); text-decoration:none}
+a.link:hover{text-decoration:underline}
+
+/* Hover cards */
+.card.hoverable{transition:transform .15s ease, box-shadow .15s ease}
+.card.hoverable:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.08)}
+
+/* Back to top */
+#topBtn{
+  position:fixed; right:18px; bottom:18px; padding:10px 14px; border:none; cursor:pointer;
+  color:white; background:var(--e-global-color-secondary); border-radius:12px; box-shadow:var(--shadow);
+  opacity:.8
+}
+#topBtn:hover{opacity:1}
+
+/* Subtle highlight */
+.highlight{background:linear-gradient(90deg, rgba(255,134,54,.15), rgba(41,184,204,.08)); border-radius:8px; padding:2px 6px}
+
+@media (min-width: 900px){
+  .two-col{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-dot"></span> Competitive Report</div>
+    <a href="#positioning">Positioning</a>
+    <a href="#pricing">Pricing &amp; Fees</a>
+    <a href="#features">In‑Depth Feature Matrix</a>
+    <a href="#gaps">Key Gaps</a>
+    <a href="#reviews">Reviews &amp; Sentiment</a>
+    <a href="#battlecards">Battle Cards</a>
+    <a href="#sources">Sources</a>
+    <div class="spacer"></div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section id="positioning" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>Positioning comparison</h2>
+    <div class="two-col">
+      <div>
+        <h3>LoveAdmin</h3>
+        <p><span class="tag">All‑in‑one</span><span class="tag">Growth consultancy</span><span class="tag">Marketing school</span></p>
+        <p>LoveAdmin is positioned as an all‑in‑one membership and booking platform for activity providers. It covers the full journey from registrations and payments to calendars, registers, communications and reporting. It also offers value‑added programmes like <span class="highlight">Step2Success (£4,000 consultancy)</span> and the <span class="highlight">School of Marketing</span> to drive growth and operational excellence.</p>
+        <div class="callout"><strong>Gymnastics angle:</strong> Emphasis on safeguarding, progress tracking, capacity and competition/event management.</div>
+      </div>
+      <div>
+        <h3>ClassForKids (Class4Kids)</h3>
+        <p><span class="tag">Simplicity</span><span class="tag">Upfront payments</span><span class="tag">Kids’ clubs focus</span></p>
+        <p>ClassForKids is a booking and management system oriented toward children’s clubs. It stresses simple parent booking flows (book in a few clicks), automated invoicing and subscriptions, and offline‑capable registers for coaches.</p>
+        <div class="kpi">
+          <div class="pill">High user ratings reported on review sites</div>
+          <div class="pill">Time‑savings via upfront payment enforcement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>Pricing &amp; Fees</h2>
+    <div class="controls">
+      <input type="search" id="priceSearch" placeholder="Search… (e.g., Stripe, refunds, settlement)">
+      <select id="priceVendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="ClassForKids">ClassForKids</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table id="pricingTable">
+        <thead>
+          <tr>
+            <th data-key="vendor">Vendor <span class="sort-ind">⇅</span></th>
+            <th data-key="licence">Monthly Licence <span class="sort-ind">⇅</span></th>
+            <th data-key="platformFee" data-type="num">Platform / Transaction Fees <span class="sort-ind">⇅</span></th>
+            <th data-key="processor">Processor / Methods <span class="sort-ind">⇅</span></th>
+            <th data-key="settlement">Settlement Times <span class="sort-ind">⇅</span></th>
+            <th data-key="refunds">Refunds & Credits <span class="sort-ind">⇅</span></th>
+            <th data-key="notes">Notes <span class="sort-ind">⇅</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="note">Tip: click any column header to sort; use the vendor filter or search box to narrow results.</p>
+  </section>
+
+  <section id="features" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>In‑Depth Feature Matrix</h2>
+    <div class="controls">
+      <input type="search" id="featSearch" placeholder="Search features… (e.g., progress, direct debit, QR register)">
+      <select id="featVendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="ClassForKids">ClassForKids</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table id="featureTable">
+        <thead>
+          <tr>
+            <th data-key="category">Category <span class="sort-ind">⇅</span></th>
+            <th data-key="detail">Detail <span class="sort-ind">⇅</span></th>
+            <th data-key="vendor">Vendor <span class="sort-ind">⇅</span></th>
+            <th data-key="depth">Depth / Notes <span class="sort-ind">⇅</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="gaps" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>Key gaps &amp; opportunities</h2>
+    <p>Includes a gymnastics lens (original analysis) plus additional opportunities across other children’s activities (dance, drama, aquatics, multi‑sport, wraparound care, community programmes and franchises).</p>
+    <div class="controls">
+      <input type="search" id="gapSearch" placeholder="Search gaps… (e.g., calendar view, progress, wraparound)">
+      <select id="gapVendor">
+        <option value="all">All</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="ClassForKids">ClassForKids</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table id="gapsTable">
+        <thead>
+          <tr>
+            <th data-key="gap">Gap / Need <span class="sort-ind">⇅</span></th>
+            <th data-key="why">Why it matters <span class="sort-ind">⇅</span></th>
+            <th data-key="loveadmin">LoveAdmin today <span class="sort-ind">⇅</span></th>
+            <th data-key="c4k">ClassForKids today <span class="sort-ind">⇅</span></th>
+            <th data-key="action">Actionable take for LoveAdmin <span class="sort-ind">⇅</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="reviews" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>Reviews &amp; sentiment (summary)</h2>
+    <div class="two-col">
+      <div>
+        <h3>LoveAdmin</h3>
+        <ul>
+          <li><span class="badge success">Strengths</span> Comprehensive feature set; helpful support; time savings via automation; V2 UX improvements; good DD (GoCardless) integration.</li>
+          <li><span class="badge warn">Mixed</span> Some migration pains from legacy V1; occasional support delays; optional extras discoverability for parents.</li>
+          <li><span class="badge fail">Weakness</span> No full admin mobile app yet; some PayPal workflows feel clunky for a few users.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>ClassForKids</h3>
+        <ul>
+          <li><span class="badge success">Strengths</span> Very easy to use; quick parent bookings; upfront payments improve cash flow; offline‑capable registers; helpful support.</li>
+          <li><span class="badge warn">Mixed</span> Simple reports; constraints for discounts/subscriptions; limited attachment sending.</li>
+          <li><span class="badge fail">Weakness</span> Higher effective fees (platform + Stripe); no calendar view; limited progress‑tracking; some cancellation friction reported by parents.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="battlecards" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>Sales battle cards</h2>
+    <div class="accordion">
+      <details>
+        <summary><span class="summary-left">Positioning &amp; outcomes</span><span class="chev">›</span></summary>
+        <div class="acc-body">
+          <p><strong>Talk track:</strong> LoveAdmin is an all‑in‑one platform spanning bookings, payments, registers, communications, reporting, <em>plus</em> growth consultancy and marketing education.</p>
+          <p><strong>Trap to set:</strong> Ask prospects how they’ll grow memberships and revenue beyond “software”. If they mention extra support, highlight Step2Success and the School of Marketing.</p>
+          <p><strong>Proof points:</strong> Step2Success (£4k consultancy), free School of Marketing courses, sport‑specific communities.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="summary-left">Payments, fees &amp; settlement</span><span class="chev">›</span></summary>
+        <div class="acc-body">
+          <p><strong>Talk track:</strong> Choice of payment provider, automated retries, partial refunds/credits, and fast settlement (PayPal in minutes). Reports are actionable.</p>
+          <p><strong>Trap to set:</strong> Confirm total cost of ClassForKids (licence + 3.1% platform + Stripe 1.5%+20p). This can approach ~4.5% in practice.</p>
+          <p><strong>Proof points:</strong> LoveAdmin pricing page; C4K pricing/G‑Cloud documents; payment solutions page.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="summary-left">Registers, safeguarding &amp; progress</span><span class="chev">›</span></summary>
+        <div class="acc-body">
+          <p><strong>Talk track:</strong> Custom registers (trialist, injured), QR check‑in, consent/medical icons, progress‑tracking for skills/levels—vital for disciplined coaching.</p>
+          <p><strong>Trap to set:</strong> Ask how they track skill progress today. If “notes”, stress the benefits of structured progression and reporting.</p>
+          <p><strong>Proof points:</strong> LoveAdmin activity calendars & development programmes.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span class="summary-left">Reporting &amp; analytics</span><span class="chev">›</span></summary>
+        <div class="acc-body">
+          <p><strong>Talk track:</strong> Move beyond “lists”. Actionable reports show payments, late payers, cancelled DDs, campaign engagement—with one‑click reminders or invoices.</p>
+          <p><strong>Trap to set:</strong> Ask how they optimise schedules or pricing. Simple reports rarely suffice when scaling.</p>
+          <p><strong>Proof points:</strong> Business reports pages; comms tracking.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="sources" class="card hoverable">
+    <h2 class="section-title"><span class="dot"></span>Sources</h2>
+    <div class="grid">
+      <div class="card" style="grid-column:span 12; padding:14px">
+        <h3>Official product pages</h3>
+        <ul>
+          <li><a class="link" href="https://loveadmin.com/payment-solutions/" target="_blank" rel="noopener">LoveAdmin — Payment solutions</a></li>
+          <li><a class="link" href="https://loveadmin.com/pricing/" target="_blank" rel="noopener">LoveAdmin — Pricing</a></li>
+          <li><a class="link" href="https://loveadmin.com/bookings-and-registrations/" target="_blank" rel="noopener">LoveAdmin — Bookings & registrations</a></li>
+          <li><a class="link" href="https://loveadmin.com/activity-calendars/" target="_blank" rel="noopener">LoveAdmin — Activity calendars</a></li>
+          <li><a class="link" href="https://loveadmin.com/class-and-event-management/" target="_blank" rel="noopener">LoveAdmin — Class & event management</a></li>
+          <li><a class="link" href="https://loveadmin.com/contact-management/" target="_blank" rel="noopener">LoveAdmin — Contact management</a></li>
+          <li><a class="link" href="https://loveadmin.com/business-reports/" target="_blank" rel="noopener">LoveAdmin — Business reports</a></li>
+          <li><a class="link" href="https://loveadmin.com/communication-tools/" target="_blank" rel="noopener">LoveAdmin — Communication tools</a></li>
+          <li><a class="link" href="https://loveadmin.com/automation-tools/" target="_blank" rel="noopener">LoveAdmin — Automation tools</a></li>
+          <li><a class="link" href="https://loveadmin.com/activities-payments-and-info-all-in-the-new-joinin-app/" target="_blank" rel="noopener">LoveAdmin — JoinIn app (blog)</a></li>
+          <li><a class="link" href="https://loveadmin.com/step-2-success/" target="_blank" rel="noopener">LoveAdmin — Step2Success</a></li>
+          <li><a class="link" href="https://loveadmin.com/school-of-marketing/" target="_blank" rel="noopener">LoveAdmin — School of Marketing</a></li>
+        </ul>
+      </div>
+      <div class="card" style="grid-column:span 12; padding:14px">
+        <h3>Help & knowledge base</h3>
+        <ul>
+          <li><a class="link" href="https://help.loveadmin.com/managing-shop-tiles" target="_blank" rel="noopener">LoveAdmin — Managing shop tiles</a></li>
+          <li><a class="link" href="https://help.loveadmin.com/add-products-to-my-shop" target="_blank" rel="noopener">LoveAdmin — Add products to the shop</a></li>
+          <li><a class="link" href="https://help.classforkids.io/en/articles/7021972-for-parents-and-carers-download-the-classforkids-app" target="_blank" rel="noopener">ClassForKids — Parent app</a></li>
+        </ul>
+      </div>
+      <div class="card" style="grid-column:span 12; padding:14px">
+        <h3>ClassForKids product & pricing</h3>
+        <ul>
+          <li><a class="link" href="https://classforkids.io/" target="_blank" rel="noopener">ClassForKids — Product site</a></li>
+          <li><a class="link" href="https://classforkids.io/pricing" target="_blank" rel="noopener">ClassForKids — Pricing</a></li>
+          <li><a class="link" href="https://assets.applytosupply.digitalmarketplace.service.gov.uk/g-cloud-14/documents/579935/947613184424114-pricing-document-2024-05-07-1046.pdf" target="_blank" rel="noopener">G‑Cloud — ClassForKids pricing document (PDF)</a></li>
+          <li><a class="link" href="https://blog.loopla.com/best-course-booking-systems" target="_blank" rel="noopener">Loopla — “Best Course Booking Systems”</a></li>
+          <li><a class="link" href="https://www.pembee.co/blog/class4kids-pricing" target="_blank" rel="noopener">Pembee/Nerdisa — ClassForKids pricing explained</a></li>
+        </ul>
+      </div>
+      <div class="card" style="grid-column:span 12; padding:14px">
+        <h3>Reviews & ratings</h3>
+        <ul>
+          <li><a class="link" href="https://www.capterra.com/p/141287/Class4Kids/reviews/" target="_blank" rel="noopener">Capterra — ClassForKids Reviews</a></li>
+          <li><a class="link" href="https://www.capterra.co.uk/software/140137/love-admin" target="_blank" rel="noopener">Capterra — LoveAdmin (UK listing)</a></li>
+          <li><a class="link" href="https://uk.trustpilot.com/review/loveadmin.com" target="_blank" rel="noopener">Trustpilot — LoveAdmin</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button id="topBtn" title="Back to top">↑ Top</button>
+
+<script>
+/* ---------- Utilities ---------- */
+const byId = (id) => document.getElementById(id);
+const normalise = (s) => (s||'').toString().toLowerCase();
+
+/* ---------- PRICING DATA ---------- */
+const pricingData = [
+  {
+    vendor: "LoveAdmin",
+    licence: "Not publicly listed",
+    platformFee: "3% platform fee on payments",
+    processor: "Choice of providers: PayPal (card), GoCardless (direct debit), others",
+    settlement: "PayPal card recurring settles in minutes; Direct debit follows standard bank timelines",
+    refunds: "Full/partial refunds and account credits supported",
+    notes: "Automated retries and reminders; actionable financial reports"
+  },
+  {
+    vendor: "ClassForKids",
+    licence: "£36.99/mo (or £349.99/yr)",
+    platformFee: "3.1% platform + Stripe fees (1.5% + £0.20)",
+    processor: "Stripe via AccessPay: cards + wallets (Apple Pay/Google Pay)",
+    settlement: "Stripe capture immediately; typical bank payout ~2 working days",
+    refunds: "Refunds typically handled via Stripe dashboard (limited in‑app)",
+    notes: "Clubs can absorb or pass platform fee to parents; premium SMS ~6p/text"
+  }
+];
+
+/* ---------- FEATURES DATA ---------- */
+const featureData = [
+  // Payments & Financials
+  {category:"Payments", detail:"Payment methods", vendor:"LoveAdmin", depth:"Direct debit (GoCardless), card via PayPal & other vetted providers. Choice provides flexibility and leverage on rates."},
+  {category:"Payments", detail:"Payment methods", vendor:"ClassForKids", depth:"Stripe (cards + Apple Pay/Google Pay) via AccessPay. Single processor path keeps setup simple."},
+  {category:"Payments", detail:"Fees", vendor:"LoveAdmin", depth:"3% platform fee on payments; provider card/DD fees apply separately (competitive rates)."},
+  {category:"Payments", detail:"Fees", vendor:"ClassForKids", depth:"Licence + 3.1% platform fee, plus Stripe 1.5% + £0.20."},
+  {category:"Payments", detail:"Settlement", vendor:"LoveAdmin", depth:"PayPal card recurring settles within minutes; DD aligns with bank cycles."},
+  {category:"Payments", detail:"Settlement", vendor:"ClassForKids", depth:"Stripe pay‑outs typically ~2 working days to bank."},
+  {category:"Payments", detail:"Refunds/credits", vendor:"LoveAdmin", depth:"Full/partial refunds & account credits in product."},
+  {category:"Payments", detail:"Refunds/credits", vendor:"ClassForKids", depth:"Refunds usually via Stripe; limited native tooling."},
+  {category:"Payments", detail:"Automation", vendor:"LoveAdmin", depth:"Auto‑retries for failed payments; reminders for overdue/failed/DD cancelled; pro‑rata & invoices."},
+  {category:"Payments", detail:"Automation", vendor:"ClassForKids", depth:"Upfront payments to secure booking; automatic card retries; bulk invoicing."},
+
+  // Registration & Booking
+  {category:"Registration", detail:"Custom forms & safeguarding", vendor:"LoveAdmin", depth:"Medical info, emergency contacts, consent/photo permissions, file uploads."},
+  {category:"Registration", detail:"Custom forms & safeguarding", vendor:"ClassForKids", depth:"Bespoke questions; trial sessions; reusable child profiles; emergency notes visible in registers."},
+  {category:"Booking", detail:"Booking types", vendor:"LoveAdmin", depth:"Single sessions, terms, camps, multi‑day events, competitions; admin‑approved payment collection supported."},
+  {category:"Booking", detail:"Booking types", vendor:"ClassForKids", depth:"Terms, camps, trial sessions, wraparound and PAYG options; easy copy/update of terms."},
+
+  // Calendars & Registers
+  {category:"Calendar", detail:"Consumer calendar", vendor:"LoveAdmin", depth:"Filterable activity calendar; share personalised links; capacity & colour‑coding."},
+  {category:"Calendar", detail:"Consumer calendar", vendor:"ClassForKids", depth:"List & schedule views; no dedicated calendar grid for consumers."},
+  {category:"Registers", detail:"Coach registers", vendor:"LoveAdmin", depth:"Custom statuses (trialist, injured); QR codes; icons for medical/consent; quick‑mark attendance."},
+  {category:"Registers", detail:"Coach registers", vendor:"ClassForKids", depth:"Offline register on tablets; sync later—handy for poor connectivity."},
+
+  // Communications
+  {category:"Communications", detail:"Messaging & targeting", vendor:"LoveAdmin", depth:"Segmented email/SMS, automation triggers, engagement metrics & deliverability visibility."},
+  {category:"Communications", detail:"Messaging & targeting", vendor:"ClassForKids", depth:"Bulk and individual messaging; booking confirmations; parent app notifications."},
+
+  // Mobile
+  {category:"Mobile & Apps", detail:"Parent app", vendor:"LoveAdmin", depth:"JoinIn app for bookings, payments and info (parents)."},
+  {category:"Mobile & Apps", detail:"Parent app", vendor:"ClassForKids", depth:"Parent app on iOS & Android for managing bookings and updates."},
+  {category:"Mobile & Apps", detail:"Coach/admin mobile", vendor:"LoveAdmin", depth:"No full dedicated admin app yet (web responsive)."},
+  {category:"Mobile & Apps", detail:"Coach/admin mobile", vendor:"ClassForKids", depth:"Registers work offline on tablets; broader admin app still limited."},
+
+  // Reporting & Support
+  {category:"Reporting", detail:"Financial & ops reports", vendor:"LoveAdmin", depth:"Actionable: chase late payers, see cancelled DDs, monitor campaign engagement, launch comms from reports."},
+  {category:"Reporting", detail:"Financial & ops reports", vendor:"ClassForKids", depth:"Summaries and balance reports; fewer action shortcuts."},
+  {category:"Value‑Added", detail:"Growth programmes", vendor:"LoveAdmin", depth:"Step2Success (£4,000 consultancy), School of Marketing (free courses), sport communities."},
+  {category:"Value‑Added", detail:"Growth programmes", vendor:"ClassForKids", depth:"Onboarding, webinars and help resources; no equivalent consultancy."}
+];
+
+/* ---------- GAPS DATA ---------- */
+const gapsData = [
+  // Gymnastics‑focused (original)
+  {
+    gap:"Structured progress‑tracking for skills/levels",
+    why:"Disciplined progression and badge schemes are central to coaching quality and retention.",
+    loveadmin:"Has development programmes & progress capture tied to registers and attendance.",
+    c4k:"Typically handled via notes; lacks structured skill tracking.",
+    action:"Deepen skill libraries, coach dashboards and parent progress views; template programmes per discipline."
+  },
+  {
+    gap:"Flexible event management & billing",
+    why:"Trials, competitions and showcases often need approval before payment is taken.",
+    loveadmin:"Supports admin‑approved payment collection after confirmation.",
+    c4k:"Primarily upfront payment for bookings.",
+    action:"Promote approval‑then‑pay flow; add configurable deposits and staged payments for events."
+  },
+  {
+    gap:"Integrated merchandise/shop revenue",
+    why:"Uniforms and equipment are a key ancillary revenue stream.",
+    loveadmin:"Built‑in shop tiles and stock; link products to sessions.",
+    c4k:"No equivalent merchandise module.",
+    action:"Provide one‑click upsells (kit, badges) in checkout and renewal reminders."
+  },
+  {
+    gap:"Comprehensive safeguarding dashboards",
+    why:"Coaches need real‑time medical/consent visibility to run safe sessions.",
+    loveadmin:"Contact dashboards + icons/flags on registers; real‑time updates when parents change details.",
+    c4k:"Emergency info visible but less centralised.",
+    action:"Add safeguard checklists, expiry alerts, and incident logs composed to reports."
+  },
+  {
+    gap:"Mobile admin UX (offline)",
+    why:"Venues may have weak connectivity; fast registers reduce session friction.",
+    loveadmin:"Web responsive; QR check‑in available; no complete offline.",
+    c4k:"Offline registers on tablets.",
+    action:"Deliver an offline‑capable coach app covering attendance, notes, progress and quick comms."
+  },
+  {
+    gap:"Transparent end‑to‑end fee clarity",
+    why:"Clubs want confidence in true net revenue and margins.",
+    loveadmin:"3% platform fee stated; provider fees vary.",
+    c4k:"Licence + platform + Stripe fees stack up (~4.5% typical).",
+    action:"Publish a calculator comparing provider options; surface effective rate per revenue stream."
+  },
+
+  // Additional children’s activities (new)
+  {
+    gap:"Wraparound care (before/after‑school) with check‑in/out",
+    why:"Breakfast/after‑school care needs roll‑based ratios, late pickup fees and audited sign‑in/out.",
+    loveadmin:"Attendance + registers configurable; billing rules extensible.",
+    c4k:"Wraparound supported via sessions; manual policies required.",
+    action:"Add native wraparound mode: ratio alerts, late fees, subsidy receipts, authorised pickup workflows."
+  },
+  {
+    gap:"Performing arts: rehearsals & recital ticketing",
+    why:"Dance/drama schools run rehearsals, casting and showcases with ticket/seat management.",
+    loveadmin:"Events + shop can sell merchandise; ticketing not first‑class.",
+    c4k:"Focus on classes; ticketing external.",
+    action:"Lightweight ticketing with seat groups, parent allocations, performer call‑sheets."
+  },
+  {
+    gap:"Aquatics: lane/session capacity rules & certificates",
+    why:"Swim sessions demand granular capacity, assessment levels and certificates.",
+    loveadmin:"Progress tracking adaptable; capacity controls exist.",
+    c4k:"Capacity via classes; progress limited.",
+    action:"Prebuilt aquatic levels, certificate templates and parent passbook."
+  },
+  {
+    gap:"Packs & passes for multi‑sport/dance",
+    why:"Families want flexible packs (e.g., 10‑class pass) across activities/locations.",
+    loveadmin:"Memberships and money products exist; needs cross‑product pass logic.",
+    c4k:"Term‑centric; limited pass logic.",
+    action:"Introduce passes with entitlement logic, auto top‑ups, and analytics on utilisation."
+  },
+  {
+    gap:"Coach rostering & compliance",
+    why:"Multi‑site providers need availability planning, qualifications/renewals and cover suggestions.",
+    loveadmin:"Teams + schedules; compliance tracking limited.",
+    c4k:"Manual or external tools.",
+    action:"Add rostering board, quals expiry alerts, automated cover suggestions and costed shifts."
+  },
+  {
+    gap:"Community programmes & subsidy workflows",
+    why:"Some schemes require concession pricing, attendance proof and grant reporting.",
+    loveadmin:"Discounts and reports; no dedicated subsidy journey.",
+    c4k:"Handled manually.",
+    action:"Create subsidy programme flows: eligibility proofs, coded pricing, periodic outcome reports."
+  },
+  {
+    gap:"Franchise performance & brand governance",
+    why:"Franchisors need multi‑unit insights, brand assets, templated comms and fee reporting.",
+    loveadmin:"Enterprise section exists; more franchise tooling would help.",
+    c4k:"Primarily single‑org focus.",
+    action:"Add franchise dashboards, templated campaigns, and royalty/fee automation."
+  }
+];
+
+/* ---------- RENDERERS ---------- */
+function renderPricing(){
+  const tbody = byId('pricingTable').querySelector('tbody');
+  const q = normalise(byId('priceSearch').value);
+  const vendor = byId('priceVendor').value;
+  tbody.innerHTML = '';
+  pricingData.filter(r => {
+    const hay = (r.vendor+' '+r.licence+' '+r.platformFee+' '+r.processor+' '+r.settlement+' '+r.refunds+' '+r.notes).toLowerCase();
+    const passText = hay.includes(q);
+    const passVendor = vendor === 'all' || r.vendor === vendor;
+    return passText && passVendor;
+  }).forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${r.vendor}</strong></td>
+      <td>${r.licence}</td>
+      <td>${r.platformFee}</td>
+      <td>${r.processor}</td>
+      <td>${r.settlement}</td>
+      <td>${r.refunds}</td>
+      <td>${r.notes}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderFeatures(){
+  const tbody = byId('featureTable').querySelector('tbody');
+  const q = normalise(byId('featSearch').value);
+  const vendor = byId('featVendor').value;
+  tbody.innerHTML = '';
+  featureData.filter(r => {
+    const hay = (r.category+' '+r.detail+' '+r.vendor+' '+r.depth).toLowerCase();
+    const passText = hay.includes(q);
+    const passVendor = vendor === 'all' || r.vendor === vendor;
+    return passText && passVendor;
+  }).forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.category}</td>
+      <td><strong>${r.detail}</strong></td>
+      <td><span class="badge">${r.vendor}</span></td>
+      <td>${r.depth}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderGaps(){
+  const tbody = byId('gapsTable').querySelector('tbody');
+  const q = normalise(byId('gapSearch').value);
+  const vendor = byId('gapVendor').value;
+  tbody.innerHTML = '';
+  gapsData.filter(r => {
+    const hay = (r.gap+' '+r.why+' '+r.loveadmin+' '+r.c4k+' '+r.action).toLowerCase();
+    const passText = hay.includes(q);
+    const passVendor = vendor === 'all' ||
+                       (vendor === 'LoveAdmin' && normalise(r.loveadmin) !== 'n/a') ||
+                       (vendor === 'ClassForKids' && normalise(r.c4k) !== 'n/a');
+    return passText && passVendor;
+  }).forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${r.gap}</strong></td>
+      <td>${r.why}</td>
+      <td>${r.loveadmin}</td>
+      <td>${r.c4k}</td>
+      <td><span class="badge success">Action</span> ${r.action}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------- Sorting ---------- */
+function makeSortable(tableId){
+  const table = byId(tableId);
+  const headers = table.querySelectorAll('th');
+  headers.forEach((th, idx) => {
+    th.addEventListener('click', () => {
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const key = th.getAttribute('data-key');
+      const type = th.getAttribute('data-type') || 'text';
+      let dir = th.getAttribute('data-dir') || 'asc';
+      const getVal = (tr) => {
+        const cells = tr.querySelectorAll('td');
+        return cells[idx].innerText.trim();
+      };
+      rows.sort((a,b) => {
+        let A = getVal(a), B = getVal(b);
+        if(type === 'num'){
+          const num = (s)=> parseFloat((s.match(/[0-9.]+/g)||['0']).join('')) || 0;
+          A = num(A); B = num(B);
+        }else{
+          A = A.toLowerCase(); B = B.toLowerCase();
+        }
+        if(A < B) return dir==='asc' ? -1 : 1;
+        if(A > B) return dir==='asc' ? 1 : -1;
+        return 0;
+      });
+      tbody.innerHTML = '';
+      rows.forEach(r => tbody.appendChild(r));
+      th.setAttribute('data-dir', dir==='asc'?'desc':'asc');
+    });
+  });
+}
+
+/* ---------- Back to top ---------- */
+byId('topBtn').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+/* ---------- Init ---------- */
+renderPricing(); renderFeatures(); renderGaps();
+byId('priceSearch').addEventListener('input', renderPricing);
+byId('priceVendor').addEventListener('change', renderPricing);
+byId('featSearch').addEventListener('input', renderFeatures);
+byId('featVendor').addEventListener('change', renderFeatures);
+byId('gapSearch').addEventListener('input', renderGaps);
+byId('gapVendor').addEventListener('change', renderGaps);
+
+makeSortable('pricingTable');
+makeSortable('featureTable');
+makeSortable('gapsTable');
+</script>
+</body>
+</html>

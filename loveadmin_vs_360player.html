@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoveAdmin vs 360Player — Competitive Report</title>
+
+<!-- Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --e-global-color-primary: #FF5000;
+    --e-global-color-secondary: #0885A3;
+    --e-global-color-text: #4D4D4D;
+    --e-global-color-accent: #FF8636;
+    --e-global-color-79ebde2: #29B8CC;
+    --e-global-color-3f05205: #949494;
+    --e-global-color-960c673: #D84000;
+    --e-global-color-abeb042: #FFFFFF;
+    --e-page-transition-entrance-animation: e-page-transition-fade-out;
+    --e-page-transition-exit-animation: e-page-transition-fade-in;
+    --e-page-transition-animation-duration: 500ms;
+    --e-preloader-animation-duration: 1500ms;
+    --e-preloader-delay: 0ms;
+  }
+
+  /* Base */
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Barlow", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    color: var(--e-global-color-text);
+    background: #fafafa;
+  }
+
+  .container{
+    width: min(1200px, 90vw);
+    margin: 0 auto;
+    padding: 24px 0 64px;
+  }
+
+  h1, h2, h3{
+    color: #222;
+    letter-spacing: 0.2px;
+    margin: 8px 0 12px;
+    font-weight: 600;
+  }
+  h1{ font-size: 2rem; }
+  h2{ font-size: 1.5rem; margin-top: 28px; }
+  h3{ font-size: 1.15rem; }
+
+  p, li {
+    line-height: 1.5;
+    font-weight: 300; /* slim modern */
+  }
+
+  a {
+    color: var(--e-global-color-secondary);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; }
+
+  /* Sticky top nav */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+    background: rgba(255,255,255,0.9);
+    border-bottom: 1px solid #eee;
+  }
+  .topnav .inner{
+    width: min(1200px, 90vw);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+  }
+  .brand{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--e-global-color-primary);
+    letter-spacing: .3px;
+  }
+  .brand .dot{
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--e-global-color-primary);
+    box-shadow: 0 0 0 4px rgba(255,80,0,.12);
+  }
+  .navlinks{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .navlinks a{
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    background: #fff;
+    border: 1px solid #eee;
+    transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .navlinks a:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    background: #fffaf7;
+  }
+
+  /* Cards & layout */
+  .grid{
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .card{
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(0,0,0,.07);
+  }
+  .callout{
+    border-left: 4px solid var(--e-global-color-accent);
+    background: #fff8f3;
+  }
+
+  /* Tables */
+  .tablewrap{
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.04);
+    overflow: auto;
+  }
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th{
+    position: sticky; top: 0;
+    background: #fff;
+    z-index: 1;
+  }
+  th, td{
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+  }
+  th{
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  tr:hover td{
+    background: #fffdf9;
+  }
+
+  .badge{
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid #eee;
+    background: #fafafa;
+  }
+  .yes  { color: #0a7f3f; background: #ecf8f1; border-color: #d2efdd; }
+  .no   { color: #a61b1b; background: #fff0f0; border-color: #ffd7d7; }
+  .partial { color: #7a5a00; background: #fff8e6; border-color: #ffe9b8; }
+
+  .controls{
+    display: grid;
+    grid-template-columns: 1fr 180px 180px;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .controls input, .controls select{
+    border: 1px solid #e6e6e6;
+    padding: 10px 12px;
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+    background: #fff;
+  }
+  .controls input:focus, .controls select:focus{
+    border-color: var(--e-global-color-secondary);
+    box-shadow: 0 0 0 3px rgba(8,133,163,.12);
+  }
+
+  /* Accordions */
+  details{
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 12px 14px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  summary{
+    cursor: pointer;
+    font-weight: 600;
+    color: #222;
+    outline: none;
+  }
+  details[open]{
+    background: #fffaf7;
+    border-color: #ffd7c2;
+  }
+  .pill{
+    padding: 2px 8px; border-radius: 999px; font-size: 12px;
+    border: 1px solid #eee; background: #fff;
+  }
+  .pill-primary{ background: #fff0e6; color: var(--e-global-color-primary); border-color: #ffd7c2; }
+  .pill-sec{ background: #eaf7fa; color: var(--e-global-color-secondary); border-color: #c8edf4; }
+
+  /* Preloader / transitions */
+  .preloader{
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: #fff;
+    z-index: 2000;
+    animation: preloaderFade var(--e-preloader-animation-duration) ease var(--e-preloader-delay) 1 both;
+  }
+  @keyframes preloaderFade{
+    0% { opacity: 1; }
+    90% { opacity: 0.02; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+  .fade-in{
+    animation: fadeIn var(--e-page-transition-animation-duration) ease 1 both;
+  }
+  @keyframes fadeIn{
+    from{ opacity: 0; transform: translateY(6px); }
+    to  { opacity: 1; transform: translateY(0);  }
+  }
+
+  /* Section headers */
+  .section-header{
+    display: flex; align-items: center; gap: 10px; margin: 24px 0 10px;
+  }
+  .section-header .bar{
+    width: 6px; height: 22px; border-radius: 4px; background: var(--e-global-color-primary);
+  }
+
+  /* Subtle callouts */
+  .note{
+    padding: 12px;
+    border: 1px dashed #ffd7c2;
+    background: #fffaf5;
+    border-radius: 12px;
+  }
+
+  /* Footer sources */
+  .sources a{ display: inline-block; margin: 6px 8px 6px 0; }
+</style>
+</head>
+<body>
+
+<div class="preloader"><div class="brand"><span class="dot"></span>Loading report…</div></div>
+
+<!-- Sticky nav -->
+<nav class="topnav fade-in">
+  <div class="inner">
+    <div class="brand"><span class="dot"></span> LoveAdmin vs 360Player — Competitive Report</div>
+    <div class="navlinks">
+      <a href="#positioning">Positioning comparison</a>
+      <a href="#pricing">Pricing &amp; Fees</a>
+      <a href="#features">In Depth Feature Matrix</a>
+      <a href="#gaps">Key gaps between the two platforms</a>
+      <a href="#reviews">Reviews &amp; sentiments comparisons</a>
+      <a href="#battlecards">Battle Cards</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container fade-in">
+  <header class="card callout">
+    <h1>LoveAdmin vs 360Player — Competitive Report</h1>
+    <p>This single-page report compiles positioning, pricing &amp; fees, deep feature-by-feature comparisons, gaps with actionable takes, reviews &amp; sentiment, sales battle cards, and linked sources. All content is drawn from official pages, product docs/help centers, announcements, and review sites.</p>
+    <div class="note"><strong>Legend:</strong> <span class="badge yes">Yes</span> capability; <span class="badge partial">Partial</span> or indirect; <span class="badge no">Not present / No evidence</span>.</div>
+  </header>
+
+  <!-- Positioning -->
+  <section id="positioning">
+    <div class="section-header"><div class="bar"></div><h2>Positioning comparison</h2></div>
+    <div class="grid">
+      <div class="card">
+        <h3>LoveAdmin</h3>
+        <ul>
+          <li>Comprehensive <strong>membership &amp; club admin</strong> platform for clubs, classes, events, and sports organizations with branded booking/shop, forms, calendars, contact/CRM, payments, reporting, communications, automations, and a member app (JoinIn). <a href="#sources">[refs]</a></li>
+          <li>Emphasis on <strong>reducing admin</strong>, automated reminders/renewals, finance &amp; business reporting, GDPR-by-design. <a href="#sources">[refs]</a></li>
+          <li>Payment module accessed via <strong>3% platform fee</strong> (pay when you get paid); card via PayPal (settled instantly) and Direct Debit via GoCardless. <a href="#sources">[refs]</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>360Player</h3>
+        <ul>
+          <li><strong>All-in-one sports club</strong> platform covering registrations/payments, communication, scheduling, website builder, plus <strong>sports development</strong> (video analysis, statistics, training libraries, player development). <a href="#sources">[refs]</a></li>
+          <li>Payments through Stripe and Adyen; focus on clear reporting/reconciliation and configurable payouts (typically weekly). <a href="#sources">[refs]</a></li>
+          <li>Starter plan for a whole club; add-on per-user for the “All-in-One” suite that includes performance features. <a href="#sources">[refs]</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing & Fees -->
+  <section id="pricing">
+    <div class="section-header"><div class="bar"></div><h2>Pricing &amp; Fees</h2></div>
+    <div class="controls">
+      <input id="price-search" placeholder="Search (e.g., 'payout', 'fee', 'Stripe', 'GoCardless')" />
+      <select id="price-vendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="360Player">360Player</option>
+      </select>
+      <select id="price-sort">
+        <option value="vendor">Sort by vendor</option>
+        <option value="category">Sort by category</option>
+      </select>
+    </div>
+    <div class="tablewrap">
+      <table id="pricingTable">
+        <thead>
+          <tr>
+            <th data-key="vendor">Vendor</th>
+            <th data-key="category">Category</th>
+            <th data-key="detail">Detail</th>
+            <th data-key="evidence">Reference</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-header"><div class="bar"></div><h2>In Depth Feature Matrix</h2></div>
+    <div class="controls">
+      <input id="feat-search" placeholder="Search (e.g., 'video', 'reminders', 'GDPR', 'website builder')" />
+      <select id="feat-vendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="360Player">360Player</option>
+      </select>
+      <select id="feat-sort">
+        <option value="category">Sort by category</option>
+        <option value="capability">Sort by capability</option>
+      </select>
+    </div>
+    <div class="tablewrap">
+      <table id="featureTable">
+        <thead>
+          <tr>
+            <th data-key="category">Category</th>
+            <th data-key="capability">Capability (depth)</th>
+            <th data-key="loveadmin">LoveAdmin</th>
+            <th data-key="player360">360Player</th>
+            <th data-key="notes">Notes &amp; References</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Gaps -->
+  <section id="gaps">
+    <div class="section-header"><div class="bar"></div><h2>Key gaps between the two platforms</h2></div>
+    <div class="controls">
+      <input id="gap-search" placeholder="Search gaps (e.g., 'video analysis')" />
+      <select id="gap-sort">
+        <option value="gap">Sort by gap</option>
+        <option value="impact">Sort by impact</option>
+      </select>
+    </div>
+    <div class="tablewrap">
+      <table id="gapTable">
+        <thead>
+          <tr>
+            <th data-key="gap">Gap</th>
+            <th data-key="who">Advantage</th>
+            <th data-key="impact">Impact</th>
+            <th data-key="take">Actionable Take for LoveAdmin</th>
+            <th data-key="refs">Reference</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews">
+    <div class="section-header"><div class="bar"></div><h2>Reviews &amp; sentiments comparisons</h2></div>
+    <div class="grid">
+      <div class="card">
+        <h3>LoveAdmin</h3>
+        <ul>
+          <li><strong>Trustpilot:</strong> Avg. 2.8/5 (141 reviews). Select positives highlight smoother summer ops and responsive support. <a href="#sources">[Trustpilot ref]</a></li>
+          <li>Feature praise around reducing manual admin &amp; payment collection; support called out positively by several reviewers. <a href="#sources">[refs]</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>360Player</h3>
+        <ul>
+          <li><strong>GetApp:</strong> 4.5/5 (small review count). Pros: integrated Stripe, “one stop shop.” Cons: website builder can feel limiting; switching desktop/mobile frustrating for some. <a href="#sources">[GetApp ref]</a></li>
+          <li>Product scope includes sports development tooling (video, stats) not common in pure admin suites. <a href="#sources">[refs]</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Battle Cards -->
+  <section id="battlecards">
+    <div class="section-header"><div class="bar"></div><h2>Battle Cards</h2></div>
+
+    <details class="card" open>
+      <summary>LoveAdmin vs 360Player — General (Positioning)</summary>
+      <div style="margin-top:10px;">
+        <div class="grid">
+          <div class="card">
+            <h3>Talk track</h3>
+            <ul>
+              <li>LoveAdmin is a <strong>complete operations &amp; membership admin suite</strong> built to cut admin, grow revenue, and keep data compliant — from registrations and payments to reporting, calendars, communications, and automations — plus a member app for self-serve. <a href="#sources">[refs]</a></li>
+              <li>360Player adds <strong>sports performance</strong> (video analysis, stats, training) on top of core club admin. For clubs prioritising <em>operational excellence and frictionless payments/renewals</em>, LoveAdmin is the focused fit. <a href="#sources">[refs]</a></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Traps to avoid</h3>
+            <ul>
+              <li>Don’t get pulled into a “feature-count” debate around video/analytics. Reframe to <strong>admin impact, reliability, payouts, and comms</strong>.</li>
+              <li>Avoid promising features outside LoveAdmin’s scope (e.g., in-app video analytics). Offer integration stance instead.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Proof points</h3>
+            <ul>
+              <li>3% platform fee “only when paid,” card via PayPal (settled instantly), DD via GoCardless; branded shops, flexible billing, reminders, and finance reporting. <a href="#sources">[refs]</a></li>
+              <li>Business &amp; finance reports, communications toolkit with email/SMS/segmentation &amp; 40+ automations; JoinIn app. <a href="#sources">[refs]</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="card">
+      <summary>Handling “Why not 360Player for sports performance?”</summary>
+      <div style="margin-top:10px;">
+        <div class="grid">
+          <div class="card">
+            <h3>Talk track</h3>
+            <ul>
+              <li>360Player is strong on <strong>player development workflows</strong> (video, stats, drills). If that’s core, we can co-exist: use LoveAdmin for <strong>mission-critical ops &amp; payments</strong>, while integrating with performance tools.</li>
+              <li>Where renewals, DD reliability, <strong>instant card settlements</strong>, and automated comms matter most, LoveAdmin’s admin-first design is a better operational backbone. <a href="#sources">[refs]</a></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Traps</h3>
+            <ul>
+              <li>Don’t minimise their performance features — acknowledge value, then realign to <strong>operational KPIs</strong> and member experience.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Proof points</h3>
+            <ul>
+              <li>PayPal (card) settlements instantly; GoCardless DD supported; branded flows and robust reporting. <a href="#sources">[refs]</a></li>
+              <li>Reviews cite reduced admin workload and supportive onboarding/customer service. <a href="#sources">[refs]</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Sources -->
+  <section id="sources" class="sources">
+    <div class="section-header"><div class="bar"></div><h2>Sources</h2></div>
+    <h3>LoveAdmin — official pages</h3>
+    <p>
+      <a href="https://loveadmin.com/pricing/">Pricing</a> ·
+      <a href="https://loveadmin.com/software/features/payment-solutions/">Payment solutions</a> ·
+      <a href="https://loveadmin.com/software/features/bookings-and-registrations/">Bookings &amp; registrations</a> ·
+      <a href="https://loveadmin.com/software/features/activity-calendar/">Activity calendar</a> ·
+      <a href="https://loveadmin.com/software/features/contact-management/">Contact management</a> ·
+      <a href="https://loveadmin.com/software/features/communications/">Communications tools</a> ·
+      <a href="https://loveadmin.com/software/features/automations/">Automations</a> ·
+      <a href="https://loveadmin.com/software/features/class-and-event-management/">Class &amp; event management</a> ·
+      <a href="https://loveadmin.com/software/features/team-sports/">Team sports</a> ·
+      <a href="https://loveadmin.com/software/features/joinin-online-app/">JoinIn app</a> ·
+      <a href="https://www.trustpilot.com/review/loveadmin.com">Trustpilot</a>
+    </p>
+
+    <h3>360Player — official pages &amp; docs</h3>
+    <p>
+      <a href="https://www.360player.com/features/payments-and-registrations/">Payments &amp; registrations</a> ·
+      <a href="https://www.360player.com/features/communication/">Communication</a> ·
+      <a href="https://www.360player.com/features/scheduling/">Scheduling</a> ·
+      <a href="https://www.360player.com/features/websites/">Websites</a> ·
+      <a href="https://www.360player.com/features/training-and-season-planning/">Training &amp; season planning</a> ·
+      <a href="https://www.360player.com/features/video/">Video analysis</a> ·
+      <a href="https://www.360player.com/features/statistics/">Statistics &amp; data</a> ·
+      <a href="https://www.360player.com/features/player-development/">Player development</a> ·
+      <a href="https://www.360player.com/product-news/new-360player-features-april-2025">Product news — Adyen</a> ·
+      <a href="https://help.360player.com/en/articles/10728943-get-started-with-payments-adyen">Help: Get started with payments (Adyen)</a> ·
+      <a href="https://help.360player.com/en/articles/11659469-reconciling-your-payments-adyen">Help: Reconciling payments (Adyen)</a> ·
+      <a href="https://help.360player.com/en/articles/10175239-how-to-set-up-stripe-for-payment-processing-with-360player">Help: Stripe setup</a>
+    </p>
+
+    <h3>Aggregators / reviews</h3>
+    <p>
+      <a href="https://www.getapp.ca/software/2061128/360player">GetApp — 360Player</a> ·
+      <a href="https://www.capterra.ca/software/185072/loveadmin">Capterra — LoveAdmin</a> ·
+      <a href="https://www.softwareadvice.com/membership-management/loveadmin-profile/">SoftwareAdvice — LoveAdmin</a> ·
+      <a href="https://www.capterra.ca/software/2061128/360player">Capterra — 360Player</a>
+    </p>
+  </section>
+</main>
+
+<script>
+  // --- Data ----------------------------------------------------
+  const pricingRows = [
+    {
+      vendor: "LoveAdmin",
+      category: "Platform fee",
+      detail: "3% platform fee for the payment module — 'You only pay that when you get paid.'",
+      evidence: '<a href="https://loveadmin.com/pricing/">Pricing</a>'
+    },
+    {
+      vendor: "LoveAdmin",
+      category: "Payment processors",
+      detail: "Card via PayPal (settled instantly); Direct Debit via GoCardless.",
+      evidence: '<a href="https://loveadmin.com/pricing/">Pricing → FAQ</a>'
+    },
+    {
+      vendor: "LoveAdmin",
+      category: "Setup/onboarding",
+      detail: "Setup/implementation fee is charged to configure the system and onboard (amount not publicly listed).",
+      evidence: '<a href="https://loveadmin.com/pricing/">Pricing → FAQ</a>'
+    },
+    {
+      vendor: "LoveAdmin",
+      category: "Subscription visibility",
+      detail: "Plan tiers shown by audience (activity providers, sports clubs, membership orgs); pricing not listed publicly — contact sales.",
+      evidence: '<a href="https://loveadmin.com/pricing/">Pricing</a>'
+    },
+
+    {
+      vendor: "360Player",
+      category: "Base price",
+      detail: "Starter base fee begins at US$49/month for an entire club.",
+      evidence: '<a href="https://www.getapp.ca/software/2061128/360player">GetApp</a>'
+    },
+    {
+      vendor: "360Player",
+      category: "All-in-One price model",
+      detail: "All-in-One version adds performance features at +US$3/user/month (per GetApp listing).",
+      evidence: '<a href="https://www.getapp.ca/software/2061128/360player#faq">GetApp FAQ</a>'
+    },
+    {
+      vendor: "360Player",
+      category: "Payment processors",
+      detail: "Supports Stripe and Adyen for payments.",
+      evidence: '<a href="https://www.360player.com/product-news/new-360player-features-april-2025">Product news</a>, <a href="https://help.360player.com/en/articles/10175239-how-to-set-up-stripe-for-payment-processing-with-360player">Help</a>'
+    },
+    {
+      vendor: "360Player",
+      category: "Payouts / settlement",
+      detail: "Funds appear in Adyen account instantly when paid; typical delay up to ~48 hours before available for bank transfer; weekly payouts are common.",
+      evidence: '<a href="https://help.360player.com/en/articles/11659469-reconciling-your-payments-adyen">Help: Reconciling payments</a>'
+    }
+  ];
+
+  const featureRows = [
+    {
+      category: "Payments & billing",
+      capability: "Payment options & flow",
+      loveadmin: '<span class="badge yes">Yes</span> Card via PayPal (instant) and DD via GoCardless; branded booking/shop; flexible billing & refunds; automated reminders; finance/sales reporting.',
+      player360: '<span class="badge yes">Yes</span> Stripe & Adyen; product catalogue; auto-charging subscriptions; instalment plans; financial reports (Balance/Revenue/Payout).',
+      notes: '<a href="https://loveadmin.com/pricing/">LA Pricing</a>, <a href="https://loveadmin.com/software/features/payment-solutions/">LA Payment solutions</a>, <a href="https://help.360player.com/en/articles/10183640-introduction-to-360player-payments">360P Intro to Payments</a>, <a href="https://help.360player.com/en/articles/11659469-reconciling-your-payments-adyen">360P Reconciling</a>'
+    },
+    {
+      category: "Registration",
+      capability: "Customisable forms & fee structures",
+      loveadmin: '<span class="badge yes">Yes</span> Custom forms, medical info, discounts, waiting lists, trials; sell sessions, events, memberships & merchandise.',
+      player360: '<span class="badge yes">Yes</span> Flexible registration forms including events/try-outs; pay during registration.',
+      notes: '<a href="https://loveadmin.com/software/features/bookings-and-registrations/">LA Bookings</a>, <a href="https://help.360player.com/en/articles/10183640-introduction-to-360player-payments">360P Intro to Payments</a>'
+    },
+    {
+      category: "Communication",
+      capability: "Channels & automation",
+      loveadmin: '<span class="badge yes">Yes</span> Email builder, SMS, targeted segments, 40+ automated notifications.',
+      player360: '<span class="badge yes">Yes</span> Direct & group messaging, push notifications; share posts/video content within the platform.',
+      notes: '<a href="https://loveadmin.com/software/features/communications/">LA Comms</a>, <a href="https://www.360player.com/features/communication/">360P Comms</a>'
+    },
+    {
+      category: "Scheduling & calendar",
+      capability: "Club/team calendars & availability",
+      loveadmin: '<span class="badge yes">Yes</span> Activity calendar with filters, colour coding, attendance tracking & capacity.',
+      player360: '<span class="badge yes">Yes</span> Scheduling across teams/locations; avoid double bookings.',
+      notes: '<a href="https://loveadmin.com/software/features/activity-calendar/">LA Activity calendar</a>, <a href="https://www.360player.com/features/scheduling/">360P Scheduling</a>'
+    },
+    {
+      category: "Website / Shop",
+      capability: "Public site / shop presence",
+      loveadmin: '<span class="badge yes">Yes</span> Branded registration/booking site & shop.',
+      player360: '<span class="badge partial">Partial</span> Website builder included; some users cite limitations and friction switching mobile/desktop views.',
+      notes: '<a href="https://loveadmin.com/pricing/">LA Pricing</a>, <a href="https://www.360player.com/features/websites/">360P Websites</a>, <a href="https://www.getapp.ca/software/2061128/360player">GetApp reviews</a>'
+    },
+    {
+      category: "Contact / CRM",
+      capability: "Member records, privacy & portal",
+      loveadmin: '<span class="badge yes">Yes</span> GDPR-by-design, safe contact data; role-based dashboards; self-serve portal.',
+      player360: '<span class="badge yes">Yes</span> Single contact database; supports billing contacts; unified user profile.',
+      notes: '<a href="https://loveadmin.com/software/features/contact-management/">LA Contact management</a>, <a href="https://help.360player.com/en/articles/10183640-introduction-to-360player-payments">360P Intro to Payments</a>, <a href="https://www.360player.com/product-news/new-360player-features-april-2025">User Profile 2.0</a>'
+    },
+    {
+      category: "Reporting & finance",
+      capability: "Business reports & reconciliation",
+      loveadmin: '<span class="badge yes">Yes</span> Finance & sales reporting; business reports across revenue & membership.',
+      player360: '<span class="badge yes">Yes</span> Balance, Revenue, and Payout reports; reconciliation guidance; export.',
+      notes: '<a href="https://loveadmin.com/software/features/business-reports/">LA Business reports</a>, <a href="https://help.360player.com/en/articles/11659469-reconciling-your-payments-adyen">360P Reconciling</a>'
+    },
+    {
+      category: "Automations",
+      capability: "Operational automations",
+      loveadmin: '<span class="badge yes">Yes</span> Automated reminders, renewals, retries, and comms workflows.',
+      player360: '<span class="badge partial">Partial</span> Automated billing & notifications configurable via Stripe/Adyen + platform reminders (less emphasis on a named “automations” suite).',
+      notes: '<a href="https://loveadmin.com/software/features/automations/">LA Automations</a>, <a href="https://help.360player.com/en/articles/10175239-how-to-set-up-stripe-for-payment-processing-with-360player">360P Stripe</a>'
+    },
+    {
+      category: "Mobile experience",
+      capability: "Mobile app for members/staff",
+      loveadmin: '<span class="badge yes">Yes</span> JoinIn app: bookings, payments, updates, and self-serve info.',
+      player360: '<span class="badge yes">Yes</span> Native apps (Android, iPhone, iPad) for players, parents, and staff.',
+      notes: '<a href="https://loveadmin.com/software/features/joinin-online-app/">LA JoinIn app</a>, <a href="https://www.getapp.ca/software/2061128/360player">GetApp devices</a>'
+    },
+    {
+      category: "Team sports mgmt",
+      capability: "Squads, attendance, safeguarding info",
+      loveadmin: '<span class="badge yes">Yes</span> Manage squads, availability, fees; store medical & emergency details for safeguarding.',
+      player360: '<span class="badge yes">Yes</span> Team scheduling, rosters, and coordination.',
+      notes: '<a href="https://loveadmin.com/software/features/team-sports/">LA Team sports</a>, <a href="https://www.360player.com/features/scheduling/">360P Scheduling</a>'
+    },
+    {
+      category: "Sports performance",
+      capability: "Video analysis, stats, training library, dev plans",
+      loveadmin: '<span class="badge no">No</span> Not part of core product.',
+      player360: '<span class="badge yes">Yes</span> Video analysis, statistics, training libraries, player development plans & reviews.',
+      notes: '<a href="https://www.360player.com/features/video/">360P Video</a>, <a href="https://www.360player.com/features/statistics/">360P Statistics</a>, <a href="https://www.360player.com/features/player-development/">360P Player dev</a>'
+    }
+  ];
+
+  const gapRows = [
+    {
+      gap: "Sports performance tooling (video analysis, training libraries, player development)",
+      who: "360Player",
+      impact: "High for clubs prioritising performance & coaching workflows",
+      take: "Position LoveAdmin as the operations & payments backbone; offer integrations/partners for performance tooling; focus messaging on reliability, payouts and admin reduction.",
+      refs: '<a href="https://www.360player.com/features/video/">360P Video</a> · <a href="https://www.360player.com/features/player-development/">Player Dev</a>'
+    },
+    {
+      gap: "Website builder flexibility / UX polish (per reviews)",
+      who: "LoveAdmin (advantage vs. 360P limitation)",
+      impact: "Medium — affects brand polish and conversion on sign-ups",
+      take: "Emphasise branded booking/shop and clean flows; consider showcasing best-practice templates; if needed, integrate with popular CMS for advanced sites.",
+      refs: '<a href="https://www.360player.com/features/websites/">360P Websites</a> · <a href="https://www.getapp.ca/software/2061128/360player">GetApp reviews</a>'
+    },
+    {
+      gap: "Payments: transparency & reconciliation narrative",
+      who: "Neutral (different emphasis)",
+      impact: "High — directly affects finance operations and trust",
+      take: "Publish a clear fees explainer & payout timeline examples (PayPal instant card; DD via provider); add reconciliation tips & exports in docs similar to Adyen guides to reassure treasurers.",
+      refs: '<a href="https://loveadmin.com/pricing/">LA Pricing</a> · <a href="https://help.360player.com/en/articles/11659469-reconciling-your-payments-adyen">360P Reconciling</a>'
+    },
+    {
+      gap: "Public pricing clarity",
+      who: "360Player (clear starter & add-on on listings)",
+      impact: "Medium — accelerates shortlisting",
+      take: "Provide transparent indicative ranges or a calculator (inc. 3% platform fee scenarios) to reduce friction pre-demo.",
+      refs: '<a href="https://www.getapp.ca/software/2061128/360player">GetApp</a> · <a href="https://loveadmin.com/pricing/">LA Pricing</a>'
+    },
+    {
+      gap: "Review sentiment (volume & score)",
+      who: "360Player (higher score on small sample)",
+      impact: "Medium — social proof in competitive cycles",
+      take: "Run a proactive review program targeting recent successful onboardings; highlight awards, case stories, and response cadence to issues.",
+      refs: '<a href="https://www.trustpilot.com/review/loveadmin.com">Trustpilot</a> · <a href="https://www.getapp.ca/software/2061128/360player">GetApp</a>'
+    }
+  ];
+
+  // --- Utilities ----------------------------------------------------
+  function renderTable(tbody, rows, columns){
+    tbody.innerHTML = rows.map(r => {
+      return `<tr>${columns.map(c => `<td>${r[c] || ""}</td>`).join("")}</tr>`;
+    }).join("");
+  }
+
+  function sortRows(rows, key){
+    const copy = rows.slice();
+    copy.sort((a,b) => {
+      const av = (a[key] ?? "").toString().toLowerCase();
+      const bv = (b[key] ?? "").toString().toLowerCase();
+      if (av < bv) return -1;
+      if (av > bv) return 1;
+      return 0;
+    });
+    return copy;
+  }
+
+  function searchRows(rows, query, keys){
+    if (!query) return rows;
+    const q = query.toLowerCase();
+    return rows.filter(r => keys.some(k => (r[k] ?? "").toString().toLowerCase().includes(q)));
+  }
+
+  function filterRows(rows, predicate){
+    return rows.filter(predicate);
+  }
+
+  // --- Pricing table init -------------------------------------------
+  const pricingBody = document.querySelector("#pricingTable tbody");
+  const priceSearch = document.getElementById("price-search");
+  const priceVendor = document.getElementById("price-vendor");
+  const priceSort = document.getElementById("price-sort");
+
+  function refreshPricing(){
+    let rows = pricingRows.slice();
+    // filter
+    const v = priceVendor.value;
+    if (v !== "all"){ rows = filterRows(rows, r => r.vendor === v); }
+    // search
+    rows = searchRows(rows, priceSearch.value, ["vendor","category","detail","evidence"]);
+    // sort
+    const sortKey = priceSort.value === "category" ? "category" : "vendor";
+    rows = sortRows(rows, sortKey);
+    renderTable(pricingBody, rows, ["vendor","category","detail","evidence"]);
+  }
+  priceSearch.addEventListener("input", refreshPricing);
+  priceVendor.addEventListener("change", refreshPricing);
+  priceSort.addEventListener("change", refreshPricing);
+  refreshPricing();
+
+  // allow header-click sorting
+  document.querySelectorAll("#pricingTable th").forEach(th => {
+    th.addEventListener("click", () => {
+      priceSort.value = th.dataset.key === "category" ? "category" : "vendor";
+      refreshPricing();
+    });
+  });
+
+  // --- Feature table init -------------------------------------------
+  const featureBody = document.querySelector("#featureTable tbody");
+  const featSearch = document.getElementById("feat-search");
+  const featVendor = document.getElementById("feat-vendor");
+  const featSort = document.getElementById("feat-sort");
+
+  function vendorText(cellHtml){
+    if (!cellHtml) return "";
+    // quick detection of presence for filtering by vendor "has yes/partial/no content"
+    return cellHtml.replace(/<[^>]+>/g, "").trim().toLowerCase();
+  }
+
+  function refreshFeatures(){
+    let rows = featureRows.slice();
+    // filter by vendor
+    const v = featVendor.value;
+    if (v === "LoveAdmin"){
+      rows = rows.map(r => ({...r, player360: ""}));
+    } else if (v === "360Player"){
+      rows = rows.map(r => ({...r, loveadmin: ""}));
+    }
+    // search
+    rows = searchRows(rows, featSearch.value, ["category","capability","loveadmin","player360","notes"]);
+    // sort
+    const key = featSort.value === "capability" ? "capability" : "category";
+    rows = sortRows(rows, key);
+    renderTable(featureBody, rows, ["category","capability","loveadmin","player360","notes"]);
+  }
+  featSearch.addEventListener("input", refreshFeatures);
+  featVendor.addEventListener("change", refreshFeatures);
+  featSort.addEventListener("change", refreshFeatures);
+  refreshFeatures();
+
+  document.querySelectorAll("#featureTable th").forEach(th => {
+    th.addEventListener("click", () => {
+      featSort.value = th.dataset.key === "capability" ? "capability" : "category";
+      refreshFeatures();
+    });
+  });
+
+  // --- Gaps table init ----------------------------------------------
+  const gapBody = document.querySelector("#gapTable tbody");
+  const gapSearch = document.getElementById("gap-search");
+  const gapSort = document.getElementById("gap-sort");
+
+  function refreshGaps(){
+    let rows = gapRows.slice();
+    rows = searchRows(rows, gapSearch.value, ["gap","who","impact","take","refs"]);
+    const key = gapSort.value === "impact" ? "impact" : "gap";
+    rows = sortRows(rows, key);
+    renderTable(gapBody, rows, ["gap","who","impact","take","refs"]);
+  }
+  gapSearch.addEventListener("input", refreshGaps);
+  gapSort.addEventListener("change", refreshGaps);
+  refreshGaps();
+
+  document.querySelectorAll("#gapTable th").forEach(th => {
+    th.addEventListener("click", () => {
+      gapSort.value = th.dataset.key === "impact" ? "impact" : "gap";
+      refreshGaps();
+    });
+  });
+
+  // Finish preloader quickly for snappy feel
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.querySelector(".preloader")?.remove();
+    }, 600);
+  });
+</script>
+</body>
+</html>

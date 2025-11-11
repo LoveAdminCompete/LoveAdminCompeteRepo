@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoveAdmin vs Coacha — Competitive Report (Gymnastics‑Focused)</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --e-global-color-primary:#FF5000;
+  --e-global-color-secondary:#0885A3;
+  --e-global-color-text:#4D4D4D;
+  --e-global-color-accent:#FF8636;
+  --e-global-color-79ebde2:#29B8CC;
+  --e-global-color-3f05205:#949494;
+  --e-global-color-960c673:#D84000;
+  --e-global-color-abeb042:#FFFFFF;
+  --e-page-transition-entrance-animation: e-page-transition-fade-out;
+  --e-page-transition-exit-animation: e-page-transition-fade-in;
+  --e-page-transition-animation-duration: 500ms;
+  --e-preloader-animation-duration: 1500ms;
+  --e-preloader-delay: 0ms;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:"Barlow", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;color:var(--e-global-color-text);background:#fafafa; font-weight:300;}
+
+a{color:var(--e-global-color-secondary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.container{max-width:1200px;margin:0 auto;padding:24px}
+
+header.sticky{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(8px);
+  border-bottom:1px solid #eee;
+}
+.nav{
+  display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  padding:10px 24px;
+}
+.nav .brand{display:flex;gap:10px;align-items:center}
+.brand .dot{width:10px;height:10px;background:var(--e-global-color-primary);border-radius:50%}
+.nav a{
+  padding:8px 12px;border-radius:999px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06);
+  border:1px solid #eee;color:#333;font-weight:400;
+}
+.nav a:hover{box-shadow:0 6px 18px rgba(0,0,0,.08); transform:translateY(-1px)}
+
+h1{font-weight:600;color:#222;margin:24px 0 8px}
+h2{font-weight:600;color:#222;margin:32px 0 12px}
+h3{font-weight:500;color:#222;margin:20px 0 8px}
+.subtle{color:#777;font-size:14px}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;background:var(--e-global-color-79ebde2);color:white;margin-right:6px}
+.card{
+  background:#fff;border:1px solid #eee;border-radius:16px;
+  box-shadow:0 6px 24px rgba(0,0,0,.06);
+  padding:20px;margin:14px 0; transition:box-shadow .2s ease, transform .2s ease;
+}
+.card:hover{box-shadow:0 12px 36px rgba(0,0,0,.09); transform:translateY(-2px)}
+
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.span-12{grid-column:span 12}
+.span-6{grid-column:span 6}
+.span-4{grid-column:span 4}
+@media(max-width:960px){.span-6{grid-column:span 12}.span-4{grid-column:span 12}}
+
+.kicker{display:flex;gap:8px;align-items:center;margin:8px 0 16px}
+.kicker .line{height:1px;background:#eee;flex:1}
+.kicker .label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#666;font-weight:500}
+
+.table-wrap{overflow:auto;border:1px solid #eee;border-radius:16px;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+thead th{
+  position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;
+  padding:12px;text-align:left;font-weight:600;color:#333;white-space:nowrap;cursor:pointer;
+}
+tbody td{padding:12px;border-top:1px dashed #eee;vertical-align:top}
+tbody tr:hover{background:#fffaf6}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 14px}
+.toolbar input[type="search"], .toolbar select{
+  padding:10px 12px;border:1px solid #ddd;border-radius:12px;background:#fff;min-width:220px
+}
+.count-pill{font-size:12px;color:#555;background:#f1f1f1;padding:6px 10px;border-radius:999px}
+
+.callout{
+  border-left:4px solid var(--e-global-color-primary);
+  background: #fff8f3;
+  padding:12px 14px;border-radius:8px;margin:8px 0;color:#5a2f12
+}
+
+.accordion{border:1px solid #eee;border-radius:14px;background:#fff;overflow:hidden}
+.accordion .item + .item{border-top:1px dashed #eee}
+.accordion .head{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer}
+.accordion .title{font-weight:500}
+.accordion .body{display:none;padding:0 18px 18px;color:#333}
+
+.tag{display:inline-block;padding:3px 8px;border-radius:999px;border:1px solid #eee;margin:2px;font-size:12px}
+.tag.primary{background:var(--e-global-color-primary);color:#fff;border:none}
+.tag.accent{background:var(--e-global-color-accent);color:#fff;border:none}
+.tag.neutral{background:#f1f1f1}
+
+.footer{color:#666;font-size:13px;padding:24px 0 60px}
+
+/* Preloader & transitions */
+#preloader{
+  position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:2000;
+  animation:fadeOut var(--e-preloader-animation-duration) ease var(--e-preloader-delay) forwards;opacity:1;
+}
+#preloader .doty{display:flex;gap:8px}
+#preloader .doty div{width:10px;height:10px;border-radius:50%}
+#preloader .d1{background:var(--e-global-color-primary);animation:up 1s infinite}
+#preloader .d2{background:var(--e-global-color-secondary);animation:up 1s .1s infinite}
+#preloader .d3{background:var(--e-global-color-accent);animation:up 1s .2s infinite}
+@keyframes up{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+.fade-in{animation:fadeIn var(--e-page-transition-animation-duration) ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.small{font-size:12px;color:#777}
+hr.sep{border:none;border-top:1px solid #eee;margin:18px 0}
+
+</style>
+</head>
+<body>
+
+<div id="preloader"><div class="doty"><div class="d1"></div><div class="d2"></div><div class="d3"></div></div></div>
+
+<header class="sticky">
+  <nav class="nav">
+    <div class="brand"><span class="dot"></span><strong>LoveAdmin vs Coacha</strong></div>
+    <div class="links" style="display:flex;gap:8px;flex-wrap:wrap">
+      <a href="#positioning">Positioning comparison</a>
+      <a href="#pricing">Pricing &amp; Fees</a>
+      <a href="#matrix">In‑Depth Feature Matrix</a>
+      <a href="#gaps">Key Gaps</a>
+      <a href="#reviews">Reviews &amp; Sentiment</a>
+      <a href="#battle">Battle Cards</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container fade-in">
+
+  <section id="intro" class="card">
+    <h1>Competitive Report — LoveAdmin vs Coacha</h1>
+    <div class="subtle">Single‑page brief for product, marketing and sales. Focused on class‑based activity providers (with a strong lens on gymnastics values: safeguarding, progression tracking, parent experience, cash‑flow discipline).</div>
+    <div class="kicker"><span class="label">Quick take</span><span class="line"></span></div>
+    <div class="grid">
+      <div class="span-6">
+        <div class="callout">
+          <strong>LoveAdmin advantages:</strong> advanced communications & automation; deep business reporting; multi‑provider payments; professional setup and consultancy.
+        </div>
+      </div>
+      <div class="span-6">
+        <div class="callout" style="border-left-color:var(--e-global-color-secondary)">
+          <strong>Coacha advantages:</strong> skills/grades progression; offline front‑desk self check‑in; coach timesheets; built‑in store & B2B invoicing; transparent transaction fees.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Positioning -->
+  <section id="positioning" class="card">
+    <h2>Positioning comparison</h2>
+    <div class="kicker"><span class="label">How each platform frames its value</span><span class="line"></span></div>
+    <div class="table-wrap">
+      <table id="tbl-positioning">
+        <thead>
+          <tr><th>Vendor</th><th>Positioning</th><th>Proof</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge">LoveAdmin</span></td>
+            <td>All‑in‑one booking & club management with branded experiences, strong communications, reporting and automation; professional setup & growth support.</td>
+            <td>
+              <a href="https://loveadmin.com/software/features/" target="_blank" rel="noopener">Feature hub</a> ·
+              <a href="https://loveadmin.com/software/features/bookings-and-registrations/" target="_blank" rel="noopener">Bookings</a> ·
+              <a href="https://loveadmin.com/software/features/communications/" target="_blank" rel="noopener">Communications</a> ·
+              <a href="https://loveadmin.com/software/features/automation-features/" target="_blank" rel="noopener">Automations</a> ·
+              <a href="https://loveadmin.com/software/features/business-reports/" target="_blank" rel="noopener">Business reports</a>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="badge" style="background:var(--e-global-color-secondary)">Coacha</span></td>
+            <td>Affordable “unlimited” club software with automated subscriptions/bookings, skills & progression, safeguarding tools, self check‑in, and built‑in commerce/invoicing.</td>
+            <td>
+              <a href="https://www.coacha.co.uk/features" target="_blank" rel="noopener">Features</a> ·
+              <a href="https://www.coacha.co.uk/pricing" target="_blank" rel="noopener">Pricing</a> ·
+              <a href="https://www.coacha.co.uk/features/compare-plan-features" target="_blank" rel="noopener">Plan comparison</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Pricing & Fees -->
+  <section id="pricing" class="card">
+    <h2>Pricing & Fees</h2>
+    <div class="kicker"><span class="label">Sortable • Searchable • Vendor filter</span><span class="line"></span></div>
+    <div class="toolbar">
+      <input id="search-pricing" type="search" placeholder="Search pricing & fees…" />
+      <select id="filter-pricing-vendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="Coacha">Coacha</option>
+      </select>
+      <span class="count-pill" id="count-pricing"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-pricing">
+        <thead>
+          <tr>
+            <th data-key="vendor">Vendor</th>
+            <th data-key="item">Item</th>
+            <th data-key="detail">Detail</th>
+            <th data-key="metrics">Rates / Timings</th>
+            <th data-key="source">Source</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="small">Notes: Payment provider rates can vary by account. LoveAdmin levies a platform fee; Coacha uses pay‑as‑you‑go payment provider fees and lists transparent headline rates.</div>
+  </section>
+
+  <!-- Feature Matrix -->
+  <section id="matrix" class="card">
+    <h2>In‑Depth Feature Matrix</h2>
+    <div class="kicker"><span class="label">Sortable • Searchable • Filter by vendor</span><span class="line"></span></div>
+    <div class="toolbar">
+      <input id="search-matrix" type="search" placeholder="Search capabilities…" />
+      <select id="filter-matrix-vendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="Coacha">Coacha</option>
+      </select>
+      <span class="count-pill" id="count-matrix"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-matrix">
+        <thead>
+          <tr>
+            <th data-key="capability">Capability</th>
+            <th data-key="vendor">Vendor</th>
+            <th data-key="depth">Depth / What it includes</th>
+            <th data-key="notes">Gymnastics‑relevance & Notes</th>
+            <th data-key="source">Source</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Key Gaps -->
+  <section id="gaps" class="card">
+    <h2>Key gaps between the two platforms</h2>
+    <div class="kicker"><span class="label">Sortable • Actionable takes</span><span class="line"></span></div>
+    <div class="toolbar">
+      <input id="search-gaps" type="search" placeholder="Search gaps…" />
+      <span class="count-pill" id="count-gaps"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="tbl-gaps">
+        <thead>
+          <tr>
+            <th data-key="priority">Priority</th>
+            <th data-key="gap">Gap</th>
+            <th data-key="impact">Impact (Why it matters)</th>
+            <th data-key="action">Actionable take for LoveAdmin</th>
+            <th data-key="source">Source</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="card">
+    <h2>Reviews & Sentiments</h2>
+    <div class="kicker"><span class="label">Public review sites</span><span class="line"></span></div>
+    <div class="grid">
+      <div class="span-6">
+        <h3><span class="badge">Coacha</span> themes</h3>
+        <ul>
+          <li>Praised for ease‑of‑use and breadth for the price; unlimited usage attractive for small clubs.</li>
+          <li>Requests for richer report exports and more branding options in emails/communications.</li>
+        </ul>
+        <div class="small">Source: <a href="https://www.capterra.co.uk/software/185822/coacha" target="_blank" rel="noopener">Capterra listing</a> (pros/cons & user quotes).</div>
+      </div>
+      <div class="span-6">
+        <h3><span class="badge">LoveAdmin</span> themes</h3>
+        <ul>
+          <li>Strong communications & automation toolkit, abandoned‑checkout reporting, and detailed finance/attendance insight.</li>
+          <li>Perceived cost sensitivity due to platform fee; settlement times depend on chosen payment provider.</li>
+        </ul>
+        <div class="small">Sources: <a href="https://loveadmin.com/software/features/communications/" target="_blank" rel="noopener">Communications</a>, <a href="https://loveadmin.com/software/features/business-reports/" target="_blank" rel="noopener">Business reports</a>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Battle Cards -->
+  <section id="battle" class="card">
+    <h2>Sales battle cards</h2>
+    <div class="kicker"><span class="label">Expandable accordions with talk tracks, traps, proof</span><span class="line"></span></div>
+    <div class="accordion" id="acc-battle">
+      <!-- LoveAdmin vs Coacha -->
+      <div class="item">
+        <div class="head"><div class="title">Positioning LoveAdmin vs Coacha (for Sales)</div><div>+</div></div>
+        <div class="body">
+          <p><strong>Talk track:</strong> “We’re not just booking & payments. We combine branded journeys, deep automation and live insight to grow your revenue while saving time for coaches and admins.”</p>
+          <p><strong>Traps to avoid:</strong> Don’t argue on raw price—reframe to total value: revenue lift (renewals, upsells), churn reduction via engagement, and reduced admin time.</p>
+          <p><strong>Proof points:</strong></p>
+          <ul>
+            <li>Advanced email builder, targeted SMS/portal posts, 40+ automations【Communications & Automations】.</li>
+            <li>Financial & class performance reporting incl. abandoned checkout and payment requests【Business reports】.</li>
+            <li>Multiple payment options (card via PayPal; direct debit via GoCardless or London & Zurich)【Payments】 with automatic retries and overdue chasing.</li>
+          </ul>
+          <p class="small">Links: <a href="https://loveadmin.com/software/features/communications/" target="_blank">Communications</a> · <a href="https://loveadmin.com/software/features/automation-features/" target="_blank">Automations</a> · <a href="https://loveadmin.com/software/features/business-reports/" target="_blank">Reports</a> · <a href="https://loveadmin.com/software/features/payment-solutions/" target="_blank">Payments</a></p>
+        </div>
+      </div>
+      <!-- Coacha vs LoveAdmin -->
+      <div class="item">
+        <div class="head"><div class="title">How Coacha competes (for Product & Competitive Intel)</div><div>+</div></div>
+        <div class="body">
+          <p><strong>Talk track:</strong> “Coacha wins with clear, low‑friction pricing and built‑ins clubs care about—progression tracking, self check‑in, coach timesheets, and a store.”</p>
+          <p><strong>Traps to watch:</strong> Don’t underplay the importance of skill/grade progression and safeguarding workflows for youth athletics.</p>
+          <p><strong>Proof points:</strong></p>
+          <ul>
+            <li>Skills & grades progression, safeguarding officer CC, illness reporting【Plan comparison】.</li>
+            <li>Front‑desk self check‑in (works offline), coach/staff timesheets【Plan comparison】.</li>
+            <li>Transparent transaction fees; quick settlements via Stripe/GoCardless【Pricing】.</li>
+            <li>Store & B2B invoicing for kit sales and invoicing schools/providers【Commerce/B2B】.</li>
+          </ul>
+          <p class="small">Links: <a href="https://www.coacha.co.uk/features/compare-plan-features" target="_blank">Feature comparison</a> · <a href="https://www.coacha.co.uk/pricing" target="_blank">Pricing</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section id="sources" class="card">
+    <h2>Sources</h2>
+    <div class="grid">
+      <div class="span-6">
+        <h3>LoveAdmin (official)</h3>
+        <ul>
+          <li><a href="https://loveadmin.com/software/features/" target="_blank" rel="noopener">All features</a></li>
+          <li><a href="https://loveadmin.com/software/features/bookings-and-registrations/" target="_blank" rel="noopener">Bookings & registrations</a></li>
+          <li><a href="https://loveadmin.com/software/features/business-reports/" target="_blank" rel="noopener">Business reports</a></li>
+          <li><a href="https://loveadmin.com/software/features/payment-solutions/" target="_blank" rel="noopener">Payment solutions</a></li>
+          <li><a href="https://loveadmin.com/software/features/communications/" target="_blank" rel="noopener">Communications</a></li>
+          <li><a href="https://loveadmin.com/software/features/automation-features/" target="_blank" rel="noopener">Automations</a></li>
+          <li><a href="https://loveadmin.com/pricing" target="_blank" rel="noopener">Pricing</a></li>
+          <li><a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf" target="_blank" rel="noopener">Buyer guide (PDF)</a></li>
+          <li><a href="https://loveadmin.uservoice.com/knowledgebase" target="_blank" rel="noopener">Help centre (fees, timelines)</a></li>
+        </ul>
+      </div>
+      <div class="span-6">
+        <h3>Coacha (official) & reviews</h3>
+        <ul>
+          <li><a href="https://www.coacha.co.uk/features" target="_blank" rel="noopener">Features</a></li>
+          <li><a href="https://www.coacha.co.uk/features/compare-plan-features" target="_blank" rel="noopener">Compare plan features</a></li>
+          <li><a href="https://www.coacha.co.uk/pricing" target="_blank" rel="noopener">Pricing</a></li>
+          <li><a href="https://www.capterra.co.uk/software/185822/coacha" target="_blank" rel="noopener">Capterra (Coacha)</a></li>
+          <li><a href="https://www.getapp.co.uk/software/2053376/coacha" target="_blank" rel="noopener">GetApp (Coacha)</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="sep"/>
+    <div class="grid">
+      <div class="span-12">
+        <h3>Payment provider context</h3>
+        <ul>
+          <li><a href="https://gocardless.com" target="_blank" rel="noopener">GoCardless (direct debit)</a></li>
+          <li><a href="https://www.paypal.com" target="_blank" rel="noopener">PayPal</a></li>
+          <li><a href="https://stripe.com" target="_blank" rel="noopener">Stripe</a></li>
+          <li><a href="https://merchant-savvy.co.uk/direct-debit-providers-uk/#london-and-zurich" target="_blank" rel="noopener">London &amp; Zurich overview (Merchant Savvy)</a></li>
+          <li><a href="https://merchantmachine.co.uk/direct-debit-providers/" target="_blank" rel="noopener">Direct debit providers comparison (Merchant Machine)</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer subtle">
+    Built with LoveAdmin brand colours for internal review. No geographic references included.
+  </section>
+
+</main>
+
+<script>
+// ---------- Data ----------
+const pricingData = [
+  // LoveAdmin
+  {vendor:"LoveAdmin", item:"Platform fee", detail:"Applied on paid plans", metrics:"3% platform fee", source:"https://loveadmin.com/pricing"},
+  {vendor:"LoveAdmin", item:"Card payments (PayPal)", detail:"Instant settlement to PayPal account", metrics:"PayPal rates (varies by account)", source:"https://loveadmin.com/software/features/class-and-event-management-features/"},
+  {vendor:"LoveAdmin", item:"Direct Debit (GoCardless)", detail:"Settlement on day 5 for existing mandates; day 6 for new", metrics:"~5–6 working days", source:"https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"},
+  {vendor:"LoveAdmin", item:"Direct Debit (London & Zurich)", detail:"Settlement timeframe via L&Z", metrics:"~7–11 working days", source:"https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"},
+
+  // Coacha
+  {vendor:"Coacha", item:"Card payments (Stripe)", detail:"Standard settlement to bank", metrics:"2.4% + 20p (headline) · ~2 business days", source:"https://www.coacha.co.uk/pricing"},
+  {vendor:"Coacha", item:"Direct Debit (GoCardless)", detail:"GoCardless collection", metrics:"2.2% + 24p (headline) · ~3–5 working days", source:"https://www.coacha.co.uk/pricing"},
+  {vendor:"Coacha", item:"PayPal", detail:"Optional PayPal acceptance", metrics:"2.95% + 30p (headline)", source:"https://www.coacha.co.uk/pricing"},
+  {vendor:"Coacha", item:"Other payment types", detail:"Cash / BACS / Standing Order recording", metrics:"No processing fees", source:"https://www.coacha.co.uk/pricing"}
+];
+
+const matrixData = [
+  {capability:"Member CRM & Portal", vendor:"LoveAdmin", depth:"Centralised contact records; customer portal to update details, consents, bookings; dashboards for payments, comms, attendance", notes:"Robust for parent engagement and medical/consent capture", source:"https://loveadmin.com/software/features/contact-management/"},
+  {capability:"Member CRM & Portal", vendor:"Coacha", depth:"Member & parent logins, noticeboard, emergency contacts, attendance; custom sign‑up forms", notes:"Includes illness reporting & safeguarding notes", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+
+  {capability:"Progression tracking", vendor:"LoveAdmin", depth:"Not built‑in (track via custom fields/forms)", notes:"Gap for skill/grade based sports", source:"https://loveadmin.com/software/features/bookings-and-registrations/"},
+  {capability:"Progression tracking", vendor:"Coacha", depth:"Skills & grades tracking, progression records", notes:"Highly relevant for athlete pathways", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+
+  {capability:"Classes & Sessions", vendor:"LoveAdmin", depth:"Recurring & one‑off sessions; branded booking site; capacity, wait lists, age restrictions; admin‑approval before capture", notes:"Strong checkout UX with data capture", source:"https://loveadmin.com/software/features/class-and-event-management-features/"},
+  {capability:"Classes & Sessions", vendor:"Coacha", depth:"Recurring, one‑off & virtual classes; block bookings/courses/camps/terms", notes:"Advanced booking for seasonal terms", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+
+  {capability:"Attendance registers", vendor:"LoveAdmin", depth:"Auto‑generated event/class registers", notes:"Ensures who’s expected on site", source:"https://loveadmin.com/software/features/class-and-event-management-features/"},
+  {capability:"Attendance registers", vendor:"Coacha", depth:"Registers + Front Desk Self Check‑in app (works offline)", notes:"Speedy sign‑in at the door", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+
+  {capability:"Coach scheduling & timesheets", vendor:"LoveAdmin", depth:"Not native", notes:"Can schedule activities but no timesheets module", source:"https://loveadmin.com/software/features/activity-calendars/"},
+  {capability:"Coach scheduling & timesheets", vendor:"Coacha", depth:"Coach/staff timeslot management & timesheets; venue item booking", notes:"Useful for floor rotations & apparatus slots", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+
+  {capability:"Payments — methods", vendor:"LoveAdmin", depth:"Card via PayPal; Direct Debit via GoCardless or London & Zurich", notes:"Choice of providers", source:"https://loveadmin.com/software/features/payment-solutions/"},
+  {capability:"Payments — methods", vendor:"Coacha", depth:"Stripe (card), GoCardless (DD), optional PayPal", notes:"Transparent per‑transaction fees", source:"https://www.coacha.co.uk/pricing"},
+
+  {capability:"Payments — cash‑flow controls", vendor:"LoveAdmin", depth:"Automatic retries, overdue chasing, partial/full refunds, credits, cancel pending payments", notes:"Cash‑flow protection for recurring fees", source:"https://loveadmin.com/software/features/payment-solutions/"},
+  {capability:"Payments — cash‑flow controls", vendor:"Coacha", depth:"Configurable retry attempts, pro‑rata options, family/sibling/group discounts, virtual cash tin", notes:"Family pricing common in classes", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+
+  {capability:"Communications & marketing", vendor:"LoveAdmin", depth:"Email builder (images, templates, branding), targeted SMS/portal posts, 40+ automated notifications, delivery/open/click tracking", notes:"Reduces no‑shows; boosts renewals", source:"https://loveadmin.com/software/features/communications/"},
+  {capability:"Communications & marketing", vendor:"Coacha", depth:"Unlimited emails; simpler templates & branding", notes:"Less customisation than LoveAdmin", source:"https://www.capterra.co.uk/software/185822/coacha"},
+
+  {capability:"Reporting & insights", vendor:"LoveAdmin", depth:"Financial summaries, pending payments, class performance, abandoned checkout, custom reports", notes:"Operational & revenue visibility", source:"https://loveadmin.com/software/features/business-reports/"},
+  {capability:"Reporting & insights", vendor:"Coacha", depth:"Essential & advanced stats; shop export less granular per user feedback", notes:"Good enough, room for depth", source:"https://www.capterra.co.uk/software/185822/coacha"},
+
+  {capability:"Commerce & B2B invoicing", vendor:"LoveAdmin", depth:"No native store; one‑off invoices and offline payment logging", notes:"Integrate with external store if needed", source:"https://loveadmin.com/software/features/payment-solutions/"},
+  {capability:"Commerce & B2B invoicing", vendor:"Coacha", depth:"Built‑in store & online sales; B2B invoicing (Custom plan)", notes:"Sell kit & invoice schools/providers", source:"https://www.coacha.co.uk/features/compare-plan-features"}
+];
+
+const gapsData = [
+  {priority:"High", gap:"Skill/grade progression tracking", impact:"Essential for athlete development records & parent transparency", action:"Add a progression module (levels, badges, assessments) + coach mobile entry + parent view", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+  {priority:"High", gap:"Offline front‑desk self check‑in", impact:"Shorter queues; resilience in low‑signal venues", action:"Build an offline tablet app or PWA for check‑in with sync & fraud‑guard", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+  {priority:"High", gap:"E‑commerce & B2B invoicing", impact:"Merch & invoice revenue; school/provider billing", action:"Ship a lightweight store add‑on or partner integration; add B2B invoice templates", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+  {priority:"Medium", gap:"Coach/staff timesheets", impact:"Track coaching hours & class coverage", action:"Add timesheet & rota features tied to sessions and payroll export", source:"https://www.coacha.co.uk/features/compare-plan-features"},
+  {priority:"Medium", gap:"Perceived pricing (platform fee)", impact:"Price‑sensitive clubs compare total cost", action:"Introduce entry tier or fee rebates at scale; bundle ROI calculators in sales cycle", source:"https://loveadmin.com/pricing"},
+  {priority:"Medium", gap:"Direct‑debit settlement speed", impact:"Longer cash conversion", action:"Encourage instant card for upfront events; explore alt provider terms; show cash‑flow projections in reports", source:"https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"},
+  {priority:"Low", gap:"Branding in Coacha comms (competitor gap)", impact:"Clubs wanting rich email branding prefer LoveAdmin", action:"Lean into advanced builder; add push notifications to widen lead", source:"https://loveadmin.com/software/features/communications/"}
+];
+
+// ---------- Helpers ----------
+function renderTable(data, tbody, searchTerm="", vendorFilter="all", sortKey=null, sortAsc=true){
+  let rows = data.filter(r => {
+    const inVendor = vendorFilter==="all" || (r.vendor||"").toLowerCase()===vendorFilter.toLowerCase();
+    const text = Object.values(r).join(" ").toLowerCase();
+    return inVendor && text.includes(searchTerm.toLowerCase());
+  });
+  if(sortKey){
+    rows.sort((a,b)=>{
+      const av=(a[sortKey]??"").toString().toLowerCase();
+      const bv=(b[sortKey]??"").toString().toLowerCase();
+      if(av<bv) return sortAsc?-1:1;
+      if(av>bv) return sortAsc?1:-1;
+      return 0;
+    });
+  }
+  tbody.innerHTML = rows.map(r => `
+    <tr>
+      ${'vendor' in r ? `<td><span class="badge" style="background:${r.vendor==='Coacha'?'var(--e-global-color-secondary)':'var(--e-global-color-primary)'}">${r.vendor}</span></td>`:``}
+      ${'item' in r ? `<td>${r.item}</td>`:``}
+      ${'detail' in r ? `<td>${r.detail}</td>`:``}
+      ${'metrics' in r ? `<td>${r.metrics||""}</td>`:``}
+      ${'capability' in r ? `<td>${r.capability}</td>`:``}
+      ${'depth' in r ? `<td>${r.depth}</td>`:``}
+      ${'notes' in r ? `<td>${r.notes||""}</td>`:``}
+      ${'priority' in r ? `<td><span class="tag ${r.priority==='High'?'primary':(r.priority==='Medium'?'accent':'neutral')}">${r.priority}</span></td>`:``}
+      ${'gap' in r ? `<td>${r.gap}</td>`:``}
+      ${'impact' in r ? `<td>${r.impact}</td>`:``}
+      ${'action' in r ? `<td><strong>${r.action}</strong></td>`:``}
+      <td><a href="${r.source}" target="_blank" rel="noopener">Reference</a></td>
+    </tr>
+  `).join("");
+  return rows.length;
+}
+function attachSorting(tableId, initialKey){
+  const table = document.getElementById(tableId);
+  const thead = table.querySelector('thead');
+  let sortKey = initialKey, sortAsc = true;
+  thead.addEventListener('click', (e)=>{
+    const th = e.target.closest('th'); if(!th || !th.dataset.key) return;
+    if(sortKey===th.dataset.key){ sortAsc = !sortAsc; } else { sortKey = th.dataset.key; sortAsc = true; }
+    table.dispatchEvent(new CustomEvent('recalc', {detail:{sortKey, sortAsc}}));
+  });
+  return {getSort:()=>({sortKey, sortAsc})};
+}
+
+// Pricing render
+(function(){
+  const tbl = document.getElementById('tbl-pricing');
+  const tbody = tbl.querySelector('tbody');
+  const search = document.getElementById('search-pricing');
+  const filter = document.getElementById('filter-pricing-vendor');
+  const count = document.getElementById('count-pricing');
+  const sorter = attachSorting('tbl-pricing','vendor');
+
+  function recalc(){
+    const s = search.value.trim();
+    const f = filter.value;
+    const {sortKey, sortAsc} = sorter.getSort();
+    const n = renderTable(pricingData, tbody, s, f, sortKey, sortAsc);
+    count.textContent = n + " rows";
+  }
+  search.addEventListener('input', recalc);
+  filter.addEventListener('change', recalc);
+  tbl.addEventListener('recalc', recalc);
+  recalc();
+})();
+
+// Matrix render
+(function(){
+  const tbl = document.getElementById('tbl-matrix');
+  const tbody = tbl.querySelector('tbody');
+  const search = document.getElementById('search-matrix');
+  const filter = document.getElementById('filter-matrix-vendor');
+  const count = document.getElementById('count-matrix');
+  const sorter = attachSorting('tbl-matrix','capability');
+
+  function recalc(){
+    const s = search.value.trim();
+    const f = filter.value;
+    const {sortKey, sortAsc} = sorter.getSort();
+    const n = renderTable(matrixData, tbody, s, f, sortKey, sortAsc);
+    count.textContent = n + " rows";
+  }
+  search.addEventListener('input', recalc);
+  filter.addEventListener('change', recalc);
+  tbl.addEventListener('recalc', recalc);
+  recalc();
+})();
+
+// Gaps render
+(function(){
+  const tbl = document.getElementById('tbl-gaps');
+  const tbody = tbl.querySelector('tbody');
+  const search = document.getElementById('search-gaps');
+  const count = document.getElementById('count-gaps');
+  const sorter = attachSorting('tbl-gaps','priority');
+
+  function recalc(){
+    const s = search.value.trim();
+    const {sortKey, sortAsc} = sorter.getSort();
+    const n = renderTable(gapsData, tbody, s, "all", sortKey, sortAsc);
+    count.textContent = n + " rows";
+  }
+  search.addEventListener('input', recalc);
+  tbl.addEventListener('recalc', recalc);
+  recalc();
+})();
+
+// Accordions
+document.querySelectorAll('.accordion .item .head').forEach(h=>{
+  h.addEventListener('click', ()=>{
+    const body = h.parentElement.querySelector('.body');
+    const isOpen = body.style.display==='block';
+    body.style.display = isOpen ? 'none' : 'block';
+    h.querySelector('div:last-child').textContent = isOpen ? '+' : '–';
+  });
+});
+
+// Hide preloader after delay
+window.addEventListener('load', ()=>{
+  setTimeout(()=>{ const p=document.getElementById('preloader'); if(p){p.style.display='none';} }, 900);
+});
+</script>
+
+</body>
+</html>
