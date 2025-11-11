@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LoveAdmin vs 360Player — Competitive Report</title>
-
+<link rel="icon" href="/Images/fight.ico" type="image/x-icon">
 <!-- Typography -->
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -832,6 +832,17 @@
       document.querySelector(".preloader")?.remove();
     }, 600);
   });
+    // Share link
+  document.getElementById('btnCopyLink').addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(location.href);
+      alert('Link copied to clipboard!');
+    }catch(e){
+      alert('Could not copy link.');
+    }
+  });
+  // Print
+  document.getElementById('btnPrint').addEventListener('click', () => window.print());
 </script>
 </body>
 </html>

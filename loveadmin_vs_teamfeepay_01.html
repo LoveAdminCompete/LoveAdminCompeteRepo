@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LoveAdmin vs TeamFeePay — Competitive Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="/Images/fight.ico" type="image/x-icon">
+<style>
+  :root{
+    --e-global-color-primary: #FF5000;
+    --e-global-color-secondary: #0885A3;
+    --e-global-color-text: #4D4D4D;
+    --e-global-color-accent: #FF8636;
+    --e-global-color-79ebde2: #29B8CC;
+    --e-global-color-3f05205: #949494;
+    --e-global-color-960c673: #D84000;
+    --e-global-color-abeb042: #FFFFFF;
+
+    --e-page-transition-entrance-animation: e-page-transition-fade-out;
+    --e-page-transition-exit-animation: e-page-transition-fade-in;
+    --e-page-transition-animation-duration: 500ms;
+    --e-preloader-animation-duration: 1500ms;
+    --e-preloader-delay: 0ms;
+
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --shadow-soft: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  /* Page transitions */
+  @keyframes e-page-transition-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes e-page-transition-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  html, body { height: 100%; }
+  body{
+    font-family: "Barlow", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--e-global-color-text);
+    line-height: 1.55;
+    margin: 0;
+    background: #fafafa;
+    animation: e-page-transition-fade-in var(--e-page-transition-animation-duration) ease-out;
+  }
+  a{ color: var(--e-global-color-secondary); text-decoration: none; }
+  a:hover{ text-decoration: underline; }
+
+  /* Sticky top nav */
+  .topnav{
+    position: sticky; top: 0; z-index: 40;
+    backdrop-filter: saturate(150%) blur(8px);
+    background: rgba(255,255,255,0.9);
+    border-bottom: 1px solid #eee;
+  }
+  .topnav .wrap{
+    max-width: 1200px; margin: 0 auto; display: flex; gap: 16px; align-items: center; padding: 10px 16px;
+  }
+   .btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
+  }
+  .brand{
+    font-weight: 600; letter-spacing: .3px; color: var(--e-global-color-primary);
+  }
+  .topnav a.link{
+    padding: 8px 12px; border-radius: 999px; transition: background .2s ease;
+    color: #333;
+  }
+  .topnav a.link:hover{ background: rgba(8,133,163,.08); }
+  .pill{
+    background: var(--e-global-color-primary); color: white; padding: 2px 10px; border-radius: 999px; font-size: 12px; margin-left: 6px;
+  }
+
+  /* Layout */
+  .container{ max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+  .grid{ display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+  .card{
+    background: white; padding: 18px; border-radius: var(--radius); box-shadow: var(--shadow-soft);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
+  h1{ font-weight: 600; color: #222; margin: 12px 0 4px; }
+  h2{ font-weight: 600; color: #222; margin-top: 6px; }
+  h3{ margin: 12px 0 8px; color:#222; }
+  .kicker{ text-transform: uppercase; letter-spacing: .12em; font-size: 12px; color: var(--e-global-color-3f05205); }
+  .callout{
+    border-left: 4px solid var(--e-global-color-accent); background: #fff7f1; padding: 12px 14px; border-radius: 8px;
+  }
+
+  /* Tables */
+  .toolbar{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .toolbar input[type="search"], .toolbar select{
+    padding: 10px 12px; border: 1px solid #e5e5e5; border-radius: 12px; font-size: 14px; outline: none;
+    background: #fff;
+  }
+  table{ width: 100%; border-collapse: collapse; }
+  thead th{
+    position: sticky; top: 52px; z-index: 3; background: #fff;
+    text-align: left; font-weight: 600; font-size: 13px; color: #222; border-bottom: 1px solid #eee; padding: 10px;
+    cursor: pointer;
+  }
+  tbody td{
+    font-size: 14px; padding: 10px; border-bottom: 1px solid #f0f0f0; vertical-align: top;
+  }
+  tbody tr:hover{ background: #fcfcfc; }
+  .vendor-badge{
+    display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 500;
+  }
+  .vendor-LoveAdmin{ background: rgba(255,80,0,.08); color: var(--e-global-color-primary); }
+  .vendor-TeamFeePay{ background: rgba(8,133,163,.1); color: var(--e-global-color-secondary); }
+
+  .note{ font-size: 12px; color: #666; }
+
+  /* Accordions (Battle Cards) */
+  details{
+    background: white; border-radius: var(--radius); box-shadow: var(--shadow-soft); padding: 10px 14px; margin-bottom: 12px;
+  }
+  details summary{
+    cursor: pointer; list-style: none; font-weight: 600;
+  }
+  details[open]{ box-shadow: var(--shadow); }
+  .chip{ display:inline-block; padding:4px 8px; border-radius:999px; background:#f3f3f3; font-size:12px; margin-right:6px; }
+
+  /* Section anchor spacing */
+  section{ scroll-margin-top: 90px; }
+
+  /* Preloader */
+  #preloader{
+    position: fixed; inset: 0; background: white; display: grid; place-items: center; z-index: 1000;
+    animation: e-page-transition-fade-out var(--e-preloader-animation-duration) ease var(--e-preloader-delay) forwards;
+    pointer-events: none;
+  }
+  .spinner{
+    width: 48px; height: 48px; border-radius: 50%;
+    border: 4px solid #eee; border-top-color: var(--e-global-color-primary);
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin{ to { transform: rotate(360deg); } }
+
+  .tag{ font-size: 12px; color: #666; }
+  .muted{ color: #777; }
+
+  .two-col{ display:grid; grid-template-columns: repeat(12,1fr); gap:20px; }
+  .two-col > .col{ grid-column: span 6; }
+  @media (max-width: 900px){
+    thead th{ top: 100px; }
+    .two-col > .col{ grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+<div id="preloader"><div class="spinner" aria-label="Loading"></div></div>
+
+<nav class="topnav" aria-label="Primary">
+  <div class="wrap">
+    <div class="brand">Competitive Report</div>
+    <a class="link" href="#positioning">Positioning comparison</a>
+    <a class="link" href="#pricing">Pricing & Fees<span class="pill">Dynamic</span></a>
+    <a class="link" href="#feature-matrix">In‑Depth Feature Matrix<span class="pill">Dynamic</span></a>
+    <a class="link" href="#gaps">Key gaps & Actionables<span class="pill">Dynamic</span></a>
+    <a class="link" href="#reviews">Reviews & Sentiment</a>
+    <a class="link" href="#battlecards">Battle Cards</a>
+    <a class="link" href="#sources">Sources</a>
+  </div>
+</nav>
+
+<header class="container">
+  <div class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h1>LoveAdmin vs TeamFeePay</h1>
+      <div class="kicker">Single‑page, interactive dossier for Product · Marketing · Sales</div>
+      <p class="muted">Sort, search and filter the tables; expand battle cards for talk‑tracks, traps, and proof points.</p>
+    <div class="cta-buttons">
+      <a href="loveadmin_vs_teamfeepay.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+
+    </div>
+      <div class="callout"><strong>What this covers:</strong> positioning, pricing & fees, payment rails & settlement timelines, registrations, parent communications, admin efficiencies, shop/e‑commerce, mobile, business support; gaps and actionable takes; reviews & sentiment; and sales battle cards.</div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- Positioning -->
+  <section id="positioning" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Positioning comparison</h2>
+      <div class="two-col">
+        <div class="col">
+          <h3><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></h3>
+          <ul>
+            <li>All‑in‑one club & membership management platform for sports clubs, classes/courses, and membership orgs; supports Direct Debit (GoCardless), card & PayPal for one‑off and recurring payments, with automated schedules, reminders and retries. <span class="tag">Ref: pricing page & football page</span></li>
+            <li>Transparent service fee with a platform fee on collected payments; clear setup/implementation details. <span class="tag">Ref: pricing</span></li>
+            <li>Depth in admin efficiency: pro‑rata billing, instalments, product relationships, award schemes, automated waitlists, and granular comms (email/SMS/WhatsApp). <span class="tag">Ref: Buyer Guide PDF</span></li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3><span class="vendor-badge vendor-TeamFeePay">TeamFeePay</span></h3>
+          <ul>
+            <li>Football‑specific platform focused on payments & registrations, fundraising, e‑commerce (club shop), and club development support (webinars, funding advice, facilities). <span class="tag">Ref: homepage & pillar pages</span></li>
+            <li>Simple Annual Licence fee; payment processing fees also apply; claims instant payment collections and full reporting. <span class="tag">Ref: pricing & payments pages</span></li>
+            <li>Fully account‑managed service; emphasis on increasing club income and reducing admin by bespoke plans. <span class="tag">Ref: site copy</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing & Fees -->
+  <section id="pricing" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Pricing & Fees</h2>
+      <div class="toolbar">
+        <input id="priceSearch" type="search" placeholder="Search pricing & fees…" aria-label="Search pricing table">
+        <select id="priceVendor">
+          <option value="all">All vendors</option>
+          <option value="LoveAdmin">LoveAdmin</option>
+          <option value="TeamFeePay">TeamFeePay</option>
+        </select>
+      </div>
+      <div class="note">Click column headers to sort. Numbers are ex‑VAT where stated by vendor.</div>
+      <table id="pricingTable" aria-describedby="pricing">
+        <thead>
+          <tr>
+            <th data-col="vendor">Vendor</th>
+            <th data-col="plan">Plan / Model</th>
+            <th data-col="monthly">Monthly</th>
+            <th data-col="annual">Annual</th>
+            <th data-col="setup">Setup / Implementation</th>
+            <th data-col="platform">Platform fee</th>
+            <th data-col="processing">Processing & other fees</th>
+            <th data-col="settlement">Settlement timelines</th>
+            <th data-col="notes">Notes</th>
+            <th data-col="sources">Sources</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Feature Matrix -->
+  <section id="feature-matrix" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>In‑Depth Feature Matrix</h2>
+      <div class="toolbar">
+        <input id="featSearch" type="search" placeholder="Search features…" aria-label="Search feature table">
+        <select id="featVendor">
+          <option value="all">All vendors</option>
+          <option value="LoveAdmin">LoveAdmin</option>
+          <option value="TeamFeePay">TeamFeePay</option>
+        </select>
+        <select id="featCategory">
+          <option value="all">All categories</option>
+          <option value="Payments">Payments</option>
+          <option value="Registrations & Registers">Registrations & Registers</option>
+          <option value="Parent Communications">Parent Communications</option>
+          <option value="Admin Efficiencies">Admin Efficiencies</option>
+          <option value="Shop & Fundraising">Shop & Fundraising</option>
+          <option value="Mobile & Access">Mobile & Access</option>
+          <option value="Business Support">Business Support</option>
+        </select>
+      </div>
+      <table id="featureTable">
+        <thead>
+          <tr>
+            <th data-col="vendor">Vendor</th>
+            <th data-col="category">Category</th>
+            <th data-col="feature">Feature</th>
+            <th data-col="depth">Depth / Detail</th>
+            <th data-col="sources">Sources</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Gaps -->
+  <section id="gaps" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Key gaps between the two platforms</h2>
+      <div class="toolbar">
+        <input id="gapSearch" type="search" placeholder="Search gaps…" aria-label="Search gaps table">
+        <select id="gapSort">
+          <option value="gap">Sort by gap</option>
+          <option value="impact">Sort by impact</option>
+          <option value="owner">Sort by owner</option>
+        </select>
+      </div>
+      <table id="gapsTable">
+        <thead>
+          <tr>
+            <th data-col="gap">Gap / Observation</th>
+            <th data-col="impact">Impact</th>
+            <th data-col="action">Actionable take for LoveAdmin</th>
+            <th data-col="owner">Primary Owner</th>
+            <th data-col="sources">Sources</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reviews & Sentiment -->
+  <section id="reviews" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Reviews & sentiment comparison</h2>
+      <div class="grid" style="grid-template-columns: repeat(12,1fr); gap: 14px;">
+        <div class="card" style="grid-column: span 6;">
+          <h3><span class="vendor-badge vendor-LoveAdmin">LoveAdmin</span></h3>
+          <p><strong>Rating:</strong> 4.4 / 5 (44 reviews, Capterra). <span class="tag">Oct 2024 snapshot</span></p>
+          <ul>
+            <li><em>Pros (paraphrased):</em> Easier setup of classes & timetables; helpful account management.</li>
+            <li><em>Cons (paraphrased):</em> Some users note reconciliation/financial reporting can be harder to match precisely vs received funds.</li>
+          </ul>
+          <p class="note"><a href="#src-capterra-loveadmin">Capterra – LoveAdmin</a></p>
+        </div>
+        <div class="card" style="grid-column: span 6;">
+          <h3><span class="vendor-badge vendor-TeamFeePay">TeamFeePay</span></h3>
+          <p><strong>Rating:</strong> ~4.7 / 5 (6 reviews across SoftwareAdvice/GetApp).</p>
+          <ul>
+            <li><em>Pros (paraphrased):</em> Easy for members; improves club finances and admin control.</li>
+            <li><em>Cons (paraphrased):</em> Some comments about admin permission/change limitations; tracking monthly membership payments can require attention.</li>
+          </ul>
+          <p class="note"><a href="#src-softwareadvice-tfp">SoftwareAdvice – Team Fee Pay</a> · <a href="#src-getapp-tfp">GetApp – Team Fee Pay</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Battle Cards -->
+  <section id="battlecards" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Sales Battle Cards</h2>
+
+      <details>
+        <summary>Positioning & Discovery</summary>
+        <div class="muted">Use these to qualify quickly and steer the convo toward LoveAdmin strengths.</div>
+        <ul>
+          <li><span class="chip">Ask</span> “Are you looking for a football‑only system or a platform used across multiple sports and membership orgs?”</li>
+          <li><span class="chip">Talk Track</span> LoveAdmin supports Direct Debit via GoCardless and instant card/PayPal settlements via PayPal, with rich admin automation and reporting. This helps volunteers minimise chasing and improve cash‑flow predictability.</li>
+          <li><span class="chip">Trap</span> If they emphasise webinars/funding advice and a fully account‑managed service, acknowledge that TFP leans into club development services; then pivot to LoveAdmin’s deeper built‑in payment, comms, and reporting feature set.</li>
+          <li><span class="chip">Proof</span> Instant card settlement via PayPal; Direct Debit timelines published; transparent 3% platform fee + clear service fee schedule.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Payments & Cashflow</summary>
+        <ul>
+          <li><span class="chip">Talk Track</span> “We combine instant card settlements (PayPal) with bank‑friendly Direct Debit (GoCardless). You choose rails per product—e.g., memberships by Direct Debit, merch by card for faster cashflow.”</li>
+          <li><span class="chip">Proof</span> PayPal instant settlement; GoCardless 5–7 working days; L&Z Direct Debit 7–11 working days (published). Payment retries, overdue reminders, and refunds handled centrally.</li>
+          <li><span class="chip">Trap</span> TFP markets “instant collections” but does not publish bank settlement timings or detailed processing fee tables publicly; push for written SLAs and fee schedules.</li>
+          <li><span class="chip">Question</span> “Do you need to reconcile PayPal/Direct Debit settlement schedules by product to match venue/camp pre‑payments?”</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Registrations, Comms & Admin</summary>
+        <ul>
+          <li><span class="chip">Talk Track</span> LoveAdmin offers age‑validated registrations, product relationships (enforce kit with membership), pro‑rata, instalments, automated waitlists, and granular comms (email/SMS/WhatsApp/templates/scheduling).</li>
+          <li><span class="chip">Proof</span> Buyer Guide PDF feature set; Help Centre articles for billing options & notifications.</li>
+          <li><span class="chip">Trap</span> TFP emphasises ease, but specific details for registers/attendance and advanced comms are not fully documented on its site—ask to see feature depth.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Value & Pricing</summary>
+        <ul>
+          <li><span class="chip">Talk Track</span> LoveAdmin pricing is transparent (£20/mo Sports Clubs; 3% platform fee; published setup). TFP lists a licence at £41.99/mo or £416.58/yr plus processing fees; its Terms reference additional fees (e.g., disputes up to £50).</li>
+          <li><span class="chip">Trap</span> If TFP claims “free to launch”, clarify the ongoing licence + processing fees; request the full processing schedule and settlement SLAs.</li>
+          <li><span class="chip">Proof</span> Cite vendor pricing pages & Terms.</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- Sources -->
+  <section id="sources" class="grid">
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>Sources</h2>
+      <ul>
+        <li id="src-loveadmin-pricing"><a href="https://loveadmin.com/pricing/">LoveAdmin — Pricing</a></li>
+        <li><a href="https://loveadmin.com/pricing/loveadmin-for-sports-clubs/">LoveAdmin — Sports club pricing</a></li>
+        <li><a href="https://loveadmin.com/who-we-help/football-club-management-software/">LoveAdmin — Football club management</a></li>
+        <li><a href="https://loveadmin.com/software/features/payment-solution/">LoveAdmin — Payment solution features</a></li>
+        <li><a href="https://loveadmin.com/software/features/business-reports/">LoveAdmin — Business reports</a></li>
+        <li><a href="https://loveadmin.com/software/features/class-and-event-management-features/">LoveAdmin — Class & event management</a></li>
+        <li><a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">LoveAdmin — Recurring payments settle in minutes</a></li>
+        <li><a href="https://help.loveadmin.com/how-do-i-enable-the-latest-integration-of-paypal">LoveAdmin Help — PayPal integration & instant settlement</a></li>
+        <li><a href="https://help.loveadmin.com/migration/pending-payment-report">LoveAdmin Help — Pending payment report (PayPal settle in minutes)</a></li>
+        <li><a href="https://help.loveadmin.com/billing-settings">LoveAdmin Help — Billing settings</a></li>
+        <li><a href="https://help.loveadmin.com/reports">LoveAdmin Help — Reports index</a></li>
+        <li id="src-capterra-loveadmin"><a href="https://www.capterra.com/p/182986/LoveAdmin/pricing/">Capterra — LoveAdmin pricing & reviews</a></li>
+        <li><a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf">LoveAdmin — Buyer Guide PDF (settlement timelines)</a></li>
+        <li><a href="https://teamfeepay.com/">TeamFeePay — Home</a></li>
+        <li><a href="https://teamfeepay.com/pricing/">TeamFeePay — Pricing</a></li>
+        <li><a href="https://teamfeepay.com/payments/">TeamFeePay — Payments</a></li>
+        <li><a href="https://teamfeepay.com/club-shop/">TeamFeePay — Club Shop</a></li>
+        <li><a href="https://teamfeepay.com/club-administration/">TeamFeePay — Club Administration</a></li>
+        <li><a href="https://teamfeepay.com/football-club-management-system/">TeamFeePay — Football Club Management System</a></li>
+        <li id="src-softwareadvice-tfp"><a href="https://www.softwareadvice.co.uk/software/262836/team-fee-pay">SoftwareAdvice — Team Fee Pay</a></li>
+        <li id="src-getapp-tfp"><a href="https://www.getapp.com/recreation-wellness-software/a/team-fee-pay/">GetApp — Team Fee Pay</a></li>
+        <li><a href="https://teamfeepay.com/client-terms-and-conditions/">TeamFeePay — Client Terms & Conditions (processing, disputes)</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+// Preloader hide
+window.addEventListener('load', () => {
+  const pre = document.getElementById('preloader');
+  setTimeout(()=> pre.style.display='none', 900);
+});
+
+// Data
+const pricingData = [
+  {
+    vendor: "LoveAdmin",
+    plan: "Sports Clubs",
+    monthly: "£20/mo service fee",
+    annual: "—",
+    setup: "Implementation fee ~£195 (published on sports clubs pricing)",
+    platform: "3% on transactions (payment module)",
+    processing: "Card via PayPal, Direct Debit via GoCardless; processing rates competitive; refunds handled; disputes per provider",
+    settlement: "PayPal (card): Instant to PayPal acct; GoCardless (DD): 5–7 working days; London & Zurich (DD): 7–11 working days",
+    notes: "One‑off & recurring; automated schedules, retries, reminders",
+    sources: ["https://loveadmin.com/pricing/",
+              "https://loveadmin.com/pricing/loveadmin-for-sports-clubs/",
+              "https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf",
+              "https://help.loveadmin.com/how-do-i-enable-the-latest-integration-of-paypal",
+              "https://help.loveadmin.com/migration/pending-payment-report"]
+  },
+  {
+    vendor: "LoveAdmin",
+    plan: "Activity Providers",
+    monthly: "£35/mo service fee",
+    annual: "—",
+    setup: "Implementation fee (paid)",
+    platform: "3% on transactions (payment module)",
+    processing: "Card via PayPal; DD via GoCardless",
+    settlement: "Instant (card via PayPal); 5–7 days (GoCardless)",
+    notes: "Full features for classes/courses as well as sports",
+    sources: ["https://loveadmin.com/pricing/"]
+  },
+  {
+    vendor: "TeamFeePay",
+    plan: "Annual Licence",
+    monthly: "£41.99/mo",
+    annual: "£416.58/yr",
+    setup: "Fully account‑managed onboarding",
+    platform: "—",
+    processing: "Payment Processing Fees apply (vary by plan). Dispute fee up to £50; refunds re‑charged processing fee; reserve account possible; changes with notice",
+    settlement: "Markets ‘instant payment collections’ (no public banking settlement SLA published)",
+    notes: "Focused on football; includes comms, registrations, shop, fundraising, development support",
+    sources: ["https://teamfeepay.com/pricing/","https://teamfeepay.com/client-terms-and-conditions/","https://teamfeepay.com/payments/"]
+  }
+];
+
+const featureData = [
+  // Payments
+  {vendor:"LoveAdmin", category:"Payments", feature:"Payment methods",
+   depth:"Card & PayPal (instant settlement); Direct Debit via GoCardless; can set method per product (e.g., memberships by DD, merch by card).",
+   sources:["https://loveadmin.com/who-we-help/football-club-management-software/","https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf","https://loveadmin.com/pricing/"]},
+  {vendor:"LoveAdmin", category:"Payments", feature:"Settlement timelines",
+   depth:"PayPal card: Instant; GoCardless DD: 5–7 working days; London & Zurich DD: 7–11 working days. Setup ~15 mins (PayPal/GoCardless) or ~5 working days (L&Z).",
+   sources:["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]},
+  {vendor:"LoveAdmin", category:"Payments", feature:"Recurring & retries",
+   depth:"Recurring schedules, automatic retries for failed payments, overdue reminders; refunds via Sales Admin > Payments.",
+   sources:["https://help.loveadmin.com/billing-settings","https://help.loveadmin.com/payments"]},
+  {vendor:"LoveAdmin", category:"Payments", feature:"Instant recurring (PayPal)",
+   depth:"‘Collected and settled within minutes’ for card/PayPal including recurring.",
+   sources:["https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/","https://help.loveadmin.com/how-do-i-enable-the-latest-integration-of-paypal","https://help.loveadmin.com/migration/pending-payment-report"]},
+
+  {vendor:"TeamFeePay", category:"Payments", feature:"Payment collections",
+   depth:"‘Instant payment collections’ and support with re‑collections; automatic collections & reconciliation; dedicated account manager.",
+   sources:["https://teamfeepay.com/payments/","https://teamfeepay.com/"]},
+  {vendor:"TeamFeePay", category:"Payments", feature:"Processing fees",
+   depth:"Processing fees vary by plan (not publicly itemised). Terms mention fixed per‑transaction elements, dispute fees up to £50, refunds incur processing fee, reserves.",
+   sources:["https://teamfeepay.com/client-terms-and-conditions/"]},
+
+  // Registrations & Registers
+  {vendor:"LoveAdmin", category:"Registrations & Registers", feature:"Age‑validated registration & custom forms",
+   depth:"Online shop for new sign‑ups; age rules place members in correct categories; custom forms for members & volunteers.",
+   sources:["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]},
+  {vendor:"LoveAdmin", category:"Registrations & Registers", feature:"Attendance registers",
+   depth:"Automatically generated attendance registers; mobile check‑in incl. QR codes; medical/payment flags visible.",
+   sources:["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf","https://loveadmin.com/software/features/class-and-event-management-features/"]},
+  {vendor:"TeamFeePay", category:"Registrations & Registers", feature:"Online player registrations",
+   depth:"Customisable registration process; embed policies; collect parent/guardian info.",
+   sources:["https://teamfeepay.com/payments/"]},
+
+  // Parent Communications
+  {vendor:"LoveAdmin", category:"Parent Communications", feature:"Email/SMS/WhatsApp & templates",
+   depth:"Drag‑and‑drop emails, BCC/CC, headers/footers, scheduled sends; 40+ system notifications; SMS & WhatsApp supported.",
+   sources:["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf","https://help.loveadmin.com/settings"]},
+  {vendor:"TeamFeePay", category:"Parent Communications", feature:"Club comms & scheduling (site claim)",
+   depth:"Site highlights communication & scheduling as a core area; specifics not fully documented on features pages.",
+   sources:["https://teamfeepay.com/pricing/"]},
+
+  // Admin Efficiencies
+  {vendor:"LoveAdmin", category:"Admin Efficiencies", feature:"Pro‑rata, instalments, product relationships, waitlists",
+   depth:"Pro‑rata joiners; instalment schedules; enforce related purchases (e.g., kit with membership); automated trials & waitlists with rules.",
+   sources:["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]},
+  {vendor:"LoveAdmin", category:"Admin Efficiencies", feature:"Reporting suite",
+   depth:"Financial & communications reports; renewals, sales, transaction fees, disputes, aged receivables, settled sales reporting.",
+   sources:["https://loveadmin.com/software/features/business-reports/","https://help.loveadmin.com/reports","https://help.loveadmin.com/product-sales-report"]},
+  {vendor:"TeamFeePay", category:"Admin Efficiencies", feature:"Automation & reporting",
+   depth:"Automated collections, reconciliations, and full visibility across memberships, fundraising, and shop orders.",
+   sources:["https://teamfeepay.com/club-administration/","https://teamfeepay.com/payments/"]},
+
+  // Shop & Fundraising
+  {vendor:"LoveAdmin", category:"Shop & Fundraising", feature:"Branded shop & merch",
+   depth:"Sell merchandise, tickets, rentals; manage stock; link products & trials; boost revenue via shop features.",
+   sources:["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf","https://loveadmin.com/generating-income/12-ways-you-can-improve-your-organisations-profitability/"]},
+  {vendor:"TeamFeePay", category:"Shop & Fundraising", feature:"Club shop & fundraising platform",
+   depth:"Customisable online shop for teamwear/merch/tickets; digital fundraising suite and guidance.",
+   sources:["https://teamfeepay.com/club-shop/","https://teamfeepay.com/club-fundraising-software/","https://teamfeepay.com/"]},
+
+  // Mobile & Access
+  {vendor:"LoveAdmin", category:"Mobile & Access", feature:"Mobile‑optimised booking & on‑the‑go management",
+   depth:"Easy bookings/renewals, mobile check‑in, and contact management on mobile; instant PayPal card for upfront venue payments.",
+   sources:["https://loveadmin.com/software/features/class-and-event-management-features/","https://loveadmin.com/software/features/for-administrators/"]},
+  {vendor:"TeamFeePay", category:"Mobile & Access", feature:"Accessible on the go",
+   depth:"Access club data on the go; player/parent access via account portal.",
+   sources:["https://teamfeepay.com/payments/","https://clubfeepay.com/"]},
+
+  // Business Support
+  {vendor:"LoveAdmin", category:"Business Support", feature:"Guides, growth advice, enterprise support",
+   depth:"Guides on member management and growth; enterprise plan with premium account management, security & reporting.",
+   sources:["https://loveadmin.com/resources/guides/","https://loveadmin.com/pricing/enterprise/"]},
+  {vendor:"TeamFeePay", category:"Business Support", feature:"Club development services",
+   depth:"Webinars, facilities funding advice, volunteer recruitment, planners and development resources.",
+   sources:["https://teamfeepay.com/Club-development/","https://teamfeepay.com/liverpool-fa/","https://teamfeepay.com/grassroots-football-club-planner/"]},
+];
+
+const gapsData = [
+  {
+    gap: "LA Wins: Published settlement timelines & rails transparency",
+    impact: "Finance teams can plan cashflow and reconcile by rail (card vs DD).",
+    action: "Lead with LoveAdmin’s published timelines (PayPal instant; GoCardless 5–7d; L&Z 7–11d). Offer best‑practice mapping: merch/events on card, memberships on DD.",
+    owner: "PMM + Sales",
+    sources: ["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf",
+              "https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/"]
+  },
+  {
+    gap: "TFP Wins: Processing fee schedules & dispute costs visibility",
+    impact: "Avoid unexpected margin erosion and bill shock for clubs.",
+    action: "Share LoveAdmin cost model up‑front (service fee + 3% platform fee). When facing TFP, request their processing schedule in writing; highlight Terms (dispute up to £50, refunds re‑charged).",
+    owner: "Sales",
+    sources: ["https://teamfeepay.com/client-terms-and-conditions/","https://teamfeepay.com/pricing/","https://loveadmin.com/pricing/"]
+  },
+  {
+    gap: "LA Wins: Depth of admin tooling (pro‑rata, related products, advanced waitlists)",
+    impact: "Reduces volunteer time and increases compliance (e.g., kit required with membership).",
+    action: "Demo Buyer‑Guide features (pro‑rata, instalments, product relationships, auto‑waitlists) against TFP’s higher‑level claims.",
+    owner: "SE / AE",
+    sources: ["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]
+  },
+  {
+    gap: "LA Wins: Comms granularity (templates, BCC/CC, SMS/WhatsApp, 40+ triggers)",
+    impact: "Higher engagement, fewer missed payments, and auditability.",
+    action: "Show LoveAdmin email builder and notification catalogue; ask TFP for parity details.",
+    owner: "SE / AE",
+    sources: ["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf","https://help.loveadmin.com/settings"]
+  },
+  {
+    gap: "LA Wins: Published registers & attendance detail",
+    impact: "Duty of care, safeguarding, and availability planning.",
+    action: "Highlight LoveAdmin’s auto‑registers, QR check‑in, medical flags. Ask TFP for concrete register functionality and exports.",
+    owner: "PMM + Sales",
+    sources: ["https://loveadmin.com/software/features/class-and-event-management-features/","https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]
+  },
+    {
+    gap: "TFP Wins: Fundraising",
+    impact: "TFP wins by marketing football‑specific fundraising mini‑games..",
+    action: "Highlight Enablement. Product: Explore lightweight fundraising add‑ons or integrations to neutralise this talking poin",
+    owner: "PMM + Sales",
+    sources: ["https://teamfeepay.com/client-terms-and-conditions/"]
+  },
+    {
+    gap: "TFP Wins: Advertising",
+    impact: "TFP terms allow advertisements in platform surfaces.",
+    action: "Position ad‑free environment as premium, brand‑safe experience for families.",
+    owner: "PMM + Sales",
+    sources: ["https://loveadmin.com/software/features/class-and-event-management-features/"]
+  }
+];
+
+// Utilities
+function createLinkList(urls){
+  return urls.map(u => `<a href="${u}">link</a>`).join(" · ");
+}
+function textContains(hay, needle){
+  return hay.toLowerCase().includes(needle);
+}
+
+// Render Pricing
+const pricingTbody = document.querySelector("#pricingTable tbody");
+function renderPricing(){
+  const q = document.getElementById("priceSearch").value.trim().toLowerCase();
+  const v = document.getElementById("priceVendor").value;
+  pricingTbody.innerHTML = "";
+  pricingData
+    .filter(r => (v==="all" || r.vendor===v))
+    .filter(r => !q || Object.values(r).some(val => String(val).toLowerCase().includes(q)))
+    .forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="vendor-badge vendor-${r.vendor.replace(/\s/g,'')}">${r.vendor}</span></td>
+        <td>${r.plan}</td>
+        <td>${r.monthly}</td>
+        <td>${r.annual}</td>
+        <td>${r.setup}</td>
+        <td>${r.platform}</td>
+        <td>${r.processing}</td>
+        <td>${r.settlement}</td>
+        <td>${r.notes}</td>
+        <td>${createLinkList(r.sources)}</td>`;
+      pricingTbody.appendChild(tr);
+    });
+}
+renderPricing();
+document.getElementById("priceSearch").addEventListener("input", renderPricing);
+document.getElementById("priceVendor").addEventListener("change", renderPricing);
+
+// Render Features
+const featTbody = document.querySelector("#featureTable tbody");
+function renderFeatures(){
+  const q = document.getElementById("featSearch").value.trim().toLowerCase();
+  const v = document.getElementById("featVendor").value;
+  const c = document.getElementById("featCategory").value;
+  featTbody.innerHTML = "";
+  featureData
+    .filter(r => (v==="all" || r.vendor===v))
+    .filter(r => (c==="all" || r.category===c))
+    .filter(r => !q || (r.vendor+r.category+r.feature+r.depth).toLowerCase().includes(q))
+    .forEach(r => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="vendor-badge vendor-${r.vendor.replace(/\s/g,'')}">${r.vendor}</span></td>
+        <td>${r.category}</td>
+        <td><strong>${r.feature}</strong></td>
+        <td>${r.depth}</td>
+        <td>${createLinkList(r.sources)}</td>`;
+      featTbody.appendChild(tr);
+    });
+}
+renderFeatures();
+document.getElementById("featSearch").addEventListener("input", renderFeatures);
+document.getElementById("featVendor").addEventListener("change", renderFeatures);
+document.getElementById("featCategory").addEventListener("change", renderFeatures);
+
+// Render Gaps
+const gapsTbody = document.querySelector("#gapsTable tbody");
+let gapsSortKey = "gap";
+function renderGaps(){
+  const q = document.getElementById("gapSearch").value.trim().toLowerCase();
+  let arr = gapsData.slice(0);
+  arr.sort((a,b)=> String(a[gapsSortKey]).localeCompare(String(b[gapsSortKey])) );
+  gapsTbody.innerHTML = "";
+  arr.filter(r => !q || (r.gap+r.impact+r.action+r.owner).toLowerCase().includes(q))
+     .forEach(r => {
+       const tr = document.createElement("tr");
+       tr.innerHTML = `
+        <td><strong>${r.gap}</strong></td>
+        <td>${r.impact}</td>
+        <td>${r.action}</td>
+        <td>${r.owner}</td>
+        <td>${createLinkList(r.sources)}</td>`;
+       gapsTbody.appendChild(tr);
+     });
+}
+renderGaps();
+document.getElementById("gapSearch").addEventListener("input", renderGaps);
+document.getElementById("gapSort").addEventListener("change", (e)=>{ gapsSortKey = e.target.value; renderGaps(); });
+
+// Column sorting for pricing & features
+function enableSorting(tableId){
+  const table = document.getElementById(tableId);
+  const headers = table.querySelectorAll("thead th");
+  headers.forEach((th, idx) => {
+    let dir = 1;
+    th.addEventListener("click", () => {
+      const tbody = table.querySelector("tbody");
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      rows.sort((a,b)=>{
+        const A = a.children[idx].innerText.toLowerCase();
+        const B = b.children[idx].innerText.toLowerCase();
+        if(!isNaN(parseFloat(A)) && !isNaN(parseFloat(B))){
+          return (parseFloat(A) - parseFloat(B)) * dir;
+        }
+        return A.localeCompare(B) * dir;
+      });
+      dir *= -1;
+      tbody.replaceChildren(...rows);
+    });
+  });
+}
+enableSorting("pricingTable");
+enableSorting("featureTable");
+enableSorting("gapsTable");
+
+  // Share link
+  document.getElementById('btnCopyLink').addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(location.href);
+      alert('Link copied to clipboard!');
+    }catch(e){
+      alert('Could not copy link.');
+    }
+  });
+  // Print
+  document.getElementById('btnPrint').addEventListener('click', () => window.print());
+</script>
+</body>
+</html>

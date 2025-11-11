@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>LoveAdmin vs. ClassForKids — Competitive Report</title>
+<style>
+    :root {
+      --e-global-color-primary: #FF5000;
+      --e-global-color-secondary: #0885A3;
+      --e-global-color-text: #4D4D4D;
+      --e-global-color-accent: #FF8636;
+      --e-global-color-79ebde2: #29B8CC;
+      --e-global-color-3f05205: #949494;
+      --e-global-color-960c673: #D84000;
+      --e-global-color-abeb042: #FFFFFF;
+      --e-global-typography-primary-font-family: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --e-global-typography-secondary-font-family: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --e-global-typography-text-font-family: "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --weight-slim: 300;
+      --weight-smart: 500;
+      --radius: 16px;
+      --shadow: 0 6px 20px rgba(0,0,0,.08);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,.12);
+      --bg: #fafafa;
+      --card: #ffffff;
+      --muted: #f3f5f7;
+      --success: #2e7d32;
+      --warn: #c62828;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      margin: 0;
+      font-family: var(--e-global-typography-text-font-family);
+      color: var(--e-global-color-text);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    .container {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+      padding: 96px 0 80px;
+    }
+    /* Sticky Top Nav */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      border-bottom: 3px solid var(--e-global-color-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .brand {
+      font-weight: 800;
+      color: var(--e-global-color-primary);
+      letter-spacing: .3px;
+      margin-right: 8px;
+    }
+    .chip {
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      background: var(--muted);
+      color: #222;
+      text-decoration: none;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+      border: 1px solid #e6e8eb;
+    }
+    .chip:hover { transform: translateY(-1px); box-shadow: var(--shadow); background: #fff; }
+    /* Cards & Sections */
+    section {
+      margin: 28px 0 36px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 22px;
+      transition: box-shadow .2s ease, transform .08s ease;
+    }
+    .card:hover { box-shadow: var(--shadow-hover); }
+    h1, h2, h3 { margin: 0 0 12px; }
+    h1 { font-size: 34px; font-weight: 800; color: #1f1f1f; }
+    h2 { font-size: 26px; font-weight: 700; color: #222; }
+    h3 { font-size: 18px; font-weight: 700; }
+    .subtle { color: var(--e-global-color-3f05205); font-size: 14px; }
+    /* Grids */
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+    /* Tables */
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0 12px;
+    }
+    .search {
+      padding: 10px 12px; border: 1px solid #e6e8eb; border-radius: 10px; min-width: 240px;
+      background: #fff;
+    }
+    .select, .checkbox {
+      padding: 10px 12px; border: 1px solid #e6e8eb; border-radius: 10px; background: #fff;
+    }
+    table {
+      width: 100%; border-collapse: collapse; font-size: 14px; overflow: hidden; border-radius: 12px;
+    }
+    thead th {
+      text-align: left; background: var(--muted); padding: 12px; position: sticky; top: 58px;
+      border-bottom: 1px solid #e6e8eb; cursor: pointer;
+    }
+    tbody td { padding: 12px; border-bottom: 1px solid #f0f2f5; vertical-align: top; }
+    tr:hover td { background: #fffdfa; }
+    .tag {
+      display: inline-block; background: var(--e-global-color-79ebde2); color: #063b46;
+      padding: 2px 8px; border-radius: 999px; font-size: 12px; margin-right: 4px;
+    }
+    .tag.loveadmin { background: #FFE6DA; color: #7a2a00; border: 1px solid #ffd4bf; }
+    .tag.cfk { background: #DFF6FB; color: #034753; border: 1px solid #baeaf2; }
+    .badge { color: #fff; background: var(--e-global-color-primary); padding: 2px 8px; border-radius: 8px; font-size: 12px; }
+    .callout {
+      border-left: 4px solid var(--e-global-color-accent);
+      background: #fff6f1; padding: 12px 14px; border-radius: 12px;
+    }
+    .pill { background: #fff; border: 1px dashed #e3e6ea; padding: 6px 10px; border-radius: 999px; font-size: 12px; margin-right: 8px; }
+    a { color: var(--e-global-color-secondary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    /* Accordions */
+    details { border: 1px solid #e6e8eb; border-radius: 12px; padding: 12px 14px; background: #fff; }
+    summary { font-weight: 700; cursor: pointer; }
+    details + details { margin-top: 10px; }
+    .proofs a { display: inline-block; margin-right: 10px; }
+    /* Back to top */
+    .totop {
+      position: fixed; right: 16px; bottom: 16px; background: var(--e-global-color-secondary);
+      color: #fff; padding: 10px 14px; border-radius: 999px; box-shadow: var(--shadow); text-decoration: none;
+    }
+    .kpi { display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; background:#fff; border:1px solid #eee; }
+    .kpi b{font-size:18px}
+    .muted-note{color:#6c6c6c; font-size:13px}
+  </style>
+</head>
+<body>
+<nav class="topnav">
+<div class="brand">LoveAdmin vs ClassForKids</div>
+<a class="chip" href="#overview">Overview</a>
+<a class="chip" href="#positioning">Positioning</a>
+<a class="chip" href="#pricing">Pricing &amp; Fees</a>
+<a class="chip" href="#settlement">Settlement Times</a>
+<a class="chip" href="#features">Feature Matrix</a>
+<a class="chip" href="#reviews">Reviews</a>
+<a class="chip" href="#gaps">Key Gaps</a>
+<a class="chip" href="#battle">Battle Cards</a>
+<a class="chip" href="#sources">Sources</a>
+</nav>
+<div class="container">
+<header class="card" id="overview">
+<h1>Competitive Summary</h1>
+<p>
+        This single-page competitive report compares <strong>LoveAdmin</strong> and <strong>ClassForKids</strong> across UK‑market needs:
+        payments &amp; fees, payout visibility, registers &amp; attendance, communications, admin efficiency, shop/merch, mobile,
+        business support, and third‑party sentiment. All sections are sortable, searchable, and filterable. Works fully offline.
+      </p>
+<div class="grid grid-3" style="margin-top:10px">
+<div class="kpi"><span class="tag loveadmin">LoveAdmin</span> <span>Platform fee <b>3%</b> + monthly fee</span></div>
+<div class="kpi"><span class="tag cfk">ClassForKids</span> <span>Licence ~<b>£34.99/mo</b> + <b>3.1%</b> platform fee*</span></div>
+<div class="kpi"><span class="badge">Updated</span> <span>2025-11-10</span></div>
+</div>
+<p class="muted-note" style="margin-top:10px">* As per promotion T&amp;Cs. See Sources for exact references.</p>
+</header>
+<section id="positioning">
+<div class="card">
+<h2>Positioning</h2>
+<div class="grid grid-2">
+<div>
+<h3><span class="tag loveadmin">LoveAdmin</span> Narrative</h3>
+<ul>
+<li>All‑in‑one admin system for clubs, classes &amp; membership orgs with <em>payments, bookings, comms, reporting</em> and more.</li>
+<li>Claims to reduce manual processes by up to <strong>80%</strong> via automations and workflows (e.g., chasing late payments).</li>
+<li>Offers <em>JoinIn</em> member app, School of Marketing content, and growth consultancy.</li>
+</ul>
+</div>
+<div>
+<h3><span class="tag cfk">ClassForKids</span> Narrative</h3>
+<ul>
+<li>Booking &amp; management platform tailored to kids clubs; strong in <em>registers, parent comms, bookings &amp; payments</em>.</li>
+<li>Supports <em>subscription</em> (recurring card) billing; offline registers; “Payment Secures Booking” option.</li>
+<li>Actively markets coaching/enablement for growth and offers price‑match on fees in T&amp;Cs.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="pricing">
+<div class="card">
+<h2>Pricing &amp; Fees</h2>
+<div class="toolbar">
+<input class="search" id="priceSearch" oninput="filterTable('pricingTable', this.value)" placeholder="Search pricing &amp; fees…"/>
+<select class="select" id="priceVendor" onchange="filterByVendor('pricingTable', this.value)">
+<option value="">All vendors</option>
+<option value="LoveAdmin">LoveAdmin</option>
+<option value="ClassForKids">ClassForKids</option>
+</select>
+</div>
+<table id="pricingTable">
+<thead>
+<tr>
+<th onclick="sortTable('pricingTable',0)">Vendor</th>
+<th onclick="sortTable('pricingTable',1)">Plan / Context</th>
+<th onclick="sortTable('pricingTable',2)">Monthly Fee</th>
+<th onclick="sortTable('pricingTable',3)">Platform Fee</th>
+<th onclick="sortTable('pricingTable',4)">Transaction Fee</th>
+<th onclick="sortTable('pricingTable',5)">Implementation</th>
+<th>Notes</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr data-vendor="LoveAdmin">
+<td><span class="tag loveadmin">LoveAdmin</span></td>
+<td>Activity Providers</td>
+<td>£35/mo</td>
+<td>3%</td>
+<td>2.95–3.95% (vendor reply)</td>
+<td>Yes</td>
+<td>Payment module included with platform fee; card &amp; DD options</td>
+<td><a href="https://loveadmin.com/pricing/" rel="noopener" target="_blank">Pricing</a>; <a href="https://www.softwareadvice.co.uk/software/344331/paysubsonline" rel="noopener" target="_blank">SoftwareAdvice</a></td>
+</tr>
+<tr data-vendor="LoveAdmin">
+<td><span class="tag loveadmin">LoveAdmin</span></td>
+<td>Sports Clubs</td>
+<td>£20/mo</td>
+<td>3%</td>
+<td>2.95–3.95% (vendor reply)</td>
+<td>Yes</td>
+<td>Payment module included with platform fee; card &amp; DD options</td>
+<td><a href="https://loveadmin.com/pricing/" rel="noopener" target="_blank">Pricing</a>; <a href="https://www.softwareadvice.co.uk/software/344331/paysubsonline" rel="noopener" target="_blank">SoftwareAdvice</a></td>
+</tr>
+<tr data-vendor="LoveAdmin">
+<td><span class="tag loveadmin">LoveAdmin</span></td>
+<td>Membership Orgs</td>
+<td>£20/mo</td>
+<td>3%</td>
+<td>2.95–3.95% (vendor reply)</td>
+<td>Yes</td>
+<td>Payment module included with platform fee</td>
+<td><a href="https://loveadmin.com/pricing/" rel="noopener" target="_blank">Pricing</a></td>
+</tr>
+<tr data-vendor="ClassForKids">
+<td><span class="tag cfk">ClassForKids</span></td>
+<td>Licence &amp; Platform Fee (promo T&amp;Cs)</td>
+<td>£34.99/mo</td>
+<td>3.1% per online transaction</td>
+<td>Varies; price‑match includes Stripe fee %</td>
+<td>Not stated</td>
+<td>Promo: 11 months free if 15 bookings in month 1</td>
+<td><a href="https://classforkids.io/clubs/tcs/11-months-free-when-you-take-15-bookings-in-your-first-month" rel="noopener" target="_blank">Promo T&amp;Cs</a>; <a href="https://classforkids.io/clubs/tcs/classforkids-price-match-t-cs" rel="noopener" target="_blank">Price‑Match T&amp;Cs</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="settlement">
+<div class="card">
+<h2>Settlement Times / Payout Visibility</h2>
+<div class="toolbar">
+<input class="search" id="settleSearch" oninput="filterTable('settlementTable', this.value)" placeholder="Search settlement…"/>
+<select class="select" onchange="filterByVendor('settlementTable', this.value)">
+<option value="">All vendors</option>
+<option value="LoveAdmin">LoveAdmin</option>
+<option value="ClassForKids">ClassForKids</option>
+</select>
+</div>
+<table id="settlementTable">
+<thead>
+<tr>
+<th onclick="sortTable('settlementTable',0)">Vendor</th>
+<th onclick="sortTable('settlementTable',1)">Method</th>
+<th onclick="sortTable('settlementTable',2)">Public Settlement Time</th>
+<th>Notes</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr data-vendor="LoveAdmin">
+<td><span class="tag loveadmin">LoveAdmin</span></td>
+<td>Card &amp; Direct Debit</td>
+<td>Not publicly stated</td>
+<td>Business reports emphasise <em>knowing exactly when you’re getting paid</em> and cash‑flow visibility.</td>
+<td><a href="https://loveadmin.com/software/features/business-reports/" rel="noopener" target="_blank">Business Reports</a></td>
+</tr>
+<tr data-vendor="ClassForKids">
+<td><span class="tag cfk">ClassForKids</span></td>
+<td>Card (incl. recurring card subscriptions)</td>
+<td>Not publicly stated</td>
+<td>Help Centre explains subscriptions use <em>recurring card</em> (not Direct Debit); no published payout schedule.</td>
+<td><a href="https://help.classforkids.io/en/articles/7826740-setting-up-and-managing-subscriptions" rel="noopener" target="_blank">Subscriptions</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="features">
+<div class="card">
+<h2>Feature Matrix (depth)</h2>
+<div class="toolbar">
+<input class="search" id="featSearch" oninput="filterTable('featureTable', this.value)" placeholder="Search features…"/>
+<select class="select" onchange="filterByBrand('featureTable', this.value)">
+<option value="">All</option>
+<option value="LoveAdmin">LoveAdmin</option>
+<option value="ClassForKids">ClassForKids</option>
+</select>
+</div>
+<table id="featureTable">
+<thead>
+<tr>
+<th onclick="sortTable('featureTable',0)">Category</th>
+<th onclick="sortTable('featureTable',1)">Subfeature</th>
+<th onclick="sortTable('featureTable',2)">LoveAdmin</th>
+<th onclick="sortTable('featureTable',3)">ClassForKids</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr data-brand="Payments">
+<td>Payments</td>
+<td>Methods</td>
+<td><span class="tag loveadmin">Card + Direct Debit</span></td>
+<td><span class="tag cfk">Card (incl. recurring card)</span></td>
+<td><a href="https://loveadmin.com/pricing/" target="_blank">LA Pricing</a>; <a href="https://help.classforkids.io/en/articles/7826740-setting-up-and-managing-subscriptions" target="_blank">CFK Subscriptions</a></td>
+</tr>
+<tr>
+<td>Payments</td>
+<td>Automated reminders &amp; retries</td>
+<td>Automated reminders &amp; failed payment retries</td>
+<td>Automations available; specifics vary by setup</td>
+<td><a href="https://loveadmin.com/software/features/payment-solution/" target="_blank">LA Payment Solutions</a>; <a href="https://help.classforkids.io/en/articles/8115990-taking-payments" target="_blank">CFK Taking Payments</a></td>
+</tr>
+<tr>
+<td>Registers</td>
+<td>Attendance &amp; registers</td>
+<td>Schedule &amp; attendance registers; activity calendars</td>
+<td>Register management; create schedules; mark attendance</td>
+<td><a href="https://loveadmin.com/pricing/" target="_blank">LA Pricing (features)</a>; <a href="https://classforkids.io/clubs/features/register-management" target="_blank">CFK Registers</a></td>
+</tr>
+<tr>
+<td>Registers</td>
+<td>Offline registers</td>
+<td>— (not explicitly advertised)</td>
+<td>Offline registers supported; sync when back online</td>
+<td><a href="https://help.classforkids.io/en/articles/8193906-customising-your-club-features" target="_blank">CFK Offline Registers</a></td>
+</tr>
+<tr>
+<td>Parent comms</td>
+<td>Email/SMS &amp; roles</td>
+<td>Comms tools; 40+ automated notifications</td>
+<td>Parent comms features; roles for coaches</td>
+<td><a href="https://loveadmin.com/pricing/" target="_blank">LA Pricing</a>; <a href="https://classforkids.io/clubs/features/parent-communication" target="_blank">CFK Parent Comms</a></td>
+</tr>
+<tr>
+<td>Admin efficiency</td>
+<td>Automation impact</td>
+<td>Up to 80% reduction in manual processes (claim)</td>
+<td>Time‑saving workflows; details vary</td>
+<td><a href="https://loveadmin.com/who-we-help/membership-organisations/" target="_blank">LA Membership Orgs</a></td>
+</tr>
+<tr>
+<td>Shop/Merch</td>
+<td>Sell merch &amp; extras</td>
+<td>Sell merch, camps, events on branded site</td>
+<td>Set‑up fees can cover membership/merch; merch store not explicitly listed</td>
+<td><a href="https://loveadmin.com/who-we-help/membership-organisations/" target="_blank">LA Membership Orgs</a>; <a href="https://help.classforkids.io/en/articles/8267022-set-up-fees" target="_blank">CFK Set‑Up Fees</a></td>
+</tr>
+<tr>
+<td>Mobile</td>
+<td>Apps</td>
+<td>JoinIn app for members; booking, payments, updates</td>
+<td>Mobile‑friendly; offline registers; no separate member app listed</td>
+<td><a href="https://loveadmin.com/software/features/joinin-online-app/" target="_blank">LA JoinIn</a>; <a href="https://classforkids.io/clubs/features/register-management" target="_blank">CFK Registers</a></td>
+</tr>
+<tr>
+<td>Business support</td>
+<td>Enablement</td>
+<td>School of Marketing + growth consultancy</td>
+<td>Business coaching outreach on site</td>
+<td><a href="https://loveadmin.com/who-we-help/membership-organisations/" target="_blank">LA Membership Orgs</a>; <a href="https://classforkids.io/clubs/pricing-updated" target="_blank">CFK Pricing</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="reviews">
+<div class="card">
+<h2>Third‑Party Reviews</h2>
+<div class="toolbar">
+<input class="search" oninput="filterTable('reviewsTable', this.value)" placeholder="Search reviews…"/>
+<select class="select" onchange="filterByVendor('reviewsTable', this.value)">
+<option value="">All vendors</option>
+<option value="LoveAdmin">LoveAdmin</option>
+<option value="ClassForKids">ClassForKids</option>
+</select>
+</div>
+<table id="reviewsTable">
+<thead>
+<tr>
+<th onclick="sortTable('reviewsTable',0)">Vendor</th>
+<th onclick="sortTable('reviewsTable',1)">Site</th>
+<th onclick="sortTable('reviewsTable',2)">Rating</th>
+<th onclick="sortTable('reviewsTable',3)">Reviews</th>
+<th>Notes / Link</th>
+</tr>
+</thead>
+<tbody>
+<tr data-vendor="LoveAdmin">
+<td><span class="tag loveadmin">LoveAdmin</span></td>
+<td>Trustpilot</td>
+<td>2.8 / 5 (TrustScore “3/5”)</td>
+<td>141</td>
+<td><a href="https://www.trustpilot.com/review/loveadmin.com" target="_blank">Open</a></td>
+</tr>
+<tr data-vendor="LoveAdmin">
+<td><span class="tag loveadmin">LoveAdmin</span></td>
+<td>SoftwareAdvice</td>
+<td>4.4 / 5</td>
+<td>44</td>
+<td><a href="https://www.softwareadvice.co.uk/software/344331/paysubsonline" target="_blank">Open</a></td>
+</tr>
+<tr data-vendor="ClassForKids">
+<td><span class="tag cfk">ClassForKids</span></td>
+<td>Trustpilot (UK)</td>
+<td>3.7 / 5</td>
+<td>45</td>
+<td><a href="https://uk.trustpilot.com/review/class4kids.co.uk" target="_blank">Open</a></td>
+</tr>
+<tr data-vendor="ClassForKids">
+<td><span class="tag cfk">ClassForKids</span></td>
+<td>Capterra</td>
+<td>4.8 / 5</td>
+<td>99</td>
+<td><a href="https://www.capterra.com/p/141287/Class4Kids/reviews/" target="_blank">Open</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="gaps">
+<div class="card">
+<h2>Key Gaps &amp; Actionable Takes (LoveAdmin)</h2>
+<div class="toolbar">
+<input class="search" oninput="filterTable('gapsTable', this.value)" placeholder="Search gaps…"/>
+<select class="select" onchange="filterByPriority(this.value)">
+<option value="">All priorities</option>
+<option value="P1">P1</option>
+<option value="P2">P2</option>
+<option value="P3">P3</option>
+</select>
+</div>
+<table id="gapsTable">
+<thead>
+<tr>
+<th onclick="sortTable('gapsTable',0)">Priority</th>
+<th onclick="sortTable('gapsTable',1)">Gap vs. ClassForKids</th>
+<th>Impact</th>
+<th>Actionable Take (LoveAdmin)</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr data-priority="P1">
+<td><span class="badge">P1</span></td>
+<td>CFK heavily promotes register UX incl. offline registers.</td>
+<td>Venues without Wi‑Fi need robust offline flows.</td>
+<td>Ensure clear offline attendance story (workarounds or roadmap). Publish guidance &amp; demo assets.</td>
+<td><a href="https://help.classforkids.io/en/articles/8193906-customising-your-club-features" target="_blank">CFK Offline Registers</a></td>
+</tr>
+<tr data-priority="P1">
+<td><span class="badge">P1</span></td>
+<td>CFK price‑match on transaction fees (incl. Stripe fee %).</td>
+<td>Procurement pushes for lower total fee.</td>
+<td>Lead with value (automation, support, DD choice). Offer competitive review; anchor on <em>3% platform + service value</em>.</td>
+<td><a href="https://classforkids.io/clubs/tcs/classforkids-price-match-t-cs" target="_blank">CFK Price‑Match</a></td>
+</tr>
+<tr data-priority="P2">
+<td><span class="badge" style="background:#29B8CC">P2</span></td>
+<td>CFK subscriptions run on recurring <em>card</em> payments.</td>
+<td>Some UK orgs prefer Direct Debit for subs.</td>
+<td>Position DD as an option with LoveAdmin; highlight failed payment retries &amp; cash‑flow reporting.</td>
+<td><a href="https://help.classforkids.io/en/articles/7826740-setting-up-and-managing-subscriptions" target="_blank">CFK Subscriptions</a></td>
+</tr>
+<tr data-priority="P2">
+<td><span class="badge" style="background:#29B8CC">P2</span></td>
+<td>Settlement schedule transparency not published by either vendor.</td>
+<td>Finance teams ask “When do funds land?”</td>
+<td>Provide a “Payouts 101” one‑pager per PSP (card/DD), showing typical timelines + in‑product reporting views.</td>
+<td><a href="https://loveadmin.com/software/features/business-reports/" target="_blank">LA Business Reports</a></td>
+</tr>
+<tr data-priority="P3">
+<td><span class="badge" style="background:#949494">P3</span></td>
+<td>Merch shop is explicit on LA; CFK leans on set‑up fees.</td>
+<td>Ancillary revenue ease of use.</td>
+<td>Showcase merch flows and reconcile via finance reports; compare with CFK set‑up fee workaround.</td>
+<td><a href="https://loveadmin.com/who-we-help/membership-organisations/" target="_blank">LA Membership Orgs</a>; <a href="https://help.classforkids.io/en/articles/8267022-set-up-fees" target="_blank">CFK Set‑Up Fees</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="battle">
+<div class="card">
+<h2>Sales Battle Cards</h2>
+<details open="">
+<summary>Payments &amp; Cash‑Flow</summary>
+<div class="grid">
+<div class="callout">
+<h3>Talk Track</h3>
+<p>“With LoveAdmin you get card <em>and</em> Direct Debit choice, automated reminders &amp; retries,
+              and reporting that tells you exactly when you’re getting paid, improving cash‑flow visibility.”</p>
+</div>
+<div class="callout">
+<h3>Trap to Avoid</h3>
+<p>Don’t assert specific payout timelines; point to reporting and provider schedules.</p>
+</div>
+<div class="callout">
+<h3>Proof Points</h3>
+<p class="proofs">
+<a href="https://loveadmin.com/software/features/payment-solution/" target="_blank">LA Payment Solutions</a>
+<a href="https://loveadmin.com/software/features/business-reports/" target="_blank">LA Business Reports</a>
+<a href="https://help.classforkids.io/en/articles/7826740-setting-up-and-managing-subscriptions" target="_blank">CFK Subscriptions (card‑based)</a>
+</p>
+</div>
+</div>
+</details>
+<details>
+<summary>Registers &amp; Attendance</summary>
+<div class="grid">
+<div class="callout"><h3>Talk Track</h3><p>“Both platforms offer strong registers; ClassForKids also promotes offline registers. We’ll show you LA workflows &amp; calendar tools that keep coaches moving.”</p></div>
+<div class="callout"><h3>Trap</h3><p>Avoid dismissing offline needs—confirm venue connectivity and present options.</p></div>
+<div class="callout"><h3>Proof</h3><p class="proofs"><a href="https://classforkids.io/clubs/features/register-management" target="_blank">CFK Registers</a> <a href="https://help.classforkids.io/en/articles/8193906-customising-your-club-features" target="_blank">CFK Offline</a> <a href="https://loveadmin.com/pricing/" target="_blank">LA Features list</a></p></div>
+</div>
+</details>
+<details>
+<summary>Parent Comms</summary>
+<div class="grid">
+<div class="callout"><h3>Talk Track</h3><p>“LA provides branded comms and 40+ automated notifications; keep parents informed and reduce no‑shows.”</p></div>
+<div class="callout"><h3>Trap</h3><p>Confirm SMS/email costs and templates before promising advanced sequences.</p></div>
+<div class="callout"><h3>Proof</h3><p class="proofs"><a href="https://loveadmin.com/pricing/" target="_blank">LA Pricing (features)</a> <a href="https://classforkids.io/clubs/features/parent-communication" target="_blank">CFK Parent Comms</a></p></div>
+</div>
+</details>
+<details>
+<summary>Pricing Objections</summary>
+<div class="grid">
+<div class="callout"><h3>Talk Track</h3><p>“LA’s 3% platform fee funds payments, reporting and support. Net cost is offset by revenue lift and admin time saved.”</p></div>
+<div class="callout"><h3>Trap</h3><p>Don’t get dragged into pure % fee debates—reframe on automation ROI and support maturity.</p></div>
+<div class="callout"><h3>Proof</h3><p class="proofs"><a href="https://loveadmin.com/pricing/" target="_blank">LA Pricing</a> <a href="https://classforkids.io/clubs/tcs/classforkids-price-match-t-cs" target="_blank">CFK Price‑Match</a></p></div>
+</div>
+</details>
+<details>
+<summary>Mobile &amp; Member Experience</summary>
+<div class="grid">
+<div class="callout"><h3>Talk Track</h3><p>“JoinIn app + branded booking site = smooth member payments &amp; updates.”</p></div>
+<div class="callout"><h3>Trap</h3><p>Don’t assume CFK lacks an app—show LA’s app advantages instead.</p></div>
+<div class="callout"><h3>Proof</h3><p class="proofs"><a href="https://loveadmin.com/software/features/joinin-online-app/" target="_blank">LA JoinIn</a></p></div>
+</div>
+</details>
+</div>
+</section>
+<section id="sources">
+<div class="card">
+<h2>Sources (official pages, docs &amp; reviews)</h2>
+<ul><li><strong>LoveAdmin</strong>: <a href="https://loveadmin.com/pricing/" target="_blank">Pricing</a> · <a href="https://loveadmin.com/who-we-help/membership-organisations/" target="_blank">Membership Organisations</a> · <a href="https://loveadmin.com/software/features/payment-solution/" target="_blank">Payment Solutions</a> · <a href="https://loveadmin.com/software/features/business-reports/" target="_blank">Business Reports</a> · <a href="https://www.trustpilot.com/review/loveadmin.com" target="_blank">Trustpilot</a> · <a href="https://www.softwareadvice.co.uk/software/344331/paysubsonline" target="_blank">SoftwareAdvice</a></li><li><strong>ClassForKids</strong>: <a href="https://classforkids.io/clubs/features" target="_blank">Features</a> · <a href="https://classforkids.io/clubs/features/register-management" target="_blank">Register Management</a> · <a href="https://classforkids.io/clubs/features/parent-communication" target="_blank">Parent Communication</a> · <a href="https://classforkids.io/clubs/pricing-updated" target="_blank">Pricing (updated)</a> · <a href="https://classforkids.io/clubs/tcs/11-months-free-when-you-take-15-bookings-in-your-first-month" target="_blank">Promo T&amp;Cs (11 months free)</a> · <a href="https://classforkids.io/clubs/tcs/classforkids-price-match-t-cs" target="_blank">Price-Match T&amp;Cs</a> · <a href="https://help.classforkids.io/en/articles/8115990-taking-payments" target="_blank">Help: Taking Payments</a> · <a href="https://help.classforkids.io/en/articles/7826740-setting-up-and-managing-subscriptions" target="_blank">Help: Subscriptions</a> · <a href="https://help.classforkids.io/en/articles/8267022-set-up-fees" target="_blank">Help: Set-Up Fees</a> · <a href="https://help.classforkids.io/en/articles/8193906-customising-your-club-features" target="_blank">Help: Offline Registers</a> · <a href="https://uk.trustpilot.com/review/class4kids.co.uk" target="_blank">Trustpilot (UK)</a> · <a href="https://www.capterra.com/p/141287/Class4Kids/reviews/" target="_blank">Capterra</a></li></ul>
+<p class="subtle">All links open in a browser if you’re online; the page still renders fully offline.</p>
+</div>
+</section>
+</div>
+<a class="totop" href="#overview">↑ Top</a>
+<script>
+    // Generic table sorting
+    function sortTable(tableId, colIdx) {
+      const table = document.getElementById(tableId);
+      const tbody = table.tBodies[0];
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const current = table.dataset.sortCol == colIdx ? (table.dataset.sortDir || 'asc') : 'desc';
+      const dir = current === 'asc' ? 'desc' : 'asc';
+      table.dataset.sortCol = colIdx;
+      table.dataset.sortDir = dir;
+      rows.sort((a,b)=>compare(a.cells[colIdx].innerText.trim(), b.cells[colIdx].innerText.trim(), dir));
+      rows.forEach(r => tbody.appendChild(r));
+    }
+    function compare(a,b,dir) {
+      const numA = parseFloat(a.replace(/[^0-9.-]+/g,''));
+      const numB = parseFloat(b.replace(/[^0-9.-]+/g,''));
+      let cmp;
+      if (!isNaN(numA) && !isNaN(numB)) cmp = numA - numB;
+      else cmp = a.localeCompare(b);
+      return dir==='asc' ? cmp : -cmp;
+    }
+    function filterTable(tableId, q) {
+      const v = (q||'').toLowerCase();
+      document.querySelectorAll('#'+tableId+' tbody tr').forEach(tr => {
+        tr.style.display = tr.innerText.toLowerCase().includes(v) ? '' : 'none';
+      });
+    }
+    function filterByVendor(tableId, vendor) {
+      document.querySelectorAll('#'+tableId+' tbody tr').forEach(tr => {
+        const v = tr.getAttribute('data-vendor');
+        tr.style.display = (!vendor || v === vendor) ? '' : 'none';
+      });
+    }
+    function filterByBrand(tableId, brand) {
+      // Here brand means vendor filter in feature matrix
+      document.querySelectorAll('#'+tableId+' tbody tr').forEach(tr => {
+        if (!brand) { tr.style.display = ''; return; }
+        const text = tr.innerText;
+        const show = text.toLowerCase().includes(brand.toLowerCase());
+        tr.style.display = show ? '' : 'none';
+      });
+    }
+    function filterByPriority(priority) {
+      document.querySelectorAll('#gapsTable tbody tr').forEach(tr => {
+        const p = tr.getAttribute('data-priority');
+        tr.style.display = (!priority || p===priority) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

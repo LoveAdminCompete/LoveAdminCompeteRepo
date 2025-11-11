@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LoveAdmin vs TeamFeePay — Competitive Report</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="icon" href="/images/fight.ico" type="image/x-icon">
+<link rel="icon" href="/Images/fight.ico" type="image/x-icon">
 <style>
   :root{
     --e-global-color-primary: #FF5000;
@@ -60,6 +60,11 @@
   }
   .topnav .wrap{
     max-width: 1200px; margin: 0 auto; display: flex; gap: 16px; align-items: center; padding: 10px 16px;
+  }
+   .btn{
+    border:none; border-radius:12px; padding:10px 14px; font-weight:600; cursor:pointer;
+    background:var(--e-global-color-secondary); color:white; box-shadow:0 4px 14px rgba(8,133,163,.2);
+    transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
   }
   .brand{
     font-weight: 600; letter-spacing: .3px; color: var(--e-global-color-primary);
@@ -171,7 +176,13 @@
     <div class="card" style="grid-column: 1 / -1;">
       <h1>LoveAdmin vs TeamFeePay</h1>
       <div class="kicker">Single‑page, interactive dossier for Product · Marketing · Sales</div>
-      <p class="muted">Built with Axcieve colors and subtle page transitions. Sort, search and filter the tables; expand battle cards for talk‑tracks, traps, and proof points.</p>
+      <p class="muted">Sort, search and filter the tables; expand battle cards for talk‑tracks, traps, and proof points.</p>
+    <div class="cta-buttons">
+      <a href="loveadmin_vs_teamfeepay.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+
+    </div>
       <div class="callout"><strong>What this covers:</strong> positioning, pricing & fees, payment rails & settlement timelines, registrations, parent communications, admin efficiencies, shop/e‑commerce, mobile, business support; gaps and actionable takes; reviews & sentiment; and sales battle cards.</div>
     </div>
   </div>
@@ -336,7 +347,7 @@
         <summary>Positioning & Discovery</summary>
         <div class="muted">Use these to qualify quickly and steer the convo toward LoveAdmin strengths.</div>
         <ul>
-          <li><span class="chip">Ask</span> “Are you looking for a football‑only system or a platform used across multiple sports and membership orgs?”</li>
+          <li><span class="chip">Ask</span> “Are you looking for a football‑only features or a platform that supports all aspect of sports and membership orgs?”</li>
           <li><span class="chip">Talk Track</span> LoveAdmin supports Direct Debit via GoCardless and instant card/PayPal settlements via PayPal, with rich admin automation and reporting. This helps volunteers minimise chasing and improve cash‑flow predictability.</li>
           <li><span class="chip">Trap</span> If they emphasise webinars/funding advice and a fully account‑managed service, acknowledge that TFP leans into club development services; then pivot to LoveAdmin’s deeper built‑in payment, comms, and reporting feature set.</li>
           <li><span class="chip">Proof</span> Instant card settlement via PayPal; Direct Debit timelines published; transparent 3% platform fee + clear service fee schedule.</li>
@@ -535,7 +546,7 @@ const featureData = [
 
 const gapsData = [
   {
-    gap: "Published settlement timelines & rails transparency",
+    gap: "LA Wins: Published settlement timelines & rails transparency",
     impact: "Finance teams can plan cashflow and reconcile by rail (card vs DD).",
     action: "Lead with LoveAdmin’s published timelines (PayPal instant; GoCardless 5–7d; L&Z 7–11d). Offer best‑practice mapping: merch/events on card, memberships on DD.",
     owner: "PMM + Sales",
@@ -543,32 +554,46 @@ const gapsData = [
               "https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/"]
   },
   {
-    gap: "Processing fee schedules & dispute costs visibility",
+    gap: "Dispute: Processing fee schedules & dispute costs visibility",
     impact: "Avoid unexpected margin erosion and bill shock for clubs.",
     action: "Share LoveAdmin cost model up‑front (service fee + 3% platform fee). When facing TFP, request their processing schedule in writing; highlight Terms (dispute up to £50, refunds re‑charged).",
     owner: "Sales",
     sources: ["https://teamfeepay.com/client-terms-and-conditions/","https://teamfeepay.com/pricing/","https://loveadmin.com/pricing/"]
   },
   {
-    gap: "Depth of admin tooling (pro‑rata, related products, advanced waitlists)",
+    gap: "LA Wins: Depth of admin tooling (pro‑rata, related products, advanced waitlists)",
     impact: "Reduces volunteer time and increases compliance (e.g., kit required with membership).",
     action: "Demo Buyer‑Guide features (pro‑rata, instalments, product relationships, auto‑waitlists) against TFP’s higher‑level claims.",
     owner: "SE / AE",
     sources: ["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]
   },
   {
-    gap: "Comms granularity (templates, BCC/CC, SMS/WhatsApp, 40+ triggers)",
+    gap: "LA Wins: Comms granularity (templates, BCC/CC, SMS/WhatsApp, 40+ triggers)",
     impact: "Higher engagement, fewer missed payments, and auditability.",
     action: "Show LoveAdmin email builder and notification catalogue; ask TFP for parity details.",
     owner: "SE / AE",
     sources: ["https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf","https://help.loveadmin.com/settings"]
   },
   {
-    gap: "Published registers & attendance detail",
+    gap: "LA Wins: Published registers & attendance detail",
     impact: "Duty of care, safeguarding, and availability planning.",
     action: "Highlight LoveAdmin’s auto‑registers, QR check‑in, medical flags. Ask TFP for concrete register functionality and exports.",
     owner: "PMM + Sales",
     sources: ["https://loveadmin.com/software/features/class-and-event-management-features/","https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Membership_Organisations.pdf"]
+  },
+    {
+    gap: "TFP Wins: Fundraising",
+    impact: "TFP wins by marketing football‑specific fundraising mini‑games..",
+    action: "Highlight Enablement. Product: Explore lightweight fundraising add‑ons or integrations to neutralise this talking poin",
+    owner: "PMM + Sales",
+    sources: ["https://teamfeepay.com/client-terms-and-conditions/"]
+  },
+    {
+    gap: "TFP Wins: Advertising",
+    impact: "TFP terms allow advertisements in platform surfaces.",
+    action: "Position ad‑free environment as premium, brand‑safe experience for families.",
+    owner: "PMM + Sales",
+    sources: ["https://loveadmin.com/software/features/class-and-event-management-features/"]
   }
 ];
 
@@ -685,6 +710,18 @@ function enableSorting(tableId){
 enableSorting("pricingTable");
 enableSorting("featureTable");
 enableSorting("gapsTable");
+
+  // Share link
+  document.getElementById('btnCopyLink').addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(location.href);
+      alert('Link copied to clipboard!');
+    }catch(e){
+      alert('Could not copy link.');
+    }
+  });
+  // Print
+  document.getElementById('btnPrint').addEventListener('click', () => window.print());
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LoveAdmin vs Coacha — Competitive Report (Gymnastics‑Focused)</title>
-
+<link rel="icon" href="/Images/fight.ico" type="image/x-icon">
 <!-- Font -->
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -577,6 +577,17 @@ document.querySelectorAll('.accordion .item .head').forEach(h=>{
 window.addEventListener('load', ()=>{
   setTimeout(()=>{ const p=document.getElementById('preloader'); if(p){p.style.display='none';} }, 900);
 });
+  // Share link
+  document.getElementById('btnCopyLink').addEventListener('click', async () => {
+    try{
+      await navigator.clipboard.writeText(location.href);
+      alert('Link copied to clipboard!');
+    }catch(e){
+      alert('Could not copy link.');
+    }
+  });
+  // Print
+  document.getElementById('btnPrint').addEventListener('click', () => window.print());
 </script>
 
 </body>
