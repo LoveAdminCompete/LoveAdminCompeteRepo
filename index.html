@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Competitive Index — LoveAdmin vs Competitors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --e-global-color-primary: #FF5000;
+      --e-global-color-secondary: #0885A3;
+      --e-global-color-text: #4D4D4D;
+      --e-global-color-accent: #FF8636;
+      --e-global-color-79ebde2: #29B8CC;
+      --e-global-color-3f05205: #949494;
+      --e-global-color-960c673: #D84000;
+      --e-global-color-abeb042: #FFFFFF;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --shadow-soft: 0 6px 18px rgba(0,0,0,.06);
+      --e-page-transition-entrance-animation: e-page-transition-fade-out;
+      --e-page-transition-exit-animation: e-page-transition-fade-in;
+      --e-page-transition-animation-duration: 500ms;
+      --e-preloader-animation-duration: 1500ms;
+      --e-preloader-delay: 0ms;
+    }
+    *,*::before,*::after{ box-sizing: border-box; }
+    html,body{ margin:0; padding:0; height:100%; }
+    body{
+      font-family: "Barlow", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--e-global-color-text);
+      background: #fafafa;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity var(--e-page-transition-animation-duration) ease;
+    }
+    body.loaded{ opacity: 1; }
+    a{ color: var(--e-global-color-secondary); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    /* Sticky top nav */
+    .topnav{
+      position: sticky; top:0; z-index:999;
+      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid #eee;
+    }
+    .topnav-inner{
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px;
+    }
+    .brand{
+      font-weight:700; letter-spacing:.3px;
+      color: var(--e-global-color-primary);
+    }
+    .navlinks{ display:flex; gap: 12px; flex-wrap: wrap; margin-left:auto; }
+    .navlinks a{
+      padding:8px 12px; border-radius:999px;
+      border:1px solid #eee; background:#fff;
+      box-shadow: var(--shadow-soft);
+      color:#333; font-weight:500;
+    }
+    .navlinks a:hover{ background: #f6faff; border-color:#e5f3f7; }
+
+    /* Layout */
+    .wrap{ max-width: 1200px; margin: 24px auto 100px; padding: 0 16px; }
+    .section{ margin: 36px 0; }
+    h1,h2,h3{ color: #222; line-height: 1.25; margin: 12px 0; }
+    h1{ font-size: 34px; }
+    h2{ font-size: 26px; margin-top: 24px; }
+    h3{ font-size: 20px; color:#333; }
+    .pill{
+      display:inline-block; padding:3px 10px; border-radius:999px; font-size:12px;
+      background: #fff3eb; color: var(--e-global-color-primary); border:1px solid #ffd5bf;
+      vertical-align: middle; margin-left:8px;
+    }
+
+    .lead{
+      display:grid; grid-template-columns: 1fr; gap:14px;
+    }
+    .lead p{ margin:0 }
+    .callout{
+      border-left: 4px solid var(--e-global-color-secondary);
+      background: #f7fdff; padding: 12px 16px; border-radius: 12px;
+    }
+
+    /* Controls */
+    .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:16px 0 10px; }
+    input[type="search"], select{
+      padding:10px 12px; border-radius:10px; border:1px solid #ddd; min-width:200px; background:#fff;
+    }
+    .toggle{
+      display:inline-flex; gap:6px; align-items:center; background:#fff; border:1px solid #eee; border-radius:999px; padding:6px; box-shadow: var(--shadow-soft);
+    }
+    .toggle button{
+      border:none; background:transparent; padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600; color:#333;
+    }
+    .toggle button.active{ background:#ffece2; color:#8a3f00; }
+
+    /* Grid & cards */
+    .grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:16px; }
+    .card{
+      background:#fff; border-radius: 16px; padding: 18px;
+      border:1px solid #eee; box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .card:hover{ transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,.1); }
+    .card .title{ font-weight:700; color:#222; display:flex; align-items:center; gap:8px; }
+    .segment{ padding:2px 8px; border-radius:8px; font-size:12px; border:1px solid #e8e8e8; color:#333; background:#fff; }
+    .seg-gym{ background:#fff6f1; border-color:#ffd4bf; color:#8a3f00; }
+    .seg-grass{ background:#f1fbff; border-color:#d2f2ff; color:#045; }
+    .seg-cap{ background:#f7f5ff; border-color:#e7e4ff; color:#2d2175; }
+    .status{ margin-left:auto; font-size:12px; padding:3px 8px; border-radius:8px; }
+    .live{ background:#f0fff5; border:1px solid #c4f7d2; color:#146c2e; }
+    .coming{ background:#fff8f2; border:1px solid #ffe1c7; color:#7a2e00; }
+    .muted{ color:#777; }
+    .actions{ display:flex; gap:10px; margin-top:auto; }
+    .btn{
+      border:1px solid #eee; background:#fff; border-radius:10px; padding:10px 12px; font-weight:600; cursor:pointer; box-shadow: var(--shadow-soft);
+    }
+    .btn-visit{ background: var(--e-global-color-primary); color:#fff; border-color: #fa996a; }
+    .btn-visit:hover{ filter: brightness(.95); }
+    .btn-disabled{ background:#f7f7f7; color:#999; cursor:not-allowed; }
+
+    /* Preloader */
+    .preloader{ position: fixed; inset:0; display:grid; place-items:center; background:#fff; z-index:2000; transition: opacity var(--e-preloader-animation-duration) ease; }
+    .preloader.hidden{ opacity:0; pointer-events:none; }
+    .spinner{ width:52px; height:52px; border-radius:50%; border:6px solid #f1f1f1; border-top-color: var(--e-global-color-primary); animation: spin var(--e-preloader-animation-duration) cubic-bezier(.6,.1,.4,.9) infinite; }
+    @keyframes spin{ to{ transform: rotate(1turn);} }
+  </style>
+</head>
+<body>
+  <div class="preloader"><div class="spinner" title="Loading…"></div></div>
+
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <div class="brand">LoveAdmin — Competitive Index</div>
+      <div class="navlinks">
+        <a href="#live">Live</a>
+        <a href="#soon">Coming Soon</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <header class="section">
+      <h1>Index of Competitor Reports <span class="pill">for Sales • Marketing • Product</span></h1>
+      <div class="lead">
+        <p class="muted">Quickly navigate to competitor deep‑dives. Use search and filters to find a vendor or segment. “Coming Soon” items are visible for planning but not yet linked.</p>
+        <div class="callout">
+          <b>Segments:</b>
+          <span class="segment seg-gym">Gymnastics</span>
+          <span class="segment seg-grass">Grass Root (Team Sports)</span>
+          <span class="segment seg-cap">Children Activity/Class Providers (CAP)</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <input id="q" type="search" placeholder="Search vendor (e.g., ‘Spond’, ‘Pitchero’, ‘Gymnastics’)"/>
+        <select id="seg">
+          <option value="all">All segments</option>
+          <option value="Gymnastics">Gymnastics</option>
+          <option value="Grass Root (Team Sports)">Grass Root (Team Sports)</option>
+          <option value="Children Activity/Class Providers (CAP)">Children Activity/Class Providers (CAP)</option>
+          <option value="TBD">TBD</option>
+        </select>
+        <div class="toggle">
+          <button id="showLive" class="active">Live</button>
+          <button id="showSoon" class="">Coming Soon</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" id="live">
+      <h2>Live reports</h2>
+      <div class="grid" id="grid-live">
+        <!-- Live cards -->
+        <div class="card" data-name="iClassPro" data-seg="Gymnastics" data-status="live">
+          <div class="title">iClassPro <span class="segment seg-gym">Gymnastics</span> <span class="status live">Live</span></div>
+          <p class="muted">Deep competitive report with UK payment nuances and battle cards.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_iclasspro.html">Open report</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="ClassForKids" data-seg="Gymnastics" data-status="live">
+          <div class="title">ClassForKids <span class="segment seg-gym">Gymnastics</span> <span class="status live">Live</span></div>
+          <p class="muted">Comparison focusing on children’s activity scheduling and payments.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_ClassForKids.html">Open report</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Coacha" data-seg="Gymnastics" data-status="live">
+          <div class="title">Coacha <span class="segment seg-gym">Gymnastics</span> <span class="status live">Live</span></div>
+          <p class="muted">Gymnastics & multisport club management head‑to‑head.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_Coacha.html">Open report</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="TeamFeePay" data-seg="Grass Root (Team Sports)" data-status="live">
+          <div class="title">TeamFeePay <span class="segment seg-grass">Grass Root (Team Sports)</span> <span class="status live">Live</span></div>
+          <p class="muted">Grassroots team‑sports focus: fees, compliance, and club onboarding.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_TeamFeePay.html">Open report</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Pitchero" data-seg="Grass Root (Team Sports)" data-status="live">
+          <div class="title">Pitchero <span class="segment seg-grass">Grass Root (Team Sports)</span> <span class="status live">Live</span></div>
+          <p class="muted">Club websites + payments + team apps for grassroots sports.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_Pitchero.html">Open report</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="360Player" data-seg="Grass Root (Team Sports)" data-status="live">
+          <div class="title">360Player <span class="segment seg-grass">Grass Root (Team Sports)</span> <span class="status live">Live</span></div>
+          <p class="muted">Player development, team comms, and payments landscape review.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_360Player.html">Open report</a>
+          </div>
+        </div>
+
+        <div class="card" data-name="Spond" data-seg="Grass Root (Team Sports)" data-status="live">
+          <div class="title">Spond <span class="segment seg-grass">Grass Root (Team Sports)</span> <span class="status live">Live</span></div>
+          <p class="muted">Team comms & fees. Focus on ease of use for volunteers.</p>
+          <div class="actions">
+            <a class="btn btn-visit" href="./loveadmin_vs_Spond.html">Open report</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="soon">
+      <h2>Coming Soon</h2>
+      <div class="grid" id="grid-soon">
+        <!-- Coming soon cards (no links) -->
+        <div class="card" data-name="Pebble" data-seg="Gymnastics|Children Activity/Class Providers (CAP)" data-status="soon">
+          <div class="title">Pebble
+            <span class="segment seg-gym">Gymnastics</span>
+            <span class="segment seg-cap">CAP</span>
+            <span class="status coming">Coming Soon</span>
+          </div>
+          <p class="muted">Gymnastics & CAP comparison draft in progress.</p>
+          <div class="actions">
+            <button class="btn btn-disabled" disabled>Preparing…</button>
+          </div>
+        </div>
+
+        <div class="card" data-name="Abler" data-seg="Children Activity/Class Providers (CAP)" data-status="soon">
+          <div class="title">Abler <span class="segment seg-cap">CAP</span> <span class="status coming">Coming Soon</span></div>
+          <p class="muted">Children’s activity/class provider comparison.</p>
+          <div class="actions"><button class="btn btn-disabled" disabled>Preparing…</button></div>
+        </div>
+
+        <div class="card" data-name="Pembee" data-seg="TBD" data-status="soon">
+          <div class="title">Pembee <span class="segment">TBD</span> <span class="status coming">Coming Soon</span></div>
+          <p class="muted">Segment tagging to be confirmed.</p>
+          <div class="actions"><button class="btn btn-disabled" disabled>Preparing…</button></div>
+        </div>
+
+        <div class="card" data-name="BookWhen" data-seg="TBD" data-status="soon">
+          <div class="title">BookWhen <span class="segment">TBD</span> <span class="status coming">Coming Soon</span></div>
+          <p class="muted">Segment tagging to be confirmed.</p>
+          <div class="actions"><button class="btn btn-disabled" disabled>Preparing…</button></div>
+        </div>
+
+        <div class="card" data-name="ClubSpark" data-seg="TBD" data-status="soon">
+          <div class="title">ClubSpark <span class="segment">TBD</span> <span class="status coming">Coming Soon</span></div>
+          <p class="muted">Segment tagging to be confirmed.</p>
+          <div class="actions"><button class="btn btn-disabled" disabled>Preparing…</button></div>
+        </div>
+
+        <div class="card" data-name="JackRabbit" data-seg="TBD" data-status="soon">
+          <div class="title">JackRabbit <span class="segment">TBD</span> <span class="status coming">Coming Soon</span></div>
+          <p class="muted">Segment tagging to be confirmed.</p>
+          <div class="actions"><button class="btn btn-disabled" disabled>Preparing…</button></div>
+        </div>
+
+        <div class="card" data-name="ClubManager" data-seg="TBD" data-status="soon">
+          <div class="title">ClubManager <span class="segment">TBD</span> <span class="status coming">Coming Soon</span></div>
+          <p class="muted">Segment tagging to be confirmed.</p>
+          <div class="actions"><button class="btn btn-disabled" disabled>Preparing…</button></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section small muted">
+      Use this index to jump into detailed HTML reports. Live items link to relative HTML files in the same folder. Coming Soon cards are placeholders for planning.
+    </footer>
+  </main>
+
+  <script>
+    // Preloader / fade
+    window.addEventListener('load', () => {
+      document.querySelector('.preloader').classList.add('hidden');
+      document.body.classList.add('loaded');
+    });
+
+    const q = document.getElementById('q');
+    const seg = document.getElementById('seg');
+    const showLiveBtn = document.getElementById('showLive');
+    const showSoonBtn = document.getElementById('showSoon');
+    const liveGrid = document.getElementById('grid-live');
+    const soonGrid = document.getElementById('grid-soon');
+
+    function filterCards(){
+      const query = (q.value || '').toLowerCase();
+      const segment = seg.value;
+      [liveGrid, soonGrid].forEach(grid => {
+        Array.from(grid.children).forEach(card => {
+          const name = (card.dataset.name || '').toLowerCase();
+          const segs = (card.dataset.seg || '');
+          const matchName = name.includes(query) || segs.toLowerCase().includes(query);
+          const matchSeg = (segment==='all') || segs.split('|').includes(segment);
+          card.style.display = (matchName && matchSeg) ? '' : 'none';
+        });
+      });
+    }
+    q.addEventListener('input', filterCards);
+    seg.addEventListener('change', filterCards);
+
+    function toggleView(show){
+      if(show==='live'){
+        document.getElementById('live').style.display = '';
+        document.getElementById('soon').style.display = 'none';
+        showLiveBtn.classList.add('active'); showSoonBtn.classList.remove('active');
+      }else{
+        document.getElementById('live').style.display = 'none';
+        document.getElementById('soon').style.display = '';
+        showSoonBtn.classList.add('active'); showLiveBtn.classList.remove('active');
+      }
+    }
+    showLiveBtn.addEventListener('click', ()=>toggleView('live'));
+    showSoonBtn.addEventListener('click', ()=>toggleView('soon'));
+    // default: show live
+    toggleView('live');
+    filterCards();
+  </script>
+</body>
+</html>
