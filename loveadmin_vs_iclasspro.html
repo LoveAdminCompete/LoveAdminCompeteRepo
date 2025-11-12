@@ -164,490 +164,491 @@
       </div>
     </div>
   </nav>
-
-  <main class="wrap">
-    <header class="section card" id="positioning">
-      
-        <div class="cta-buttons">
-      <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
-      <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
-      <a href="loveadmin_vs_iclasspro.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
-      </div>
-   
+<main class="wrap">
+  <header class="section card" id="positioning">
     
-    <h1 class="section-title">
-        Positioning comparison
-      </h1>
+      <div class="cta-buttons">
+    <button class="btn" id="btnCopyLink" title="Copy a sharable link">Share Link</button>
+    <button class="btn secondary" id="btnPrint">Print / Save PDF</button>
+    <a href="loveadmin_vs_iclasspro.pdf" download style="background-color:var(--e-global-color-secondary); text-decoration:none; " class="btn">Download Detailed Report PDF</a>
+    </div>
+ 
+  
+  
+  <h1 class="section-title">
+      Positioning comparison
+    </h1>
 
-    
+  
 
+    <div class="grid">
+      <div class="card">
+        <h3>LoveAdmin</h3>
+        <ul>
+          <li>UK-based platform serving sports clubs, children’s activity providers, classes &amp; courses, membership orgs, and team sports.</li>
+          <li>Strengths in Direct Debit (GoCardless, London &amp; Zurich), PayPal card-on-file for <b>recurring payments that settle in minutes</b>, and robust admin automation, communications, reporting and safeguarding.</li>
+          <li>JoinIn Online App for member self-service; strong UK phone support hours.</li>
+        </ul>
+        <div class="callout small">Support hours (UK): Mon–Fri 9:00–5:30, phone <span class="muted">0330 818 8536</span>. <span class="note">(See “Sources”)</span></div>
+      </div>
+      <div class="card">
+        <h3>iClassPro</h3>
+        <ul>
+          <li>US-based platform focused on gymnastics, dance, swim and similar centres.</li>
+          <li>Broad suite: Class Management, Parent Portal &amp; Branded App, Integrated Websites, Autopilot communications, POS, QuickBooks Online integration, Appointments, Parties, Skill Tracking.</li>
+          <li>Card processing via iClassPro Payment Services with published US fee schedules and standard/next-day funding; UK specifics not publicly documented.</li>
+        </ul>
+        <div class="callout small">Field notes: “Support is based out of the USA”, “Iframes are tidy”, “They are very expensive”, “We struggle to win their customers.”</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Pricing & Fees -->
+  <section class="section" id="pricing">
+    <h2 class="section-title">Pricing &amp; Fees <span class="pill">sortable • searchable • filterable</span></h2>
+    <div class="controls">
+      <input id="priceSearch" type="search" placeholder="Search rows (e.g., ‘PayPal’, ‘Amex’, ‘timeline’)"/>
+      <select id="priceVendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="iClassPro">iClassPro</option>
+      </select>
+    </div>
+    <table id="pricingTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Vendor</th>
+          <th data-sort="text">Item</th>
+          <th data-sort="text">Region / Applicability</th>
+          <th data-sort="text">Details</th>
+          <th data-sort="text">Sources</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- LoveAdmin payment timelines -->
+        <tr data-vendor="LoveAdmin">
+          <td><span class="vendor-tag">LoveAdmin</span></td>
+          <td>GoCardless — payout timeline</td>
+          <td>UK Direct Debit</td>
+          <td>New DDI to payout ≈ Day 6 (funds reach merchant between 2–5pm on Day 6). Existing mandate: Day 5–6 range.</td>
+          <td class="src small">
+            <a href="https://help.loveadmin.com/gocardless-payment-processing-timeline">help.loveadmin.com/gocardless-payment-processing-timeline</a>
+          </td>
+        </tr>
+        <tr data-vendor="LoveAdmin">
+          <td><span class="vendor-tag">LoveAdmin</span></td>
+          <td>London &amp; Zurich — payout timeline</td>
+          <td>UK Direct Debit</td>
+          <td>New DDI: merchant receives funds ~Day 9; Existing mandate: ~Day 6.</td>
+          <td class="src small">
+            <a href="https://help.loveadmin.com/london-zurich-payment-collection-timeline">help.loveadmin.com/london-zurich-payment-collection-timeline</a>
+          </td>
+        </tr>
+        <tr data-vendor="LoveAdmin">
+          <td><span class="vendor-tag">LoveAdmin</span></td>
+          <td>PayPal recurring / ad-hoc</td>
+          <td>UK / Global (card-on-file)</td>
+          <td>Recurring and ad-hoc fees settle to PayPal account within minutes (then transfer to bank). Same-day, 24/7 timing; supports online refunds.</td>
+          <td class="src small">
+            <a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes</a>
+          </td>
+        </tr>
+        <tr data-vendor="LoveAdmin">
+          <td><span class="vendor-tag">LoveAdmin</span></td>
+          <td>Fees disclosure</td>
+          <td>UK</td>
+          <td>Uses multiple processors (GoCardless, London &amp; Zurich, PayPal). Transaction fees vary by processor; not fully public on core site.</td>
+          <td class="src small">
+            <a href="https://loveadmin.com/payment-solutions/">loveadmin.com/payment-solutions</a>
+          </td>
+        </tr>
+
+        <!-- iClassPro payment fees / funding -->
+        <tr data-vendor="iClassPro">
+          <td><span class="vendor-tag">iClassPro</span></td>
+          <td>Card processing fees (Visa/MC/Discover)</td>
+          <td>US (published)</td>
+          <td>2.9% + $0.50 per transaction; Monthly gateway fee $10.</td>
+          <td class="src small">
+            <a href="https://support.iclasspro.com/hc/en-us/articles/360003912474-What-Are-the-Different-Fees-I-See-on-my-Credit-Card-Processing-Statement">support.iclasspro.com/.../credit-card-processing-statement</a>
+          </td>
+        </tr>
+        <tr data-vendor="iClassPro">
+          <td><span class="vendor-tag">iClassPro</span></td>
+          <td>Amex fees</td>
+          <td>US (published)</td>
+          <td>3.5% + $0.50 per transaction.</td>
+          <td class="src small">
+            <a href="https://support.iclasspro.com/hc/en-us/articles/360003912474-What-Are-the-Different-Fees-I-See-on-my-Credit-Card-Processing-Statement">support.iclasspro.com/.../credit-card-processing-statement</a>
+          </td>
+        </tr>
+        <tr data-vendor="iClassPro">
+          <td><span class="vendor-tag">iClassPro</span></td>
+          <td>Settlement schedule</td>
+          <td>US (published)</td>
+          <td>Standard funding ~2–3 business days after batch; optional Next-Day Funding (eligibility/region dependent).</td>
+          <td class="src small">
+            <a href="https://support.iclasspro.com/hc/en-us/articles/360034072333-When-Will-I-See-Funds-in-My-Account-for-Settled-Transactions">support.iclasspro.com/.../When-Will-I-See-Funds...</a> •
+            <a href="https://support.iclasspro.com/hc/en-us/articles/4402072580503-What-Do-I-Need-to-Know-About-Next-Day-Funding">support.iclasspro.com/.../Next-Day-Funding</a>
+          </td>
+        </tr>
+        <tr data-vendor="iClassPro">
+          <td><span class="vendor-tag">iClassPro</span></td>
+          <td>UK specificity</td>
+          <td>UK</td>
+          <td>Public documentation focuses on US processing; UK rates/settlement not explicitly published.</td>
+          <td class="src small">
+            <a href="https://www.iclasspro.com/payment-services">iclasspro.com/payment-services</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small muted">Tip: Click any column header to sort. Use search + vendor filter together.</p>
+  </section>
+
+  <!-- Feature Matrix -->
+  <section class="section" id="matrix">
+    <h2 class="section-title">In-Depth Feature Matrix <span class="pill">sortable • searchable • filter by vendor</span></h2>
+    <div class="controls">
+      <input id="featSearch" type="search" placeholder="Search (e.g., ‘QuickBooks’, ‘autopilot’, ‘Direct Debit’, ‘POS’)"/>
+      <select id="featVendor">
+        <option value="all">All vendors</option>
+        <option value="LoveAdmin">LoveAdmin</option>
+        <option value="iClassPro">iClassPro</option>
+      </select>
+    </div>
+    <table id="featureTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Category</th>
+          <th data-sort="text">Sub-feature / Depth</th>
+          <th data-sort="text">iClassPro</th>
+          <th data-sort="text">LoveAdmin</th>
+          <th data-sort="text">Sources</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Payments -->
+        <tr data-vendor="Both">
+          <td>Payments</td>
+          <td>Direct Debit support & timelines</td>
+          <td>Public docs emphasise card-processing via iClassPro Payment Services; DD not core focus in docs.</td>
+          <td>Native Direct Debit flows via GoCardless &amp; L&amp;Z with clear timelines (new/existing mandates) and Advance Notice handling.</td>
+          <td class="src small"><a href="https://help.loveadmin.com/gocardless-payment-processing-timeline">GoCardless timeline</a> • <a href="https://help.loveadmin.com/london-zurich-payment-collection-timeline">L&amp;Z timeline</a></td>
+        </tr>
+        <tr data-vendor="Both">
+          <td>Payments</td>
+          <td>Card-on-file recurring & ad-hoc</td>
+          <td>Yes (standard recurring billing); published US-fee structure; settlement ~2–3 business days (or next-day funding).</td>
+          <td>PayPal card-on-file for recurring & ad-hoc that <b>settle in minutes</b>; same-day, 24/7; online refunds.</td>
+          <td class="src small"><a href="https://support.iclasspro.com/hc/en-us/articles/360034072333-When-Will-I-See-Funds-in-My-Account-for-Settled-Transactions">iClassPro settlement</a> • <a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">LoveAdmin PayPal recurring</a></td>
+        </tr>
+        <tr data-vendor="Both">
+          <td>Payments</td>
+          <td>Reconciliation / credits / refunds</td>
+          <td>Standard reconciliation; details vary by processor.</td>
+          <td>Automated reconciliation; credits; refunds via PayPal directly in product; aging & receivables tracking in reports.</td>
+          <td class="src small"><a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a> • <a href="https://loveadmin.com/business-reports/">Business reports</a></td>
+        </tr>
+        <!-- Registers / Attendance -->
+        <tr data-vendor="Both">
+          <td>Registers & Attendance</td>
+          <td>Class registers, checks, QR/self check-in</td>
+          <td>Attendance tracking within Class Management and Parent Portal; makeups, approvals, etc.</td>
+          <td>Registers with medical/payment/consent flags; QR self check-in; team availability management on mobile/tablet.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/class-management">iClassPro Class Mgmt</a> • <a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a> • <a href="https://loveadmin.com/team-sports/">Team sports</a></td>
+        </tr>
+        <!-- Communications -->
+        <tr data-vendor="Both">
+          <td>Communications</td>
+          <td>Email / SMS automations & targeting</td>
+          <td>Autopilot templates, triggers, filters; connected to events like enrollments, payments, absences.</td>
+          <td>Advanced targeting, personalization, automation, tracking (open/click), and templates for journeys.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/autopilot">iClassPro Autopilot</a> • <a href="https://loveadmin.com/communications-tools/">LoveAdmin communications</a></td>
+        </tr>
+        <!-- Shop / POS -->
+        <tr data-vendor="Both">
+          <td>Shop / Store / POS</td>
+          <td>On-site POS, inventory, online store</td>
+          <td>Dedicated POS with inventory, barcode, shift mgmt, discounting, reporting.</td>
+          <td>Online shop for merchandise/kit; tickets; rentals; upsells and product relationships.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/point-of-sale">iClassPro POS</a> • <a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a></td>
+        </tr>
+        <!-- Mobile / Apps -->
+        <tr data-vendor="Both">
+          <td>Mobile / Apps</td>
+          <td>Parent / Member experience</td>
+          <td>Parent Portal & Branded App (add-on) with push notifications.</td>
+          <td>JoinIn Online App (mobile-friendly), member self-service & payments; QR check-in.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/customer-portal">iClassPro Parent Portal</a> • <a href="https://www.iclasspro.com/branded-app">iClassPro Branded App</a> • <a href="https://loveadmin.com/joinin-online-app/">JoinIn app</a></td>
+        </tr>
+        <!-- Websites -->
+        <tr data-vendor="iClassPro">
+          <td>Websites</td>
+          <td>Integrated Websites builder</td>
+          <td>Drag-and-drop sites w/ Customer Portal, pop-ups, dashboard.</td>
+          <td>—</td>
+          <td class="src small"><a href="https://www.iclasspro.com/websites">iClassPro Integrated Websites</a></td>
+        </tr>
+        <!-- Scheduling -->
+        <tr data-vendor="Both">
+          <td>Scheduling</td>
+          <td>Appointments / Private lessons</td>
+          <td>Appointments module for private lessons and reminders.</td>
+          <td>Activity calendar & flexible session/courses mgmt; waiting lists; trials.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/appointments">iClassPro Appointments</a> • <a href="https://loveadmin.com/activity-calendars/">Activity calendar</a> • <a href="https://loveadmin.com/bookings-and-registrations/">Bookings & registrations</a></td>
+        </tr>
+        <!-- Events & Parties -->
+        <tr data-vendor="iClassPro">
+          <td>Events</td>
+          <td>Parties / Camps</td>
+          <td>Party booking (packages/add-ons); (Camps page varies) .</td>
+          <td>Events, tickets, and promotions via bookings module.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/party-booking-management">iClassPro Party Booking</a> • <a href="https://loveadmin.com/class-and-event-management/">Class & event mgmt</a></td>
+        </tr>
+        <!-- Skills -->
+        <tr data-vendor="iClassPro">
+          <td>Learning</td>
+          <td>Skill tracking / Progress</td>
+          <td>Dedicated skills/progress tracking with badges & evaluations.</td>
+          <td>Attendance & performance tracking; not a dedicated skills module.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/skill-tracking">iClassPro Skill Tracking</a> • <a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a></td>
+        </tr>
+        <!-- Accounting -->
+        <tr data-vendor="iClassPro">
+          <td>Accounting</td>
+          <td>QuickBooks Online integration</td>
+          <td>One-time setup, daily sync, reconciliation & liability tracking.</td>
+          <td>Not publicly documented as QuickBooks connector.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/quickbooks-integration">iClassPro QuickBooks</a></td>
+        </tr>
+        <!-- Admin efficiencies -->
+        <tr data-vendor="LoveAdmin">
+          <td>Admin efficiencies</td>
+          <td>Automations (cashflow, reminders, journeys)</td>
+          <td>Autopilot campaigns and templates.</td>
+          <td>Automations across payments (chasing, retries), comms, renewals, safeguarding, BI dashboards & revenue opportunities.</td>
+          <td class="src small"><a href="https://www.iclasspro.com/autopilot">Autopilot</a> • <a href="https://loveadmin.com/automations/">LoveAdmin Automations</a> • <a href="https://loveadmin.com/business-reports/">Business reports</a></td>
+        </tr>
+        <!-- Support -->
+        <tr data-vendor="Both">
+          <td>Support</td>
+          <td>Coverage</td>
+          <td>Field note: Support team based in USA.</td>
+          <td>UK phone support with published hours; V1/V2 help centres.</td>
+          <td class="src small"><a href="https://loveadmin.com/contact-us-support/">LoveAdmin support</a> • <a href="https://www.iclasspro.com/iclasspro-features">iClassPro features</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Key Gaps -->
+  <section class="section" id="gaps">
+    <h2 class="section-title">Key gaps between the two platforms <span class="pill">sortable • actionable</span></h2>
+    <div class="controls">
+      <input id="gapSearch" type="search" placeholder="Search (e.g., ‘skills’, ‘support’, ‘pricing’)"/>
+      <select id="gapSort">
+        <option value="priority">Sort by priority</option>
+        <option value="category">Sort by category</option>
+      </select>
+    </div>
+    <table id="gapsTable">
+      <thead>
+        <tr>
+          <th data-sort="text">Priority</th>
+          <th data-sort="text">Area</th>
+          <th data-sort="text">Where iClassPro is strong</th>
+          <th data-sort="text">Implication in UK</th>
+          <th data-sort="text">Actionable take for LoveAdmin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>High</td>
+          <td>Native mobile & Branded App</td>
+          <td>Branded App with push notifications; polished portal.</td>
+          <td>Perceived premium app experience may influence parents.</td>
+          <td><b>Accelerate</b> PWA polish & push (via JoinIn + web push) and/or evaluate white-label mobile wrapper; emphasise QR self-check-in and same-day PayPal settlement in sales stories.</td>
+        </tr>
+        <tr>
+          <td>High</td>
+          <td>Skills / Progress tracking</td>
+          <td>Dedicated Skill Tracking module.</td>
+          <td>Gymnastics/dance centres value progress visuals.</td>
+          <td><b>Define roadmap</b> for lightweight skills badges leveraging existing attendance/performance data; short-term: publish templates & exports for coaches.</td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>POS & Inventory</td>
+          <td>Full POS with barcode & inventory.</td>
+          <td>On-site pro-shops benefit from built-in POS.</td>
+          <td><b>Clarify</b> online shop capabilities + partner for in-venue POS; publish best-practice for SKU, sizes and stock via reports.</td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>Accounting integrations</td>
+          <td>QuickBooks Online integration (daily sync).</td>
+          <td>Small/medium clubs value accounting sync.</td>
+          <td><b>Publish roadmap</b> for accounting connectors or documented export recipes for Xero/QBO (incl. tax/VAT mapping).</td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>Pricing transparency</td>
+          <td>US card fees publicly documented.</td>
+          <td>UK buyers ask for clear, comparable costs.</td>
+          <td><b>Provide matrix</b> of typical fees by provider (PayPal/GC/L&amp;Z) with examples; emphasise PayPal same-day cash and DD reliability.</td>
+        </tr>
+        <tr>
+          <td>Low</td>
+          <td>Embedded widgets / iframes</td>
+          <td>Field note: “Iframes are very tidy”.</td>
+          <td>Perception of cleaner embed.</td>
+          <td><b>Showcase</b> modern embeds & booking widgets + CSS recipes; publish gallery of best examples.</td>
+        </tr>
+        <tr>
+          <td>Context</td>
+          <td>Support locality</td>
+          <td>Field note: US-based support.</td>
+          <td>UK time-zone + GDPR reassurance can be decisive.</td>
+          <td><b>Lead</b> with UK phone hours, SLA and case studies; highlight UK-specific payment timelines and compliance.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section" id="reviews">
+    <h2 class="section-title">Reviews &amp; sentiments comparison <span class="pill">Capterra • GetApp • Trustpilot • Software Advice</span></h2>
+    <div class="grid">
+      <div class="card">
+        <h3>LoveAdmin</h3>
+        <ul>
+          <li>Capterra: highlights easy registers and Direct Debits; strong migration to V2; support responsiveness; some learning curve; lack of native phone app noted by one reviewer; occasional PayPal linking friction. <span class="small">(See sources)</span></li>
+          <li>GetApp: positive admin efficiency; some onboarding time/communication concerns in individual reviews.</li>
+          <li>Trustpilot (claimed profile): mixed sentiment; company lists UK address + phone; LoveAdmin responds to 100% of negative reviews.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>iClassPro</h3>
+        <ul>
+          <li>Capterra: strong for activity centres; some criticisms around regional payment integrations.</li>
+          <li>Software Advice: notes about credit card fees, monthly costs, and difficulty using external software for payments.</li>
+          <li>General: rich feature breadth (POS, branded app, skills); public pricing clarity mainly US-focused.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small">Quotes and detailed review excerpts are linked in “Sources”.</p>
+  </section>
+
+  <!-- Battle Cards -->
+  <section class="section" id="battle">
+    <h2 class="section-title">Sales battle cards <span class="pill">talk tracks • traps • proof points</span></h2>
+    <details open>
+      <summary>When the prospect prioritises UK cashflow predictability &amp; settlement speed</summary>
       <div class="grid">
         <div class="card">
-          <h3>LoveAdmin</h3>
-          <ul>
-            <li>UK‑based platform serving sports clubs, children’s activity providers, classes &amp; courses, membership orgs, and team sports.</li>
-            <li>Strengths in Direct Debit (GoCardless, London &amp; Zurich), PayPal card-on-file for <b>recurring payments that settle in minutes</b>, and robust admin automation, communications, reporting and safeguarding.</li>
-            <li>JoinIn Online App for member self‑service; strong UK phone support hours.</li>
-          </ul>
-          <div class="callout small">Support hours (UK): Mon–Fri 9:00–5:30, phone <span class="muted">0330 818 8536</span>. <span class="note">(See “Sources”)</span></div>
+          <div class="win">Talk track</div>
+          <p>“With LoveAdmin you choose the right rail per use-case: Direct Debit via GoCardless/L&amp;Z for predictable recurring collections, or PayPal card-on-file for fees that <b>settle in minutes</b>. Clubs cut reconciliation time and meet payroll with confidence.”</p>
         </div>
         <div class="card">
-          <h3>iClassPro</h3>
-          <ul>
-            <li>US‑based platform focused on gymnastics, dance, swim and similar centres.</li>
-            <li>Broad suite: Class Management, Parent Portal &amp; Branded App, Integrated Websites, Autopilot communications, POS, QuickBooks Online integration, Appointments, Parties, Skill Tracking.</li>
-            <li>Card processing via iClassPro Payment Services with published US fee schedules and standard/next‑day funding; UK specifics not publicly documented.</li>
-          </ul>
-          <div class="callout small">Field notes: “Support is based out of the USA”, “Iframes are tidy”, “They are very expensive”, “We struggle to win their customers.”</div>
+          <div class="risk">Trap</div>
+          <p>They ask for next-day card funding—iClassPro references US next-day. Clarify that UK DD timelines are clearly published and PayPal delivers same-day funds for recurring/ad-hoc.</p>
+        </div>
+        <div class="card">
+          <div class="neutral">Proof</div>
+          <p>Link to GoCardless &amp; L&amp;Z timelines + PayPal “settle in minutes” article in Sources.</p>
         </div>
       </div>
-    </header>
-
-    <!-- Pricing & Fees -->
-    <section class="section" id="pricing">
-      <h2 class="section-title">Pricing &amp; Fees <span class="pill">sortable • searchable • filterable</span></h2>
-      <div class="controls">
-        <input id="priceSearch" type="search" placeholder="Search rows (e.g., ‘PayPal’, ‘Amex’, ‘timeline’)"/>
-        <select id="priceVendor">
-          <option value="all">All vendors</option>
-          <option value="LoveAdmin">LoveAdmin</option>
-          <option value="iClassPro">iClassPro</option>
-        </select>
-      </div>
-      <table id="pricingTable">
-        <thead>
-          <tr>
-            <th data-sort="text">Vendor</th>
-            <th data-sort="text">Item</th>
-            <th data-sort="text">Region / Applicability</th>
-            <th data-sort="text">Details</th>
-            <th data-sort="text">Sources</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- LoveAdmin payment timelines -->
-          <tr data-vendor="LoveAdmin">
-            <td><span class="vendor-tag">LoveAdmin</span></td>
-            <td>GoCardless — payout timeline</td>
-            <td>UK Direct Debit</td>
-            <td>New DDI to payout ≈ Day 6 (funds reach merchant between 2–5pm on Day 6). Existing mandate: Day 5–6 range.</td>
-            <td class="src small">
-              <a href="https://help.loveadmin.com/gocardless-payment-processing-timeline">help.loveadmin.com/gocardless-payment-processing-timeline</a>
-            </td>
-          </tr>
-          <tr data-vendor="LoveAdmin">
-            <td><span class="vendor-tag">LoveAdmin</span></td>
-            <td>London &amp; Zurich — payout timeline</td>
-            <td>UK Direct Debit</td>
-            <td>New DDI: merchant receives funds ~Day 9; Existing mandate: ~Day 6.</td>
-            <td class="src small">
-              <a href="https://help.loveadmin.com/london-zurich-payment-collection-timeline">help.loveadmin.com/london-zurich-payment-collection-timeline</a>
-            </td>
-          </tr>
-          <tr data-vendor="LoveAdmin">
-            <td><span class="vendor-tag">LoveAdmin</span></td>
-            <td>PayPal recurring / ad‑hoc</td>
-            <td>UK / Global (card‑on‑file)</td>
-            <td>Recurring and ad‑hoc fees settle to PayPal account within minutes (then transfer to bank). Same‑day, 24/7 timing; supports online refunds.</td>
-            <td class="src small">
-              <a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes</a>
-            </td>
-          </tr>
-          <tr data-vendor="LoveAdmin">
-            <td><span class="vendor-tag">LoveAdmin</span></td>
-            <td>Fees disclosure</td>
-            <td>UK</td>
-            <td>Uses multiple processors (GoCardless, London &amp; Zurich, PayPal). Transaction fees vary by processor; not fully public on core site.</td>
-            <td class="src small">
-              <a href="https://loveadmin.com/payment-solutions/">loveadmin.com/payment-solutions</a>
-            </td>
-          </tr>
-
-          <!-- iClassPro payment fees / funding -->
-          <tr data-vendor="iClassPro">
-            <td><span class="vendor-tag">iClassPro</span></td>
-            <td>Card processing fees (Visa/MC/Discover)</td>
-            <td>US (published)</td>
-            <td>2.9% + $0.50 per transaction; Monthly gateway fee $10.</td>
-            <td class="src small">
-              <a href="https://support.iclasspro.com/hc/en-us/articles/360052312674-What-are-the-different-fees-I-see-on-my-credit-card-processing-statement">support.iclasspro.com/.../credit-card-processing-statement</a>
-            </td>
-          </tr>
-          <tr data-vendor="iClassPro">
-            <td><span class="vendor-tag">iClassPro</span></td>
-            <td>Amex fees</td>
-            <td>US (published)</td>
-            <td>3.5% + $0.50 per transaction.</td>
-            <td class="src small">
-              <a href="https://support.iclasspro.com/hc/en-us/articles/360052312674-What-are-the-different-fees-I-see-on-my-credit-card-processing-statement">support.iclasspro.com/.../credit-card-processing-statement</a>
-            </td>
-          </tr>
-          <tr data-vendor="iClassPro">
-            <td><span class="vendor-tag">iClassPro</span></td>
-            <td>Settlement schedule</td>
-            <td>US (published)</td>
-            <td>Standard funding ~2–3 business days after batch; optional Next‑Day Funding (eligibility/region dependent).</td>
-            <td class="src small">
-              <a href="https://support.iclasspro.com/hc/en-us/articles/28193190163675-Settlement-Schedule">support.iclasspro.com/.../Settlement-Schedule</a>
-            </td>
-          </tr>
-          <tr data-vendor="iClassPro">
-            <td><span class="vendor-tag">iClassPro</span></td>
-            <td>UK specificity</td>
-            <td>UK</td>
-            <td>Public documentation focuses on US processing; UK rates/settlement not explicitly published.</td>
-            <td class="src small">
-              <a href="https://www.iclasspro.com/features/payment">iclasspro.com/features/payment</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="small muted">Tip: Click any column header to sort. Use search + vendor filter together.</p>
-    </section>
-
-    <!-- Feature Matrix -->
-    <section class="section" id="matrix">
-      <h2 class="section-title">In‑Depth Feature Matrix <span class="pill">sortable • searchable • filter by vendor</span></h2>
-      <div class="controls">
-        <input id="featSearch" type="search" placeholder="Search (e.g., ‘QuickBooks’, ‘autopilot’, ‘Direct Debit’, ‘POS’)"/>
-        <select id="featVendor">
-          <option value="all">All vendors</option>
-          <option value="LoveAdmin">LoveAdmin</option>
-          <option value="iClassPro">iClassPro</option>
-        </select>
-      </div>
-      <table id="featureTable">
-        <thead>
-          <tr>
-            <th data-sort="text">Category</th>
-            <th data-sort="text">Sub‑feature / Depth</th>
-            <th data-sort="text">iClassPro</th>
-            <th data-sort="text">LoveAdmin</th>
-            <th data-sort="text">Sources</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Payments -->
-          <tr data-vendor="Both">
-            <td>Payments</td>
-            <td>Direct Debit support & timelines</td>
-            <td>Public docs emphasise card‑processing via iClassPro Payment Services; DD not core focus in docs.</td>
-            <td>Native Direct Debit flows via GoCardless &amp; L&amp;Z with clear timelines (new/existing mandates) and Advance Notice handling.</td>
-            <td class="src small"><a href="https://help.loveadmin.com/gocardless-payment-processing-timeline">GoCardless timeline</a> • <a href="https://help.loveadmin.com/london-zurich-payment-collection-timeline">L&amp;Z timeline</a></td>
-          </tr>
-          <tr data-vendor="Both">
-            <td>Payments</td>
-            <td>Card‑on‑file recurring & ad‑hoc</td>
-            <td>Yes (standard recurring billing); published US‑fee structure; settlement ~2–3 business days (or next‑day funding).</td>
-            <td>PayPal card‑on‑file for recurring & ad‑hoc that <b>settle in minutes</b>; same‑day, 24/7; online refunds.</td>
-            <td class="src small"><a href="https://support.iclasspro.com/hc/en-us/articles/28193190163675-Settlement-Schedule">iClassPro settlement</a> • <a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">LoveAdmin PayPal recurring</a></td>
-          </tr>
-          <tr data-vendor="Both">
-            <td>Payments</td>
-            <td>Reconciliation / credits / refunds</td>
-            <td>Standard reconciliation; details vary by processor.</td>
-            <td>Automated reconciliation; credits; refunds via PayPal directly in product; aging & receivables tracking in reports.</td>
-            <td class="src small"><a href="http://localhost:8451/https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a> • <a href="https://loveadmin.com/business-reports/">Business reports</a></td>
-          </tr>
-          <!-- Registers / Attendance -->
-          <tr data-vendor="Both">
-            <td>Registers & Attendance</td>
-            <td>Class registers, checks, QR/self check‑in</td>
-            <td>Attendance tracking within Class Management and Parent Portal; makeups, approvals, etc.</td>
-            <td>Registers with medical/payment/consent flags; QR self check‑in; team availability management on mobile/tablet.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/class-management">iClassPro Class Mgmt</a> • <a href="http://localhost:8451/https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a> • <a href="https://loveadmin.com/team-sports/">Team sports</a></td>
-          </tr>
-          <!-- Communications -->
-          <tr data-vendor="Both">
-            <td>Communications</td>
-            <td>Email / SMS automations & targeting</td>
-            <td>Autopilot templates, triggers, filters; connected to events like enrollments, payments, absences.</td>
-            <td>Advanced targeting, personalization, automation, tracking (open/click), and templates for journeys.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/autopilot">iClassPro Autopilot</a> • <a href="https://loveadmin.com/communications-tools/">LoveAdmin communications</a></td>
-          </tr>
-          <!-- Shop / POS -->
-          <tr data-vendor="Both">
-            <td>Shop / Store / POS</td>
-            <td>On‑site POS, inventory, online store</td>
-            <td>Dedicated POS with inventory, barcode, shift mgmt, discounting, reporting.</td>
-            <td>Online shop for merchandise/kit; tickets; rentals; upsells and product relationships.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/point-of-sale">iClassPro POS</a> • <a href="http://localhost:8451/https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a></td>
-          </tr>
-          <!-- Mobile / Apps -->
-          <tr data-vendor="Both">
-            <td>Mobile / Apps</td>
-            <td>Parent / Member experience</td>
-            <td>Parent Portal & Branded App (add‑on) with push notifications.</td>
-            <td>JoinIn Online App (mobile‑friendly), member self‑service & payments; QR check‑in.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/parent-portal">iClassPro Parent Portal</a> • <a href="https://www.iclasspro.com/features/branded-app">iClassPro Branded App</a> • <a href="https://loveadmin.com/joinin-online-app/">JoinIn app</a></td>
-          </tr>
-          <!-- Websites -->
-          <tr data-vendor="iClassPro">
-            <td>Websites</td>
-            <td>Integrated Websites builder</td>
-            <td>Drag‑and‑drop sites w/ Customer Portal, pop‑ups, dashboard.</td>
-            <td>—</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/integrated-websites">iClassPro Integrated Websites</a></td>
-          </tr>
-          <!-- Scheduling -->
-          <tr data-vendor="Both">
-            <td>Scheduling</td>
-            <td>Appointments / Private lessons</td>
-            <td>Appointments module for private lessons and reminders.</td>
-            <td>Activity calendar & flexible session/courses mgmt; waiting lists; trials.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/appointments">iClassPro Appointments</a> • <a href="https://loveadmin.com/activity-calendars/">Activity calendar</a> • <a href="https://loveadmin.com/bookings-and-registrations/">Bookings & registrations</a></td>
-          </tr>
-          <!-- Events & Parties -->
-          <tr data-vendor="iClassPro">
-            <td>Events</td>
-            <td>Parties / Camps</td>
-            <td>Party booking (packages/add‑ons); (Camps page varies) .</td>
-            <td>Events, tickets, and promotions via bookings module.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/party-booking">iClassPro Party Booking</a> • <a href="https://loveadmin.com/class-and-event-management/">Class & event mgmt</a></td>
-          </tr>
-          <!-- Skills -->
-          <tr data-vendor="iClassPro">
-            <td>Learning</td>
-            <td>Skill tracking / Progress</td>
-            <td>Dedicated skills/progress tracking with badges & evaluations.</td>
-            <td>Attendance & performance tracking; not a dedicated skills module.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/skill-tracking">iClassPro Skill Tracking</a> • <a href="http://localhost:8451/https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide</a></td>
-          </tr>
-          <!-- Accounting -->
-          <tr data-vendor="iClassPro">
-            <td>Accounting</td>
-            <td>QuickBooks Online integration</td>
-            <td>One‑time setup, daily sync, reconciliation & liability tracking.</td>
-            <td>Not publicly documented as QuickBooks connector.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/quickbooks">iClassPro QuickBooks</a></td>
-          </tr>
-          <!-- Admin efficiencies -->
-          <tr data-vendor="LoveAdmin">
-            <td>Admin efficiencies</td>
-            <td>Automations (cashflow, reminders, journeys)</td>
-            <td>Autopilot campaigns and templates.</td>
-            <td>Automations across payments (chasing, retries), comms, renewals, safeguarding, BI dashboards & revenue opportunities.</td>
-            <td class="src small"><a href="https://www.iclasspro.com/features/autopilot">Autopilot</a> • <a href="https://loveadmin.com/automations/">LoveAdmin Automations</a> • <a href="https://loveadmin.com/business-reports/">Business reports</a></td>
-          </tr>
-          <!-- Support -->
-          <tr data-vendor="Both">
-            <td>Support</td>
-            <td>Coverage</td>
-            <td>Field note: Support team based in USA.</td>
-            <td>UK phone support with published hours; V1/V2 help centres.</td>
-            <td class="src small"><a href="https://loveadmin.com/contact-us-support/">LoveAdmin support</a> • <a href="https://www.iclasspro.com/features">iClassPro features</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Key Gaps -->
-    <section class="section" id="gaps">
-      <h2 class="section-title">Key gaps between the two platforms <span class="pill">sortable • actionable</span></h2>
-      <div class="controls">
-        <input id="gapSearch" type="search" placeholder="Search (e.g., ‘skills’, ‘support’, ‘pricing’)"/>
-        <select id="gapSort">
-          <option value="priority">Sort by priority</option>
-          <option value="category">Sort by category</option>
-        </select>
-      </div>
-      <table id="gapsTable">
-        <thead>
-          <tr>
-            <th data-sort="text">Priority</th>
-            <th data-sort="text">Area</th>
-            <th data-sort="text">Where iClassPro is strong</th>
-            <th data-sort="text">Implication in UK</th>
-            <th data-sort="text">Actionable take for LoveAdmin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>High</td>
-            <td>Native mobile & Branded App</td>
-            <td>Branded App with push notifications; polished portal.</td>
-            <td>Perceived premium app experience may influence parents.</td>
-            <td><b>Accelerate</b> PWA polish & push (via JoinIn + web push) and/or evaluate white‑label mobile wrapper; emphasise QR self‑check‑in and same‑day PayPal settlement in sales stories.</td>
-          </tr>
-          <tr>
-            <td>High</td>
-            <td>Skills / Progress tracking</td>
-            <td>Dedicated Skill Tracking module.</td>
-            <td>Gymnastics/dance centres value progress visuals.</td>
-            <td><b>Define roadmap</b> for lightweight skills badges leveraging existing attendance/performance data; short‑term: publish templates & exports for coaches.</td>
-          </tr>
-          <tr>
-            <td>Medium</td>
-            <td>POS & Inventory</td>
-            <td>Full POS with barcode & inventory.</td>
-            <td>On‑site pro‑shops benefit from built‑in POS.</td>
-            <td><b>Clarify</b> online shop capabilities + partner for in‑venue POS; publish best‑practice for SKU, sizes and stock via reports.</td>
-          </tr>
-          <tr>
-            <td>Medium</td>
-            <td>Accounting integrations</td>
-            <td>QuickBooks Online integration (daily sync).</td>
-            <td>Small/medium clubs value accounting sync.</td>
-            <td><b>Publish roadmap</b> for accounting connectors or documented export recipes for Xero/QBO (incl. tax/VAT mapping).</td>
-          </tr>
-          <tr>
-            <td>Medium</td>
-            <td>Pricing transparency</td>
-            <td>US card fees publicly documented.</td>
-            <td>UK buyers ask for clear, comparable costs.</td>
-            <td><b>Provide matrix</b> of typical fees by provider (PayPal/GC/L&amp;Z) with examples; emphasise PayPal same‑day cash and DD reliability.</td>
-          </tr>
-          <tr>
-            <td>Low</td>
-            <td>Embedded widgets / iframes</td>
-            <td>Field note: “Iframes are very tidy”.</td>
-            <td>Perception of cleaner embed.</td>
-            <td><b>Showcase</b> modern embeds & booking widgets + CSS recipes; publish gallery of best examples.</td>
-          </tr>
-          <tr>
-            <td>Context</td>
-            <td>Support locality</td>
-            <td>Field note: US‑based support.</td>
-            <td>UK time‑zone + GDPR reassurance can be decisive.</td>
-            <td><b>Lead</b> with UK phone hours, SLA and case studies; highlight UK‑specific payment timelines and compliance.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Reviews -->
-    <section class="section" id="reviews">
-      <h2 class="section-title">Reviews &amp; sentiments comparison <span class="pill">Capterra • GetApp • Trustpilot • Software Advice</span></h2>
+    </details>
+    <details>
+      <summary>When they emphasise mobile app polish</summary>
       <div class="grid">
         <div class="card">
-          <h3>LoveAdmin</h3>
-          <ul>
-            <li>Capterra: highlights easy registers and Direct Debits; strong migration to V2; support responsiveness; some learning curve; lack of native phone app noted by one reviewer; occasional PayPal linking friction. <span class="small">(See sources)</span></li>
-            <li>GetApp: positive admin efficiency; some onboarding time/communication concerns in individual reviews.</li>
-            <li>Trustpilot (claimed profile): mixed sentiment; company lists UK address + phone; LoveAdmin responds to 100% of negative reviews.</li>
-          </ul>
+          <div class="win">Talk track</div>
+          <p>“Parents complete tasks via the mobile-friendly JoinIn experience with saved cards and QR check-in. Clubs get the same conversions without app-store friction. For branded app needs, we can explore white-label options.”</p>
         </div>
         <div class="card">
-          <h3>iClassPro</h3>
-          <ul>
-            <li>Capterra: strong for activity centres; some criticisms around regional payment integrations.</li>
-            <li>Software Advice: notes about credit card fees, monthly costs, and difficulty using external software for payments.</li>
-            <li>General: rich feature breadth (POS, branded app, skills); public pricing clarity mainly US‑focused.</li>
-          </ul>
+          <div class="risk">Trap</div>
+          <p>iClassPro’s Branded App + push notifications impress visually.</p>
+        </div>
+        <div class="card">
+          <div class="neutral">Proof</div>
+          <p>Show JoinIn flows and QR attendance; highlight PayPal stored-card for repeat purchases.</p>
         </div>
       </div>
-      <p class="small">Quotes and detailed review excerpts are linked in “Sources”.</p>
-    </section>
-
-    <!-- Battle Cards -->
-    <section class="section" id="battle">
-      <h2 class="section-title">Sales battle cards <span class="pill">talk tracks • traps • proof points</span></h2>
-      <details open>
-        <summary>When the prospect prioritises UK cashflow predictability &amp; settlement speed</summary>
-        <div class="grid">
-          <div class="card">
-            <div class="win">Talk track</div>
-            <p>“With LoveAdmin you choose the right rail per use‑case: Direct Debit via GoCardless/L&amp;Z for predictable recurring collections, or PayPal card‑on‑file for fees that <b>settle in minutes</b>. Clubs cut reconciliation time and meet payroll with confidence.”</p>
-          </div>
-          <div class="card">
-            <div class="risk">Trap</div>
-            <p>They ask for next‑day card funding—iClassPro references US next‑day. Clarify that UK DD timelines are clearly published and PayPal delivers same‑day funds for recurring/ad‑hoc.</p>
-          </div>
-          <div class="card">
-            <div class="neutral">Proof</div>
-            <p>Link to GoCardless &amp; L&amp;Z timelines + PayPal “settle in minutes” article in Sources.</p>
-          </div>
-        </div>
-      </details>
-      <details>
-        <summary>When they emphasise mobile app polish</summary>
-        <div class="grid">
-          <div class="card">
-            <div class="win">Talk track</div>
-            <p>“Parents complete tasks via the mobile‑friendly JoinIn experience with saved cards and QR check‑in. Clubs get the same conversions without app‑store friction. For branded app needs, we can explore white‑label options.”</p>
-          </div>
-          <div class="card">
-            <div class="risk">Trap</div>
-            <p>iClassPro’s Branded App + push notifications impress visually.</p>
-          </div>
-          <div class="card">
-            <div class="neutral">Proof</div>
-            <p>Show JoinIn flows and QR attendance; highlight PayPal stored‑card for repeat purchases.</p>
-          </div>
-        </div>
-      </details>
-      <details>
-        <summary>When they mention POS, inventory or pro‑shops</summary>
-        <div class="grid">
-          <div class="card"><div class="win">Talk track</div><p>“LoveAdmin online shop covers memberships, kits, tickets and rentals, with upsells and reporting. For on‑site POS, partner integrations can be recommended.”</p></div>
-          <div class="card"><div class="risk">Trap</div><p>iClassPro POS has barcode scanning and inventory built‑in.</p></div>
-          <div class="card"><div class="neutral">Proof</div><p>Show Buyer’s Guide shop & stock; Business Reports for sales and stock insights.</p></div>
-        </div>
-      </details>
-      <details>
-        <summary>When skills/progress visuals are must‑have</summary>
-        <div class="grid">
-          <div class="card"><div class="win">Talk track</div><p>“We track attendance and performance, and can export/share progress. We’re exploring templated ‘skills’ frameworks for coaches.”</p></div>
-          <div class="card"><div class="risk">Trap</div><p>iClassPro Skills module demos can look compelling for gymnastics.</p></div>
-          <div class="card"><div class="neutral">Proof</div><p>Show registers with consent/medical flags and performance notes; roadmap outline.</p></div>
-        </div>
-      </details>
-    </section>
-
-    <!-- Sources -->
-    <section class="section" id="sources">
-      <h2 class="section-title">Sources <span class="pill">official pages • docs • reviews</span></h2>
+    </details>
+    <details>
+      <summary>When they mention POS, inventory or pro-shops</summary>
       <div class="grid">
-        <div class="card">
-          <h3>iClassPro</h3>
-          <ul class="small">
-            <li><a href="https://www.iclasspro.com/features">iclasspro.com/features</a> (overview, Class Mgmt, Parent Portal, Branded App, Integrated Websites, POS, QuickBooks, Autopilot, Appointments, Party Booking, Skill Tracking)</li>
-            <li><a href="https://www.iclasspro.com/features/payment">iclasspro.com/features/payment</a> (Payments overview)</li>
-            <li><a href="https://www.iclasspro.com/features/parent-portal">iclasspro.com/features/parent-portal</a></li>
-            <li><a href="https://www.iclasspro.com/features/branded-app">iclasspro.com/features/branded-app</a></li>
-            <li><a href="https://www.iclasspro.com/features/integrated-websites">iclasspro.com/features/integrated-websites</a></li>
-            <li><a href="https://www.iclasspro.com/features/point-of-sale">iclasspro.com/features/point-of-sale</a></li>
-            <li><a href="https://www.iclasspro.com/features/quickbooks">iclasspro.com/features/quickbooks</a></li>
-            <li><a href="https://www.iclasspro.com/features/autopilot">iclasspro.com/features/autopilot</a></li>
-            <li><a href="https://www.iclasspro.com/features/appointments">iclasspro.com/features/appointments</a></li>
-            <li><a href="https://www.iclasspro.com/features/party-booking">iclasspro.com/features/party-booking</a></li>
-            <li><a href="https://www.iclasspro.com/features/skill-tracking">iclasspro.com/features/skill-tracking</a></li>
-            <li><a href="https://support.iclasspro.com/hc/en-us/articles/360052312674-What-are-the-different-fees-I-see-on-my-credit-card-processing-statement">support.iclasspro.com/.../credit-card-processing-statement</a></li>
-            <li><a href="https://support.iclasspro.com/hc/en-us/articles/28193190163675-Settlement-Schedule">support.iclasspro.com/.../Settlement-Schedule</a></li>
-            <li><a href="https://www.softwareadvice.com/membership-management/iclasspro-profile/reviews/">softwareadvice.com/.../iclasspro</a> (review sentiments)</li>
-            <li><a href="https://www.capterra.com/p/122927/iClassPro/">capterra.com/.../iClassPro</a></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>LoveAdmin</h3>
-          <ul class="small">
-            <li><a href="https://loveadmin.com/payment-solutions/">loveadmin.com/payment-solutions</a></li>
-            <li><a href="https://loveadmin.com/communications-tools/">loveadmin.com/communications-tools</a></li>
-            <li><a href="https://loveadmin.com/business-reports/">loveadmin.com/business-reports</a></li>
-            <li><a href="https://loveadmin.com/class-and-event-management/">loveadmin.com/class-and-event-management</a></li>
-            <li><a href="https://loveadmin.com/bookings-and-registrations/">loveadmin.com/bookings-and-registrations</a></li>
-            <li><a href="https://loveadmin.com/activity-calendars/">loveadmin.com/activity-calendars</a></li>
-            <li><a href="https://loveadmin.com/team-sports/">loveadmin.com/team-sports</a></li>
-            <li><a href="https://loveadmin.com/contact-management/">loveadmin.com/contact-management</a></li>
-            <li><a href="https://loveadmin.com/joinin-online-app/">loveadmin.com/joinin-online-app</a></li>
-            <li><a href="https://loveadmin.com/contact-us-support/">loveadmin.com/contact-us-support</a> (UK phone hours)</li>
-            <li><a href="https://help.loveadmin.com/gocardless-payment-processing-timeline">help.loveadmin.com/gocardless-...-timeline</a></li>
-            <li><a href="https://help.loveadmin.com/london-zurich-payment-collection-timeline">help.loveadmin.com/london-zurich-...-timeline</a></li>
-            <li><a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">loveadmin.com/.../recurring-payments-that-settle-in-minutes</a></li>
-            <li><a href="http://localhost:8451/https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide (PDF)</a></li>
-            <li><a href="https://www.capterra.com/p/182986/LoveAdmin/">Capterra — LoveAdmin</a></li>
-            <li><a href="https://www.getapp.com/customer-management-software/a/paysubsonline/">GetApp — LoveAdmin</a></li>
-            <li><a href="https://www.trustpilot.com/review/loveadmin.com">Trustpilot — LoveAdmin</a></li>
-          </ul>
-        </div>
+        <div class="card"><div class="win">Talk track</div><p>“LoveAdmin online shop covers memberships, kits, tickets and rentals, with upsells and reporting. For on-site POS, partner integrations can be recommended.”</p></div>
+        <div class="card"><div class="risk">Trap</div><p>iClassPro POS has barcode scanning and inventory built-in.</p></div>
+        <div class="card"><div class="neutral">Proof</div><p>Show Buyer’s Guide shop & stock; Business Reports for sales and stock insights.</p></div>
       </div>
-    </section>
+    </details>
+    <details>
+      <summary>When skills/progress visuals are must-have</summary>
+      <div class="grid">
+        <div class="card"><div class="win">Talk track</div><p>“We track attendance and performance, and can export/share progress. We’re exploring templated ‘skills’ frameworks for coaches.”</p></div>
+        <div class="card"><div class="risk">Trap</div><p>iClassPro Skills module demos can look compelling for gymnastics.</p></div>
+        <div class="card"><div class="neutral">Proof</div><p>Show registers with consent/medical flags and performance notes; roadmap outline.</p></div>
+      </div>
+    </details>
+  </section>
 
-    <footer class="section small muted">
-      Built with the Axcieve palette — primary <b>#FF5000</b>, secondary <b>#0885A3</b>, text <b>#4D4D4D</b>, accent <b>#FF8636</b>. 
-    </footer>
-  </main>
+  <!-- Sources -->
+  <section class="section" id="sources">
+    <h2 class="section-title">Sources <span class="pill">official pages • docs • reviews</span></h2>
+    <div class="grid">
+      <div class="card">
+        <h3>iClassPro</h3>
+        <ul class="small">
+          <li><a href="https://www.iclasspro.com/iclasspro-features">iclasspro.com/iclasspro-features</a> (overview)</li>
+          <li><a href="https://www.iclasspro.com/payment-services">iclasspro.com/payment-services</a> (Payments overview)</li>
+          <li><a href="https://www.iclasspro.com/customer-portal">iclasspro.com/customer-portal</a></li>
+          <li><a href="https://www.iclasspro.com/branded-app">iclasspro.com/branded-app</a></li>
+          <li><a href="https://www.iclasspro.com/websites">iclasspro.com/websites</a></li>
+          <li><a href="https://www.iclasspro.com/point-of-sale">iclasspro.com/point-of-sale</a></li>
+          <li><a href="https://www.iclasspro.com/quickbooks-integration">iclasspro.com/quickbooks-integration</a></li>
+          <li><a href="https://www.iclasspro.com/autopilot">iclasspro.com/autopilot</a></li>
+          <li><a href="https://www.iclasspro.com/appointments">iclasspro.com/appointments</a></li>
+          <li><a href="https://www.iclasspro.com/party-booking-management">iclasspro.com/party-booking-management</a></li>
+          <li><a href="https://www.iclasspro.com/skill-tracking">iclasspro.com/skill-tracking</a></li>
+          <li><a href="https://support.iclasspro.com/hc/en-us/articles/360003912474-What-Are-the-Different-Fees-I-See-on-my-Credit-Card-Processing-Statement">support.iclasspro.com — fees</a></li>
+          <li><a href="https://support.iclasspro.com/hc/en-us/articles/360034072333-When-Will-I-See-Funds-in-My-Account-for-Settled-Transactions">support.iclasspro.com — funding times</a></li>
+          <li><a href="https://support.iclasspro.com/hc/en-us/articles/4402072580503-What-Do-I-Need-to-Know-About-Next-Day-Funding">support.iclasspro.com — next-day funding</a></li>
+          <li><a href="https://www.softwareadvice.com/membership-management/iclasspro-profile/reviews/">softwareadvice.com/.../iclasspro</a> (review sentiments)</li>
+          <li><a href="https://www.capterra.com/p/122927/iClassPro/">capterra.com/.../iClassPro</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>LoveAdmin</h3>
+        <ul class="small">
+          <li><a href="https://loveadmin.com/payment-solutions/">loveadmin.com/payment-solutions</a></li>
+          <li><a href="https://loveadmin.com/communications-tools/">loveadmin.com/communications-tools</a></li>
+          <li><a href="https://loveadmin.com/business-reports/">loveadmin.com/business-reports</a></li>
+          <li><a href="https://loveadmin.com/class-and-event-management/">loveadmin.com/class-and-event-management</a></li>
+          <li><a href="https://loveadmin.com/bookings-and-registrations/">loveadmin.com/bookings-and-registrations</a></li>
+          <li><a href="https://loveadmin.com/activity-calendars/">loveadmin.com/activity-calendars</a></li>
+          <li><a href="https://loveadmin.com/team-sports/">loveadmin.com/team-sports</a></li>
+          <li><a href="https://loveadmin.com/contact-management/">loveadmin.com/contact-management</a></li>
+          <li><a href="https://loveadmin.com/joinin-online-app/">loveadmin.com/joinin-online-app</a></li>
+          <li><a href="https://loveadmin.com/contact-us-support/">loveadmin.com/contact-us-support</a> (UK phone hours)</li>
+          <li><a href="https://help.loveadmin.com/gocardless-payment-processing-timeline">help.loveadmin.com/gocardless-...-timeline</a></li>
+          <li><a href="https://help.loveadmin.com/london-zurich-payment-collection-timeline">help.loveadmin.com/london-zurich-...-timeline</a></li>
+          <li><a href="https://loveadmin.com/generating-income/recurring-payments-that-settle-in-minutes/">loveadmin.com/.../recurring-payments-that-settle-in-minutes</a></li>
+          <li><a href="https://loveadmin.com/wp-content/uploads/2021/08/Buyer_Guide_-_Sports_Clubs.pdf">Buyer’s Guide (PDF)</a></li>
+          <li><a href="https://www.capterra.com/p/182986/LoveAdmin/">Capterra — LoveAdmin</a></li>
+          <li><a href="https://www.getapp.com/customer-management-software/a/paysubsonline/">GetApp — LoveAdmin</a></li>
+          <li><a href="https://www.trustpilot.com/review/loveadmin.com">Trustpilot — LoveAdmin</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
+  <footer class="section small muted">
+    Made for LoveAdmin internal use. 
+  </footer>
+</main>
   <script>
     // Preloader & page fade
     window.addEventListener('load', () => {
