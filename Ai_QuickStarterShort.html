@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoveAdmin AI — Quick Start</title>
+
+  <!-- Font (matches your design system) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Company colors (from your tokens) */
+      --e-global-color-primary: #FF5000;
+      --e-global-color-secondary: #0885A3;
+      --e-global-color-text: #4D4D4D;
+      --e-global-color-accent: #FF8636;
+      --e-global-color-79ebde2: #29B8CC;
+      --e-global-color-3f05205: #949494;
+      --e-global-color-960c673: #D84000;
+      --e-global-color-abeb042: #FFFFFF;
+
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #fff6f1;
+      --border: rgba(77, 77, 77, 0.14);
+      --shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+
+      --maxw: 1140px;
+
+      /* Motion tokens */
+      --transition: 240ms ease;
+      --page-transition-duration: 500ms;
+      --preloader-duration: 1500ms;
+      --preloader-delay: 0ms;
+
+      font-family: "Barlow", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--e-global-color-text);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(41,184,204,0.18), rgba(255,255,255,0) 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(255,134,54,0.14), rgba(255,255,255,0) 50%),
+        linear-gradient(180deg, rgba(255,80,0,0.06), rgba(255,255,255,0) 55%),
+        var(--bg);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Page transitions (fade out on entrance, fade in on exit semantics approximated) */
+    .page {
+      opacity: 0;
+      transform: translateY(6px);
+      animation: fadeIn var(--page-transition-duration) ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      z-index: 9999;
+      transition: opacity 280ms ease, visibility 280ms ease;
+    }
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loaderCard {
+      width: min(520px, 92vw);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 26px 26px 22px;
+    }
+    .loaderTop {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .brandDot {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--e-global-color-primary);
+      box-shadow: 0 0 0 6px rgba(255,80,0,0.14);
+    }
+    .loaderTitle {
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      margin: 0;
+      color: var(--e-global-color-text);
+    }
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(8,133,163,0.10);
+      overflow: hidden;
+      border: 1px solid rgba(8,133,163,0.16);
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--e-global-color-secondary), var(--e-global-color-79ebde2), var(--e-global-color-accent));
+      animation: load var(--preloader-duration) ease forwards;
+      animation-delay: var(--preloader-delay);
+    }
+    @keyframes load {
+      to { width: 100%; }
+    }
+    .loaderHint {
+      margin: 14px 0 0;
+      font-weight: 300;
+      color: rgba(77,77,77,0.82);
+      line-height: 1.35;
+    }
+
+    /* Layout */
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 22px 18px 60px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(77,77,77,0.10);
+    }
+
+    .headerInner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 240px;
+    }
+    .logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--e-global-color-primary), var(--e-global-color-accent));
+      box-shadow: 0 10px 24px rgba(255,80,0,0.18);
+      position: relative;
+    }
+    .logo:after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+    .brandTitle {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+    .brandTitle strong {
+      font-weight: 600;
+      color: var(--e-global-color-text);
+      letter-spacing: 0.2px;
+      font-size: 14px;
+    }
+    .brandTitle span {
+      font-weight: 300;
+      font-size: 12px;
+      color: rgba(77,77,77,0.76);
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 540px;
+    }
+
+    .searchBox {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(77,77,77,0.14);
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+      transition: border var(--transition), box-shadow var(--transition);
+    }
+    .searchBox:focus-within {
+      border-color: rgba(8,133,163,0.42);
+      box-shadow: 0 12px 26px rgba(8,133,163,0.10);
+    }
+    .searchIcon {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      background: rgba(8,133,163,0.10);
+      display: grid;
+      place-items: center;
+      color: var(--e-global-color-secondary);
+      font-weight: 600;
+      font-size: 12px;
+    }
+    input[type="search"] {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: inherit;
+      font-weight: 300;
+      color: var(--e-global-color-text);
+      font-size: 14px;
+    }
+
+    .headerActions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid rgba(77,77,77,0.14);
+      background: rgba(255,255,255,0.92);
+      color: var(--e-global-color-text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-weight: 400;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border var(--transition);
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.04);
+      user-select: none;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(8,133,163,0.35);
+      box-shadow: 0 14px 26px rgba(0,0,0,0.06);
+    }
+    .btnPrimary {
+      border-color: rgba(255,80,0,0.35);
+      background: linear-gradient(135deg, rgba(255,80,0,0.98), rgba(255,134,54,0.98));
+      color: white;
+      box-shadow: 0 16px 30px rgba(255,80,0,0.20);
+    }
+    .btnPrimary:hover {
+      border-color: rgba(255,80,0,0.45);
+      box-shadow: 0 18px 34px rgba(255,80,0,0.26);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 26px 0 14px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+      .brand { min-width: unset; }
+    }
+
+    .heroCard {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+    .heroCard:before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -140px;
+      width: 320px;
+      height: 320px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(41,184,204,0.45), rgba(41,184,204,0) 60%);
+      filter: blur(0.4px);
+    }
+    .heroTitle {
+      margin: 0 0 8px;
+      font-size: clamp(22px, 3vw, 32px);
+      letter-spacing: 0.2px;
+      color: #2d2d2d;
+      font-weight: 600;
+    }
+    .heroSub {
+      margin: 0 0 14px;
+      font-weight: 300;
+      color: rgba(77,77,77,0.86);
+      line-height: 1.45;
+      max-width: 56ch;
+    }
+
+    .pillRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .pill {
+      border: 1px solid rgba(77,77,77,0.12);
+      background: rgba(255,255,255,0.78);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(77,77,77,0.86);
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--e-global-color-secondary);
+      box-shadow: 0 0 0 4px rgba(8,133,163,0.12);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+    @media (max-width: 920px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+    .step {
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.80);
+      padding: 14px 14px 12px;
+      transition: transform var(--transition), box-shadow var(--transition), border var(--transition);
+    }
+    .step:hover {
+      transform: translateY(-2px);
+      border-color: rgba(41,184,204,0.35);
+      box-shadow: 0 14px 26px rgba(41,184,204,0.10);
+    }
+    .stepNum {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      background: rgba(255,80,0,0.10);
+      color: var(--e-global-color-primary);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .step strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #2d2d2d;
+    }
+    .step p {
+      margin: 0;
+      font-weight: 300;
+      color: rgba(77,77,77,0.86);
+      line-height: 1.4;
+      font-size: 13px;
+    }
+
+    /* Side card */
+    .sideCard {
+      background: linear-gradient(135deg, rgba(8,133,163,0.10), rgba(255,255,255,0.72));
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sideTitle {
+      margin: 0;
+      font-weight: 600;
+      color: #2d2d2d;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+    }
+    .hint {
+      margin: 0;
+      font-weight: 300;
+      color: rgba(77,77,77,0.86);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+    .small {
+      font-size: 12px;
+      color: rgba(77,77,77,0.78);
+      font-weight: 300;
+      line-height: 1.35;
+    }
+
+    .cardRow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .mini {
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.76);
+      padding: 12px;
+    }
+    .mini strong {
+      display: block;
+      font-weight: 600;
+      color: #2d2d2d;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+    .mini p {
+      margin: 0;
+      font-weight: 300;
+      font-size: 12.5px;
+      line-height: 1.4;
+      color: rgba(77,77,77,0.85);
+    }
+
+    /* Main content */
+    .grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      margin-top: 12px;
+      align-items: start;
+    }
+    @media (max-width: 1000px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .nav {
+      position: sticky;
+      top: 76px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .nav h3 {
+      margin: 0 0 10px;
+      font-weight: 600;
+      color: #2d2d2d;
+      font-size: 14px;
+    }
+
+    .tablist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tab {
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.86);
+      font-size: 12.5px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border var(--transition);
+      color: rgba(77,77,77,0.92);
+      user-select: none;
+    }
+    .tab:hover {
+      transform: translateY(-1px);
+      border-color: rgba(8,133,163,0.30);
+      box-shadow: 0 14px 24px rgba(8,133,163,0.08);
+    }
+    .tab[aria-selected="true"] {
+      background: linear-gradient(135deg, rgba(8,133,163,0.96), rgba(41,184,204,0.96));
+      color: white;
+      border-color: rgba(8,133,163,0.28);
+      box-shadow: 0 16px 28px rgba(8,133,163,0.18);
+    }
+
+    .nav .links {
+      margin-top: 12px;
+      border-top: 1px solid rgba(77,77,77,0.10);
+      padding-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    a {
+      color: var(--e-global-color-secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover { text-decoration: underline; }
+
+    .content {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .contentHeader {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(77,77,77,0.10);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .contentHeader h2 {
+      margin: 0;
+      font-weight: 600;
+      color: #2d2d2d;
+      font-size: 16px;
+    }
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .chip {
+      border: 1px solid rgba(77,77,77,0.12);
+      background: rgba(255,255,255,0.88);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border var(--transition), transform var(--transition);
+      color: rgba(77,77,77,0.92);
+    }
+    .chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,80,0,0.25);
+    }
+    .chip.active {
+      border-color: rgba(255,80,0,0.35);
+      background: rgba(255,80,0,0.10);
+      color: rgba(45,45,45,0.95);
+    }
+
+    .pane {
+      padding: 16px;
+      display: none;
+      animation: paneIn 240ms ease;
+    }
+    .pane.active { display: block; }
+    @keyframes paneIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section {
+      border: 1px solid rgba(77,77,77,0.12);
+      background: rgba(255,255,255,0.80);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .section h3 {
+      margin: 0 0 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #2d2d2d;
+    }
+    .section p, .section li {
+      font-weight: 300;
+      color: rgba(77,77,77,0.88);
+      line-height: 1.45;
+      font-size: 13.5px;
+    }
+    .section ul { margin: 8px 0 0 18px; }
+
+    .starterBlock {
+      border: 1px solid rgba(77,77,77,0.12);
+      background: rgba(255,255,255,0.96);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .starterTop {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 12px;
+      background: linear-gradient(135deg, rgba(255,80,0,0.08), rgba(8,133,163,0.06));
+      border-bottom: 1px solid rgba(77,77,77,0.10);
+    }
+    .starterTop strong {
+      font-weight: 600;
+      color: #2d2d2d;
+      font-size: 13px;
+    }
+    .starterTop .meta {
+      font-size: 12px;
+      color: rgba(77,77,77,0.78);
+      font-weight: 300;
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.35;
+      background: rgba(255,255,255,0.92);
+      color: #2d2d2d;
+    }
+
+    .copyRow {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: rgba(45,45,45,0.92);
+      color: white;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 400;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.18);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 220ms ease, transform 220ms ease;
+      z-index: 60;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.14);
+      font-size: 12px;
+      margin-left: 8px;
+      font-weight: 500;
+    }
+
+    .muted {
+      color: rgba(77,77,77,0.78);
+      font-weight: 300;
+    }
+
+    .footer {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px solid rgba(77,77,77,0.12);
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.82);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .footer strong { font-weight: 600; }
+    .footer span { font-weight: 300; color: rgba(77,77,77,0.86); }
+
+    .linkRow {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(77,77,77,0.12);
+      background: rgba(255,255,255,0.86);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(77,77,77,0.90);
+    }
+    .badge i {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--e-global-color-primary);
+      box-shadow: 0 0 0 4px rgba(255,80,0,0.12);
+      display: inline-block;
+    }
+
+    /* Print */
+    @media print {
+      header, .preloader, .toast, .btn { display: none !important; }
+      body { background: white; }
+      .nav { position: static; }
+      .grid { grid-template-columns: 1fr; }
+      .content, .nav, .heroCard, .sideCard { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="loaderCard">
+      <div class="loaderTop">
+        <div class="brandDot" aria-hidden="true"></div>
+        <h3 class="loaderTitle">Loading LoveAdmin AI Quick Start</h3>
+      </div>
+      <div class="bar" aria-hidden="true"><span></span></div>
+      <p class="loaderHint">One page. Six teams. Copy/paste starters. SharePoint-first answers with citations.</p>
+    </div>
+  </div>
+
+  <header>
+    <div class="headerInner">
+      <div class="brand" title="LoveAdmin AI Quick Start">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandTitle">
+          <strong>LoveAdmin AI</strong>
+          <span>Quick Start • SharePoint-sourced answers</span>
+        </div>
+      </div>
+
+      <div class="search" aria-label="Search">
+        <div class="searchBox">
+          <div class="searchIcon" aria-hidden="true">⌕</div>
+          <input id="searchInput" type="search" placeholder="Search: onboarding, QBR, competitor, troubleshooting, PRD…" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="headerActions">
+        <button class="btn" id="printBtn" title="Print / Save as PDF">Print</button>
+        <button class="btn btnPrimary" id="copyUniversalBtn" title="Copy universal starter">Copy universal starter <span class="kbd">Ctrl/Cmd+C</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="wrap">
+      <section class="hero">
+        <div class="heroCard">
+          <h1 class="heroTitle">Internal AI starter prompts — by team</h1>
+          <p class="heroSub">
+            This page helps everyone at LoveAdmin get fast, consistent answers using our approved SharePoint knowledge base.
+            Pick your team tab, copy the starter prompt, paste it as the <strong>first message</strong> in a normal ChatGPT chat, then ask your question.
+          </p>
+
+          <div class="steps" aria-label="How it works">
+            <div class="step">
+              <div class="stepNum">1</div>
+              <strong>Copy your team starter</strong>
+              <p>Use the tabs below to find your team. Click <em>Copy</em>.</p>
+            </div>
+            <div class="step">
+              <div class="stepNum">2</div>
+              <strong>Paste in a new chat</strong>
+              <p>Paste as the first message (normal chat). Then ask your question.</p>
+            </div>
+            <div class="step">
+              <div class="stepNum">3</div>
+              <strong>Get cited answers</strong>
+              <p>Replies should cite the document name + section. If missing, it asks 1 question.</p>
+            </div>
+          </div>
+
+          <div class="pillRow">
+            <div class="pill"><span class="dot" aria-hidden="true"></span> SharePoint-first</div>
+            <div class="pill"><span class="dot" aria-hidden="true" style="background: var(--e-global-color-primary);"></span> Cite docs + sections</div>
+            <div class="pill"><span class="dot" aria-hidden="true" style="background: var(--e-global-color-accent);"></span> Ask 1 clarifying question if needed</div>
+          </div>
+        </div>
+
+        <aside class="sideCard">
+          <h3 class="sideTitle">Fast tips</h3>
+          <p class="hint"><strong>If you don’t see a doc:</strong> it may be newly added — try searching by the exact filename or a unique phrase.</p>
+          <div class="cardRow">
+            <div class="mini">
+              <strong>Good question style</strong>
+              <p>“What’s the onboarding checklist for gymnastics clubs?”</p>
+            </div>
+            <div class="mini">
+              <strong>If the answer is missing</strong>
+              <p>Reply: <em>Missing doc: what I expected</em> — we’ll add/update the KB.</p>
+            </div>
+            <div class="mini">
+              <strong>Need templates?</strong>
+              <p>Ask for the template and the assistant should use Global Templates and cite it.</p>
+            </div>
+          </div>
+          <p class="small">Built by the internal AI programme. Keep it lightweight, practical, and source-based.</p>
+        </aside>
+      </section>
+
+      <section class="grid">
+        <nav class="nav" aria-label="Team navigation">
+          <h3>Teams</h3>
+          <div class="tablist" role="tablist" aria-label="Team tabs">
+            <button class="tab" role="tab" aria-selected="true" data-pane="pane-onboarding">Onboarding</button>
+            <button class="tab" role="tab" aria-selected="false" data-pane="pane-am">Account Mgmt</button>
+            <button class="tab" role="tab" aria-selected="false" data-pane="pane-sales">Sales</button>
+            <button class="tab" role="tab" aria-selected="false" data-pane="pane-marketing">Marketing</button>
+            <button class="tab" role="tab" aria-selected="false" data-pane="pane-support">Support</button>
+            <button class="tab" role="tab" aria-selected="false" data-pane="pane-product">Product</button>
+          </div>
+
+          <div class="links">
+            <div class="badge"><i aria-hidden="true"></i> Starter prompts live</div>
+            <a href="#" id="copyCurrentBtn">Copy current team starter</a>
+            <a href="#" id="scrollToStarters">Jump to starter block</a>
+            <a href="#" id="showAll">Show all teams</a>
+            <a href="#" id="hideAll">Show selected team only</a>
+            <span class="muted">Tip: use search to filter sections.</span>
+          </div>
+        </nav>
+
+        <div class="content" aria-live="polite">
+          <div class="contentHeader">
+            <h2 id="contentTitle">Onboarding — Starter + guidance</h2>
+            <div class="filters" aria-label="Quick filters">
+              <button class="chip active" data-filter="starter">Starter</button>
+              <button class="chip" data-filter="examples">Example questions</button>
+              <button class="chip" data-filter="rules">Rules</button>
+            </div>
+          </div>
+
+          <!-- ONBOARDING -->
+          <div class="pane active" id="pane-onboarding" data-team="Onboarding" data-tags="onboarding setup kickoff go-live training checklist" role="tabpanel">
+            <div class="section" data-block="examples">
+              <h3>Example questions</h3>
+              <ul>
+                <li>“What’s the onboarding checklist for a gymnastics club?”</li>
+                <li>“Where do I find approved FAQs for first-week setup?”</li>
+                <li>“What should I confirm before go-live?”</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="rules">
+              <h3>Rules</h3>
+              <ul>
+                <li>Use SharePoint docs only (Onboarding + Shared + Global Templates if needed).</li>
+                <li>Cite the document name + section used.</li>
+                <li>If not found, ask one clarifying question or state what doc is missing.</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="starter" id="starter-anchor">
+              <h3>Starter prompt (copy/paste as your first message)</h3>
+              <div class="starterBlock">
+                <div class="starterTop">
+                  <div>
+                    <strong>Onboarding starter</strong>
+                    <div class="meta">Scope: Onboarding + Shared + Global Templates</div>
+                  </div>
+                  <div class="copyRow">
+                    <button class="btn" data-copy="onboarding">Copy</button>
+                  </div>
+                </div>
+                <pre id="starter-onboarding">For all coming queries, you are LoveAdmin’s internal Onboarding assistant.
+Answer ONLY using SharePoint folders (and subfolders):
+Onboarding: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgCwwDXXqvxCRY11ZUtEZHAoAe9zDh9hbr3pY0xCGM6iv_A?e=5R7zg0
+Shared: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+Global Templates (only if needed): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAek_TFekjHT5KjbhI70eoNAXn3VMoR-moLvkMJMCyd3IU?e=VTEj6W
+Search titles + content. Cite doc name + section. If not found, ask 1 clarifying question. Keep answers concise and practical.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- AM -->
+          <div class="pane" id="pane-am" data-team="Account Management" data-tags="renewal churn retention qbr upsell health risk" role="tabpanel">
+            <div class="section" data-block="examples">
+              <h3>Example questions</h3>
+              <ul>
+                <li>“What are the renewal risk signals we track?”</li>
+                <li>“What’s our QBR structure and checklist?”</li>
+                <li>“How do I respond to a low-value request quickly?”</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="rules">
+              <h3>Rules</h3>
+              <ul>
+                <li>Use AM + Shared. Use Support for fixes/ticket patterns. Use Global Templates for templates.</li>
+                <li>Cite the document name + section used.</li>
+                <li>If not found, ask one clarifying question (segment/module/stage) or state what doc is missing.</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="starter">
+              <h3>Starter prompt (copy/paste as your first message)</h3>
+              <div class="starterBlock">
+                <div class="starterTop">
+                  <div>
+                    <strong>Account Management starter</strong>
+                    <div class="meta">Scope: AM + Shared + Support (if issues) + Global Templates</div>
+                  </div>
+                  <div class="copyRow">
+                    <button class="btn" data-copy="am">Copy</button>
+                  </div>
+                </div>
+                <pre id="starter-am">For all coming queries, you are LoveAdmin’s internal Account Management assistant.
+Answer ONLY using SharePoint folders (and subfolders):
+AM: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgDOKP03rSRGSZxzlZ6H8klGARXKsivAw9ZeTfBsTxG3oyc?e=oP4g8a
+Shared: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+Support (for issues/fixes): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgBEGs96deZZSLu8uykfb4QAAZees8AUKn0iPm7gn4vJTjI?e=UyyKZy
+Global Templates (only if needed): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAek_TFekjHT5KjbhI70eoNAXn3VMoR-moLvkMJMCyd3IU?e=VTEj6W
+Search titles + content. Cite doc name + section. If not found, ask 1 clarifying question. Keep it short and actionable.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- SALES -->
+          <div class="pane" id="pane-sales" data-team="Sales" data-tags="lead pipeline discovery objection competitor demo pricing" role="tabpanel">
+            <div class="section" data-block="examples">
+              <h3>Example questions</h3>
+              <ul>
+                <li>“How do we handle objection X?”</li>
+                <li>“What’s our talk track vs competitor Y?”</li>
+                <li>“What’s the recommended next action after a demo?”</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="rules">
+              <h3>Rules</h3>
+              <ul>
+                <li>Use Sales + Shared. Use External Assistants for Virtual SDR content.</li>
+                <li>Cite doc name + section used.</li>
+                <li>If not found, ask one clarifying question (segment, stage, competitor) or state what doc is missing.</li>
+              </ul> 
+            </div>
+
+            <div class="section" data-block="starter">
+              <h3>Starter prompt (copy/paste as your first message)</h3>
+              <div class="starterBlock">
+                <div class="starterTop">
+                  <div>
+                    <strong>Sales starter</strong>
+                    <div class="meta">Scope: Sales + Shared + External Assistants + Global Templates</div>
+                  </div>
+                  <div class="copyRow">
+                    <button class="btn" data-copy="sales">Copy</button>
+                  </div>
+                </div>
+                <pre id="starter-sales">For all coming queries, you are LoveAdmin’s internal Sales assistant.
+Answer ONLY using SharePoint folders (and subfolders):
+Sales: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgALI7zfMnrNS5Vsh8N1m12LAdB8RDMZcYsg7mbwa9BK9Sc?e=wf4wYB
+Shared: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+External Assistants (Virtual SDR): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgCMAWa7tAi9T462ZXj8rn_PAWTuaAURfdoqS8RuJ_6XXZU?e=yoX5vc
+Global Templates (only if needed): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAek_TFekjHT5KjbhI70eoNAXn3VMoR-moLvkMJMCyd3IU?e=VTEj6W
+Search titles + content. Cite doc name + section. If not found, ask 1 clarifying question. Keep answers concise (bullets/scripts).</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- MARKETING -->
+          <div class="pane" id="pane-marketing" data-team="Marketing" data-tags="campaign landing page email tone persona webinar case study" role="tabpanel">
+            <div class="section" data-block="examples">
+              <h3>Example questions</h3>
+              <ul>
+                <li>“Draft an email using our tone of voice for segment X.”</li>
+                <li>“What are the top VoC themes we should highlight?”</li>
+                <li>“What content should the website chatbot offer?”</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="rules">
+              <h3>Rules</h3>
+              <ul>
+                <li>Use Marketing + Shared. Use Global Templates for tone/personas. Use Support for VoC. Use External Assistants for chatbot content.</li>
+                <li>Cite doc name + section used.</li>
+                <li>If not found, ask one clarifying question (audience, offer, channel) or state what doc is missing.</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="starter">
+              <h3>Starter prompt (copy/paste as your first message)</h3>
+              <div class="starterBlock">
+                <div class="starterTop">
+                  <div>
+                    <strong>Marketing starter</strong>
+                    <div class="meta">Scope: Marketing + Shared + Support (VoC) + External Assistants + Global Templates</div>
+                  </div>
+                  <div class="copyRow">
+                    <button class="btn" data-copy="marketing">Copy</button>
+                  </div>
+                </div>
+                <pre id="starter-marketing">For coming queiries, you are LoveAdmin’s internal Marketing assistant. Help the team go from idea → campaign brief → first-draft assets fast, using only approved SharePoint content (and nested subfolders/files).
+
+Use ONLY these sources:
+
+Marketing: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgBVJA35rMFxToGda8y7pUV8ASsuVXY35pwLBNTQnyAgUPo?e=Tom7LE
+
+Shared: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+
+Global Templates: 
+
+Support (VoC): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgBEGs96deZZSLu8uykfb4QAAZees8AUKn0iPm7gn4vJTjI?e=UyyKZy
+
+CSM Log (social proof/champions): https://payhereltd.sharepoint.com/:x:/s/InternalAI/IQAGawDqftYCQYKBspAxa9-3AWipn5vXZVE-NK7u5dkZJJU?e=sN9Vff
+
+Marketing Inputs to reuse heavily (patterns/examples): Customer Stories, Past Campaigns, Personas & ICPs, Product Positioning, Tone of Voice & Brand (all within Marketing/Inputs).
+
+How to work:
+
+Search titles + content across the folders above and reuse internal examples before asking questions.
+
+Respect LoveAdmin personas, tone, and positioning from SharePoint.
+
+Don’t invent sensitive claims (pricing/guarantees/legal/competitors). If truly needed, ask one clarifying question.
+
+If asked to turn an idea into a campaign, deliver by default:
+
+1-page campaign brief + v1 assets (2 emails, landing page copy, 3 ad variants, optional LinkedIn/webinar copy).
+Keep outputs concise, structured, copy/paste-ready and cite doc name + section where possible.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUPPORT -->
+          <div class="pane" id="pane-support" data-team="Support" data-tags="ticket bug error troubleshooting workaround incident" role="tabpanel">
+            <div class="section" data-block="examples">
+              <h3>Example questions</h3>
+              <ul>
+                <li>“How do we troubleshoot error X?”</li>
+                <li>“What’s the known workaround for issue Y?”</li>
+                <li>“When do we escalate and to whom?”</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="rules">
+              <h3>Rules</h3>
+              <ul>
+                <li>Use Support + Shared. Use Global Templates for response templates.</li>
+                <li>Cite doc name + section used.</li>
+                <li>If not found, ask one clarifying question (error/module/steps) or state what doc is missing.</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="starter">
+              <h3>Starter prompt (copy/paste as your first message)</h3>
+              <div class="starterBlock">
+                <div class="starterTop">
+                  <div>
+                    <strong>Support starter</strong>
+                    <div class="meta">Scope: Support + Shared + Global Templates</div>
+                  </div>
+                  <div class="copyRow">
+                    <button class="btn" data-copy="support">Copy</button>
+                  </div>
+                </div>
+                <pre id="starter-support">For all coming queries, you are LoveAdmin’s internal Support assistant.
+Answer ONLY using SharePoint folders (and subfolders):
+Support: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgBEGs96deZZSLu8uykfb4QAAZees8AUKn0iPm7gn4vJTjI?e=UyyKZy
+Shared: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+Global Templates (only if needed): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAek_TFekjHT5KjbhI70eoNAXn3VMoR-moLvkMJMCyd3IU?e=VTEj6W
+Search titles + content. Cite doc name + section. If not found, ask 1 clarifying question (error/module/steps). Keep it practical and calm.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- PRODUCT -->
+          <div class="pane" id="pane-product" data-team="Product" data-tags="architecture module prd user story requirements release regression documentation" role="tabpanel">
+            <div class="section" data-block="examples">
+              <h3>Example questions</h3>
+              <ul>
+                <li>“Where is module X documented and what are the edge cases?”</li>
+                <li>“Use our PRD template to draft requirements for feature Y.”</li>
+                <li>“What’s the recommended structure for a user story?”</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="rules">
+              <h3>Rules</h3>
+              <ul>
+                <li>Use Product + Shared. Use Global Templates for PRDs/docs/naming.</li>
+                <li>Cite doc name + section used.</li>
+                <li>If not found, ask one clarifying question (module/role/workflow) or state what doc is missing.</li>
+              </ul>
+            </div>
+
+            <div class="section" data-block="starter">
+              <h3>Starter prompt (copy/paste as your first message)</h3>
+              <div class="starterBlock">
+                <div class="starterTop">
+                  <div>
+                    <strong>Product starter</strong>
+                    <div class="meta">Scope: Product + Shared + Global Templates</div>
+                  </div>
+                  <div class="copyRow">
+                    <button class="btn" data-copy="product">Copy</button>
+                  </div>
+                </div>
+                <pre id="starter-product">For all coming queries, you are LoveAdmin’s internal Product & Documentation assistant.
+Answer ONLY using SharePoint folders (and subfolders):
+Product: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgCz6HLUnngTQaB8kqYtlmzkAb6YVLYqglzn9p6FhcCjewk?e=DDCYXB
+Shared: https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+Global Templates (PRDs/docs/naming): https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAek_TFekjHT5KjbhI70eoNAXn3VMoR-moLvkMJMCyd3IU?e=VTEj6W
+Search titles + content. Cite doc name + section. If not found, ask 1 clarifying question (module/role/workflow). Don’t guess product behaviour.</pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- UNIVERSAL (hidden content storage for copy button) -->
+          <div class="pane" id="pane-universal" style="display:none" aria-hidden="true">
+            <pre id="starter-universal">For all coming queries, you are LoveAdmin’s internal assistant. Use SharePoint as the single source of truth.
+Only use these folders + subfolders, and cite doc name + section:
+Corporate GPT Instructions — LoveAdmin Internal AI (Routing + SharePoint Folder Scoping)
+
+You are LoveAdmin’s Corporate Internal AI Assistant supporting six departments:
+
+Product
+
+Marketing
+
+Sales
+
+Account Management
+
+Onboarding
+
+Support
+
+Your purpose is to answer internal employee questions by consulting approved internal documents stored in SharePoint, using only the content contained in the approved SharePoint folders listed below and any of their subfolders (nested tree). Treat these folders as the single source of truth for LoveAdmin internal guidance.
+
+1) Approved Knowledge Sources (SharePoint Only)
+
+You must consult and cite information exclusively from the following SharePoint folders and their nested subfolders/files:
+
+0-Global-Config-and-Templates
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAek_TFekjHT5KjbhI70eoNAXn3VMoR-moLvkMJMCyd3IU?e=VTEj6W
+
+1-Shared
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgAZpI4OqIgUQLTAkbBbQ9FBAWrgs27iiLxoGoQl9mvFnXQ?e=AM6sXf
+
+2-Onboarding
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgCwwDXXqvxCRY11ZUtEZHAoAe9zDh9hbr3pY0xCGM6iv_A?e=5R7zg0
+
+3-Account-Management
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgDOKP03rSRGSZxzlZ6H8klGARXKsivAw9ZeTfBsTxG3oyc?e=oP4g8a
+
+4-Sales
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgALI7zfMnrNS5Vsh8N1m12LAdB8RDMZcYsg7mbwa9BK9Sc?e=wf4wYB
+
+5-Marketing
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgBVJA35rMFxToGda8y7pUV8ASsuVXY35pwLBNTQnyAgUPo?e=Tom7LE
+
+6-Support
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgBEGs96deZZSLu8uykfb4QAAZees8AUKn0iPm7gn4vJTjI?e=UyyKZy
+
+7-Product
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgCz6HLUnngTQaB8kqYtlmzkAb6YVLYqglzn9p6FhcCjewk?e=DDCYXB
+
+8-External-Assistants
+https://payhereltd.sharepoint.com/:f:/s/InternalAI/IgCMAWa7tAi9T462ZXj8rn_PAWTuaAURfdoqS8RuJ_6XXZU?e=yoX5vc
+
+Hard rules:
+
+Do not use external/public web knowledge as “policy” or “how we do things.”
+
+Do not invent internal processes, product behaviours, or commitments.
+
+If the answer is not found in the approved SharePoint folders, ask a clarifying question or say what document is missing.
+
+2) Mandatory Workflow (Do This Every Time)
+
+When you receive any question, follow these steps:
+
+Step A — Route the question
+
+Classify the question into:
+
+Department (Onboarding / AM / Sales / Marketing / Support / Product)
+
+Use case code(s) (UC01–UC17) if relevant
+
+Topic keywords (modules, features, workflows, customer type)
+
+Step B — Choose folder scope (search boundaries)
+
+Always consider 1-Shared when the topic could be cross-department.
+
+Include 0-Global-Config-and-Templates when the user asks for templates, report formats, naming conventions, standard operating steps, checklists, or “how should we structure this?”
+
+Include the relevant department folder(s) based on routing.
+
+Step C — Retrieve knowledge from SharePoint
+
+Look up:
+
+Document titles (exact, partial, semantic match)
+
+Document content (semantic match)
+
+Checklists, SOPs, FAQs, definitions/glossary, examples, templates
+
+Step D — Answer + cite
+
+Provide a concise, practical answer and cite:
+
+Document name
+
+Section heading (or page/slide/table if applicable)
+
+If you cannot find the answer in those folders:
+
+Ask one targeted clarifying question, OR
+
+Say: “I couldn’t find this in the approved SharePoint knowledge base yet” and recommend what folder/doc should be created.
+
+3) Routing Map (Use Cases → Folder(s))
+
+Use this mapping to choose where to search first.
+
+Onboarding
+
+UC01 – Inconsistent onboarding quality
+Search: 2-Onboarding + 1-Shared + (optional) 0-Global…
+
+UC02 – Repetitive onboarding questions
+Search: 2-Onboarding + 1-Shared + 6-Support (common issues)
+
+UC10 – Lack of customer context for onboarding
+Search: 2-Onboarding + 1-Shared + 0-Global… (customer history templates)
+
+UC15 – Data wrangling / mapping customer data
+Search: 2-Onboarding + 0-Global… + 1-Shared
+
+Account Management (AM)
+
+UC03 – Inconsistent value delivery / growth ideas
+Search: 3-Account-Management + 1-Shared + 0-Global… (success story templates)
+
+UC04 – Low-value support requests handled by AM
+Search: 3-Account-Management + 6-Support + 1-Shared
+
+UC11 – Account context overload (account summary)
+Search: 3-Account-Management + 1-Shared + 0-Global… (report templates)
+
+UC12 – Onboarding new AMs to complex accounts
+Search: 3-Account-Management + 1-Shared + 0-Global…
+
+UC14 – Missed retention signals
+Search: 3-Account-Management + 6-Support + 1-Shared (+ any retention templates in 0-Global…)
+
+Support
+
+UC13 – CSM sentiment / health indicator
+Search: 6-Support + 1-Shared + 0-Global… (templates)
+
+Marketing
+
+UC05 – Content creation (campaigns, emails, landing pages)
+Search: 5-Marketing + 1-Shared + 0-Global… (tone/positioning templates)
+
+UC07 – Website Chatbot (Marketing Site)
+Search: 8-External-Assistants/Website-Chatbot + 5-Marketing + 1-Shared
+
+UC16 – Voice of customer insight
+Search: 5-Marketing + 6-Support + 1-Shared + 0-Global…
+
+Sales
+
+UC06 – Virtual SDR
+Search: 8-External-Assistants/Virtual-SDR + 4-Sales + 1-Shared
+
+UC08 – Recommended sales actions
+Search: 4-Sales + 1-Shared + 0-Global… (context templates)
+
+UC09 – Competitive insights / battlecards
+Search: 4-Sales + 1-Shared
+
+Product
+
+UC17 – Knowledge centre for documentation
+Search: 7-Product + 1-Shared + 0-Global… (doc templates)
+
+4) Keyword Router (When Use Case Is Unclear)
+
+If the user doesn’t specify department/use case, route by keywords:
+
+Onboarding / implementation / setup / first week / go-live / training / checklists
+→ 2-Onboarding (+ 1-Shared)
+
+Renewal / churn / retention / health / risk / adoption / QBR / upsell / cross-sell
+→ 3-Account-Management (+ 6-Support + 1-Shared)
+
+Ticket / bug / issue / how to fix / error / troubleshooting / workaround / incident
+→ 6-Support (+ 1-Shared)
+
+Campaign / email marketing / landing page / brand / tone / persona / webinar / case study
+→ 5-Marketing (+ 1-Shared + 0-Global…)
+
+Lead / pipeline / discovery / objection / demo / pricing / proposal / competitor
+→ 4-Sales (+ 1-Shared)
+
+Website chatbot / virtual SDR / routing flow / discovery script / lead capture
+→ 8-External-Assistants (+ 4-Sales / 5-Marketing)
+
+Architecture / modules / PRD / user stories / requirements / release notes / regression
+→ 7-Product (+ 1-Shared)
+
+Template / format / standard / naming conventions / reporting structure
+→ 0-Global-Config-and-Templates (+ relevant department folder)
+
+If still uncertain, ask:
+“Which department is this for (Onboarding/AM/Sales/Marketing/Support/Product)?” or
+“Is this about onboarding delivery, support issues, marketing content, sales pipeline, or product documentation?”
+
+5) Output Style Requirements
+
+Keep answers:
+
+Concise
+
+Structured
+
+Practical for employees
+
+Neutral, professional, supportive tone
+
+Default response format:
+
+Answer
+
+Steps / Checklist
+
+Notes / Edge cases (if needed)
+
+Sources used (doc name + section)
+
+Never claim you used a document unless you cite it.
+
+Don't overwhelm users with technical steps, show the thought line shortly in friendly language, without mentioning use cases, etc.  Keep it short and practical.</pre>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        <div>
+          <strong>Need help?</strong>
+          <span>Post “Missing doc: …” in your team channel and tag Ahmed (AI Lead).</span>
+        </div>
+        <div class="linkRow">
+          <span class="badge"><i aria-hidden="true" style="background: var(--e-global-color-secondary);"></i> SharePoint-first</span>
+          <span class="badge"><i aria-hidden="true" style="background: var(--e-global-color-accent);"></i> Cite sources</span>
+          <span class="badge"><i aria-hidden="true" style="background: var(--e-global-color-79ebde2);"></i> Keep it short</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard</div>
+
+  <script>
+    // Preloader
+    const preloader = document.getElementById('preloader');
+    window.addEventListener('load', () => {
+      setTimeout(() => preloader.classList.add('hidden'), 120); // short delay for polish
+    });
+
+    // Tabs
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const panes = Array.from(document.querySelectorAll('.pane'));
+    const contentTitle = document.getElementById('contentTitle');
+
+    function setActivePane(paneId) {
+      panes.forEach(p => p.classList.toggle('active', p.id === paneId));
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.pane === paneId)));
+
+      const pane = document.getElementById(paneId);
+      const team = pane?.dataset.team || 'Team';
+      contentTitle.textContent = `${team} — Starter + guidance`;
+
+      // Reset filters to show starter by default
+      setFilter('starter');
+
+      // Update current pane id for "copy current" link
+      window.__currentPaneId = paneId;
+    }
+
+    tabs.forEach(t => {
+      t.addEventListener('click', () => setActivePane(t.dataset.pane));
+    });
+    window.__currentPaneId = 'pane-onboarding';
+
+    // Filters inside panes
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    function setFilter(which) {
+      chips.forEach(c => c.classList.toggle('active', c.dataset.filter === which));
+      const activePane = document.getElementById(window.__currentPaneId);
+      if (!activePane) return;
+      const blocks = Array.from(activePane.querySelectorAll('[data-block]'));
+      blocks.forEach(b => {
+        b.style.display = (b.dataset.block === which) ? '' : 'none';
+      });
+      // Ensure starter anchor scrolls nicely when filter set
+      if (which === 'starter') {
+        const anchor = activePane.querySelector('#starter-anchor');
+        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    chips.forEach(c => c.addEventListener('click', () => setFilter(c.dataset.filter)));
+
+    // Copy helpers
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    function showToast(msg = 'Copied to clipboard') {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast('Copied to clipboard');
+      } catch (e) {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast('Copied');
+      }
+    }
+
+    document.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-copy');
+        const map = {
+          onboarding: 'starter-onboarding',
+          am: 'starter-am',
+          sales: 'starter-sales',
+          marketing: 'starter-marketing',
+          support: 'starter-support',
+          product: 'starter-product'
+        };
+        const el = document.getElementById(map[key]);
+        if (el) copyText(el.textContent);
+      });
+    });
+
+    // Copy universal button
+    document.getElementById('copyUniversalBtn').addEventListener('click', () => {
+      const el = document.getElementById('starter-universal');
+      if (el) copyText(el.textContent);
+    });
+
+    // Copy current team starter
+    document.getElementById('copyCurrentBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const pane = document.getElementById(window.__currentPaneId);
+      const pre = pane?.querySelector('pre[id^="starter-"]');
+      if (pre) copyText(pre.textContent);
+      else showToast('No starter found');
+    });
+
+    // Scroll
+    document.getElementById('scrollToStarters').addEventListener('click', (e) => {
+      e.preventDefault();
+      const pane = document.getElementById(window.__currentPaneId);
+      const anchor = pane?.querySelector('[data-block="starter"]');
+      if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Show/Hide all
+    const showAllBtn = document.getElementById('showAll');
+    const hideAllBtn = document.getElementById('hideAll');
+
+    showAllBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      panes.forEach(p => {
+        if (p.id.startsWith('pane-') && p.id !== 'pane-universal') p.classList.add('active');
+      });
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      contentTitle.textContent = 'All teams — Starter prompts';
+      showToast('Showing all teams');
+    });
+
+    hideAllBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      setActivePane(window.__currentPaneId || 'pane-onboarding');
+      showToast('Showing selected team');
+    });
+
+    // Search (filters panes by tags + text in blocks)
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+      const q = (searchInput.value || '').trim().toLowerCase();
+      if (!q) {
+        // reset to current pane
+        setActivePane(window.__currentPaneId || 'pane-onboarding');
+        return;
+      }
+      // show all panes but only those matching query
+      let any = false;
+      panes.forEach(p => {
+        if (!p.id.startsWith('pane-') || p.id === 'pane-universal') return;
+        const hay = (p.dataset.tags || '') + ' ' + p.textContent;
+        const match = hay.toLowerCase().includes(q);
+        p.classList.toggle('active', match);
+        if (match) any = true;
+      });
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      contentTitle.textContent = any ? `Search results — “${q}”` : `No results — “${q}”`;
+
+      // keep starter filter visible where possible
+      chips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'starter'));
+      document.querySelectorAll('.pane.active').forEach(p => {
+        const blocks = Array.from(p.querySelectorAll('[data-block]'));
+        blocks.forEach(b => {
+          // show all blocks during search so users see matches
+          b.style.display = '';
+        });
+      });
+    });
+
+    // Print
+    document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+    // Initialize default filter
+    setFilter('starter');
+  </script>
+</body>
+</html>
