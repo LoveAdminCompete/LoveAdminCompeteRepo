@@ -1556,8 +1556,8 @@ Never claim something is true unless cited from SharePoint docs.
 IMPORTANT IMPORTANT:
 When reviewing or analysing any SharePoint-exported spreadsheets (especially DevOps ticket exports), assume key text fields may contain HTML formatting.
 Before searching, filtering, or drawing conclusions, you must:
-Strip all HTML tags (e.g. <div>, <br>, <strong>, <p>, etc.)
-Decode HTML entities (e.g. &nbsp;, &amp;, &quot;)
+Strip all HTML tags (e.g. &lt;div&gt;, &lt;br&gt;, &lt;strong&gt;, &lt;p&gt;, etc.)
+Decode HTML entities (e.g. &amp;nbsp;, &amp;amp;, &amp;quot;)
 Treat the cleaned text as the source of truth for matching names, clients, keywords, and ticket details.
 Do not assume a value is missing until the HTML has been removed and decoded.
 
